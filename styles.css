@@ -1,0 +1,272 @@
+/* Estilo geral para o body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #b3b3b3; /* Cor de fundo cinza claro */
+    color: #333; /* Cor de texto cinza escuro */
+    margin: 0;
+    padding: 0;
+}
+
+/* Container principal */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff; /* Fundo branco para o container */
+    box-shadow: 0 2px 10px rgba(63, 63, 63, 0.1); /* Sombras suaves */
+}
+
+/* Estilo para o cabeçalho */
+header {
+    text-align: center;
+    background-color: #6b6b6b; /* Fundo escuro no cabeçalho */
+    color: white;
+    padding: 20px 0;
+}
+
+/* Títulos */
+h1, h2 {
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo para a lista de produtos */
+.product-list {
+    margin: 20px 0;
+}
+
+.product-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.product-list li {
+    background-color: #e0e0e0; /* Fundo cinza para os itens da lista */
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-list li img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #4CAF50; /* Cor de fundo verde */
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button.status {
+    background-color: #ff9800; /* Cor laranja para o status */
+}
+
+button.remove {
+    background-color: #f44336; /* Cor vermelha para remover */
+}
+
+/* Estilo para o formulário de adicionar produto */
+.add-product {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 20px;
+}
+
+.add-product input {
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%; /* Garantir que os inputs ocupem toda a largura disponível */
+    max-width: 400px; /* Definir uma largura máxima para evitar que fique muito largo */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura */
+}
+
+/* Ajuste para os botões */
+.add-product button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    max-width: 400px; /* Botão também com largura proporcional */
+    box-sizing: border-box;
+    
+}
+
+
+/* Rodapé */
+footer {
+    text-align: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    position: fixed;  /* Mudança para 'fixed' para fixar o rodapé na parte inferior da tela */
+    width: 100%;      /* Garantir que o rodapé ocupe toda a largura */
+    bottom: 0;        /* Garantir que o rodapé fique sempre no final da tela */
+    left: 0;          /* Alinha o rodapé à esquerda */
+}
+
+
+/* Ajuste para cada status */
+button[style*="background-color: red"] {
+    background-color: #f44336; /* Vermelho para "Repor" */
+}
+
+button[style*="background-color: yellow"] {
+    background-color: #ffeb3b; /* Amarelo para "Observar" */
+}
+
+button[style*="background-color: green"] {
+    background-color: #4CAF50; /* Verde para "Estoque" */
+}
+/* Estilo geral para o body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #b6b6b6; /* Cor de fundo cinza claro */
+    color: #333; /* Cor de texto cinza escuro */
+    margin: 0;
+    padding: 0;
+}
+
+/* Barra superior */
+.top-bar {
+    background-color: #b6b6b6; /* Cor escura para a barra */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    color: white;
+}
+
+.top-bar .logo h1 {
+    font-size: 30px;
+    font-style: italic; /* Itálico */
+    margin: 0;
+}
+
+.top-bar .logo .smaller {
+    font-size: 30px; 
+    font-style: italic; /* Itálico */
+}
+
+.top-bar nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.top-bar nav ul li {
+    margin-left: 20px;
+}
+
+.top-bar nav ul li a {
+    color: rgb(73, 73, 73);
+    text-decoration: none;
+    font-style: italic; /* Itálico */
+    font-size: 16px;
+}
+
+.top-bar nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Container principal */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff; /* Fundo branco para o container */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombras suaves */
+}
+
+/* Estilo para o cabeçalho */
+header {
+    text-align: center;
+    background-color: #333;
+    color: white;
+    padding: 30px 0;
+}
+
+/* Títulos */
+h1, h2 {
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo para a lista de produtos */
+.product-list {
+    margin: 20px 0;
+}
+
+.product-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.product-list li {
+    background-color: #e0e0e0; /* Fundo cinza para os itens da lista */
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-list li img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #4CAF50; /* Cor de fundo verde */
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button.status {
+    background-color: #ff9800; /* Cor laranja para o status */
+}
+
+button.remove {
+    background-color: #f44336; /* Cor vermelha para remover */
+}
+
+/* Estilo para o formulário de adicionar produto */
+.add-product input {
+    padding: 10px;
+    margin: 10px 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Rodapé */
+footer {
+    text-align: center;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}

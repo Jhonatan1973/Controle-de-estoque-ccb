@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Produtos</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <div class="container">
+        <!-- Barra Superior -->
+        <header class="top-bar">
+            <div class="logo">
+                <h1>Congregação Cristã no Brasil</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Produtos</a></li>
+                    <li><a href="#">Lista</a></li>
+                    <li><a href="#">Avisar</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Conteúdo principal -->
+        <main>
+            <section class="product-list">
+                <h2>Produtos em Estoque</h2>
+                <ul id="product-list">
+                    <!-- Lista de produtos será gerada sequencialmente -->
+                </ul>
+            </section>
+
+            <section class="add-product">
+                <h2>Adicionar Produto</h2>
+                <input type="text" id="product-name" placeholder="Nome do Produto">
+                <input type="number" id="product-quantity" placeholder="Quantidade">
+                <button onclick="addProduct()">Adicionar</button>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; Gi Controle de Estoque</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="base.py"></script>
+</body>
+</html>
