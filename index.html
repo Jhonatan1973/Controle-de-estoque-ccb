@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Estoque</title>
+    <link rel="stylesheet" href="linde.css">
+</head>
+<body>
+    <header class="cabecario">
+        <h1 class="title">Congregação Cristã no Brasil</h1>
+        <input type="text" name="text" class="pesquisa" placeholder="Pesquisar..." oninput="filtrarTabela()">
+        <div id="sugestoes" class="sugestoes"></div>
+    </header>
+
+    <main>
+        <p class="estoc">Controle de Estoque</p>
+    </main>
+
+    <main>
+      
+        <button onclick="adicionarLinha()" class="adiciona">Adicionar Linha</button>
+
+        <table class="tabela">
+            <thead>
+                <tr>
+                    <th>N° nota</th>
+                    <th>Nome</th>
+                    <th>Quantidade por KG e unidade</th>
+                    <th>Valor</th>
+                    <th>Validade</th>
+                    <th>Estoque Min.</th>
+                </tr>
+            </thead>
+            <tbody>
+    
+            </tbody>
+        </table>
+    </main>
+
+
+    <div id="modal" class="modal">
+        <div class="modal-conteudo">
+            <h2>Alterar Quantidade</h2>
+            <label for="quantidade">Quantidade a alterar:</label>
+            <input type="number" id="quantidade" name="quantidade" min="1">
+            <button onclick="confirmarAlteracao()">Confirmar</button>
+            <button onclick="fecharModal()">Cancelar</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
