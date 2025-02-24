@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle de Estoque</title>
+    <link
+      rel="shortcut icon"
+      href="../public/img/ccb-semfund.ico"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="/public/css/main.css" />
+    <link rel="stylesheet" href="/public/css/header.css" />
+    <link rel="stylesheet" href="/public/css/table.css" />
+    <link rel="stylesheet" href="/public/css/form.css" />
+    <link rel="stylesheet" href="../public/css/model.css" />
+    <link rel="stylesheet" href="../public/css/buttmodel.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Congregação Cristã no Brasil</h1>
+      <input
+        placeholder="Produto..."
+        class="input"
+        name="text"
+        type="pesquisa"
+        oninput="filtrarTabela()"
+      />
+    </header>
+
+    <div class="container">
+      <h2>Lista de Estoques</h2>
+      <button id="openModal" class="buttonModel">Abrir Formulário</button>
+      <table id="tabelaEstoque">
+        <thead>
+          <tr>
+            <th>Número da Nota</th>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th>categoria</th>
+            <th>Validade</th>
+            <th>Estoque Mínimo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Os dados da tabela serão carregados dinamicamente com JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+    <div id="modalForm" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Adicionar Novo Item</h2>
+        <form id="formAdicionar">
+          <input
+            type="text"
+            id="numeroNota"
+            name="numeroNota"
+            placeholder="Número da Nota"
+            required
+          />
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            placeholder="Nome do Produto"
+            required
+          />
+          <input
+            type="number"
+            id="quantidade"
+            name="quantidade"
+            placeholder="Quantidade"
+            required
+          />
+          <input
+            type="text"
+            id="categoria"
+            name="categoria"
+            placeholder="categoria"
+            required
+          />
+          <input type="date" id="validade" name="validade" required />
+          <input
+            type="number"
+            id="estoqueMinimo"
+            name="estoqueMinimo"
+            placeholder="Estoque Mínimo"
+            required
+          />
+          <button type="submit">Adicionar</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="/public/js/main.js"></script>
+    <script src="/public/js/inventory.js"></script>
+    <script src="/public/js/form.js"></script>
+    <script src="/public/js/header.js"></script>
+    <script src="../public/js/modtab.js"></script>
+    <script src="../public/js/input.js"></script>
+  </body>
+</html>
