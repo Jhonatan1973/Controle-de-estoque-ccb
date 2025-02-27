@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle de Estoque</title>
+    <link
+      rel="shortcut icon"
+      href="../assets/img/ccb-semfund.ico"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/header.css" />
+    <link rel="stylesheet" href="/assets/css/table.css" />
+    <link rel="stylesheet" href="/assets/css/form.css" />
+    <link rel="stylesheet" href="../assets/css/model.css" />
+    <link rel="stylesheet" href="../assets/css/buttmodel.css" />
+    <link rel="stylesheet" href="../assets/css/divescolha.css" />
+    <link rel="stylesheet" href="../assets/css/btndownl.css" />
+    <link rel="stylesheet" href="../assets/css/modalterar.css" />
+    <link rel="stylesheet" href="../assets/css/modhistorico.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Congregação Cristã no Brasil</h1>
+      <div class="search-container">
+        <div class="select" id="custom-select">
+          <div class="selected" id="selected-option">
+            <span id="selected-text">Nome</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="1em"
+              viewBox="0 0 512 512"
+              class="arrow"
+            >
+              <path
+                d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+              ></path>
+            </svg>
+          </div>
+          <div class="options">
+            <div class="option" data-value="nome">Nome</div>
+            <div class="option" data-value="categoria">Categoria</div>
+            <div class="option" data-value="numeroNota">Número da Nota</div>
+          </div>
+        </div>
+        <input
+          placeholder="Pesquisar..."
+          class="input"
+          type="text"
+          oninput="filtrarTabela()"
+        />
+      </div>
+    </header>
+
+    <div class="container">
+      <h2>Lista de Estoques</h2>
+      <!-- Botões ao lado -->
+      <div class="button-container">
+        <button id="openModal" class="buttonModel">Abrir Formulário</button>
+        <button class="Btn">
+          <svg
+            class="svgIcon"
+            viewBox="0 0 384 512"
+            height="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+            ></path>
+          </svg>
+          <span class="icon2"></span>
+          <span class="tooltip">Download</span>
+        </button>
+      </div>
+      <button id="btnHistorico" onclick="abrirModalHistorico()">
+        Histórico
+      </button>
+
+      <table id="tabelaEstoque">
+        <thead>
+          <tr>
+            <th>Número da Nota</th>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th>Categoria</th>
+            <th>Validade</th>
+            <th>Estoque Mínimo</th>
+            <th>baixa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Os dados da tabela serão carregados dinamicamente com JavaScript -->
+        </tbody>
+      </table>
+    </div>
+    <div id="modalAlterar" class="modal">
+      <div class="modal-content">
+        <span class="close-modal-alterar">&times;</span>
+        <h2>Alterar Quantidade</h2>
+
+        <label for="data">Data:</label>
+        <input type="date" id="data" required />
+        <label for="produtoId">Produto ID:</label>
+        <input type="text" id="produtoId" readonly />
+        <label for="evento">Evento:</label>
+        <select id="evento">
+          <option value="RGE">RGE</option>
+          <option value="ADM SP">ADM SP</option>
+          <option value="ANCIÃES">ANCIÃES</option>
+          <option value="C.O. BRAS">C.O. BRAS</option>
+          <option value="COMPLEXO BRAS">COMPLEXO BRAS</option>
+          <option value="DARPE/DEPAC/DATEX">DARPE/DEPAC/DATEX</option>
+          <option value="DIÁCONOS">DIÁCONOS</option>
+          <option value="MÚSICA">MÚSICA</option>
+          <option value="SETOR CENTRO">SETOR CENTRO</option>
+        </select>
+
+        <label for="quantidade">Quantidade:</label>
+        <input type="number" id="quantidade" required />
+        <button id="btnSalvarAlteracao">Salvar</button>
+
+        <button id="btnAdicionar">Adicionar</button>
+        <button id="btnRemover">Tirar</button>
+      </div>
+    </div>
+    <!-- Modal Histórico -->
+    <div id="modalHistorico" class="modal">
+      <div class="modal-content">
+        <span class="close-modal-historico" onclick="fecharModalHistorico()"
+          >&times;</span
+        >
+        <h2>Histórico de Alterações</h2>
+        <table id="tabelaHistorico">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Produto</th>
+              <th>Quantidade Alterada</th>
+              <th>Evento</th>
+            </tr>
+          </thead>
+          <tbody id="historicoBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="modalForm" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Adicionar Novo Item</h2>
+        <form id="formAdicionar">
+          <input
+            type="text"
+            id="numeroNota"
+            name="numeroNota"
+            placeholder="Número da Nota"
+            required
+          />
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            placeholder="Nome do Produto"
+            required
+          />
+          <input
+            type="number"
+            id="quantidade"
+            name="quantidade"
+            placeholder="Quantidade"
+            required
+          />
+          <input
+            type="text"
+            id="categoria"
+            name="Categoria"
+            placeholder="Categoria"
+            required
+          />
+          <input type="date" id="validade" name="validade" required />
+          <input
+            type="number"
+            id="estoqueMinimo"
+            name="estoqueMinimo"
+            placeholder="Estoque Mínimo"
+            required
+          />
+          <button type="submit">Adicionar</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/inventory.js"></script>
+    <script src="/assets/js/form.js"></script>
+    <script src="/assets/js/header.js"></script>
+    <script src="../assets/js/modtab.js"></script>
+    <script src="../assets/js/input.js"></script>
+    <script src="../assets/js/input.js"></script>
+    <script src="../assets/js/sigla.js"></script>
+    <script src="../assets/js/modalterar.js"></script>
+    <script src="../assets/js/app.js"></script>
+    <script src="../assets/js/abrhistorico.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const selectBox = document.getElementById("custom-select");
+        const selectedText = document.getElementById("selected-text");
+        const options = document.querySelectorAll(".option");
+
+        selectBox.addEventListener("click", () => {
+          selectBox.classList.toggle("active");
+        });
+
+        options.forEach((option) => {
+          option.addEventListener("click", () => {
+            selectedText.textContent = option.textContent;
+            selectBox.classList.remove("active");
+            filtrarTabela();
+          });
+        });
+
+        document.addEventListener("click", (event) => {
+          if (!selectBox.contains(event.target)) {
+            selectBox.classList.remove("active");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

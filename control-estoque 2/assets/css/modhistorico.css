@@ -1,0 +1,76 @@
+#btnHistorico {
+  background-color: rgb(180, 180, 180);
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 20px;
+}
+
+#btnHistorico:hover {
+  background-color: rgb(201, 201, 201);
+}
+
+/* Estilo para o modal de Histórico */
+#modalHistorico {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding-top: 60px;
+}
+
+#modalHistorico .modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  border-radius: 20px;
+}
+
+#modalHistorico .modal-content h2 {
+  font-size: 24px;
+  color: rgb(187, 187, 187);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#modalHistorico .modal-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#modalHistorico .modal-content table,
+th,
+td {
+  border: 1px solid #ddd;
+}
+
+#modalHistorico .modal-content th,
+td {
+  padding: 8px;
+  text-align: left;
+}
+
+.close-modal {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  color: black;
+  cursor: pointer;
+}
