@@ -8,7 +8,7 @@ header {
     align-items: center;
     flex-wrap: wrap;
     width: 100%;  /* Garante que o header ocupe toda a largura da tela */
-    max-width: 100vw; /* Evita que ultrapasse a tela */
+    
     box-sizing: border-box; /* Evita que padding e bordas aumentem o tamanho */
     overflow-x: hidden; /* Impede rolagem lateral */
 }
