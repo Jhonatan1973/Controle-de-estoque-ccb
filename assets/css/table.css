@@ -1,5 +1,6 @@
 table {
-  width: 100%;
+  width: max-content;
+  min-width: 100%;
   border-collapse: collapse;
   border-radius: 10px;
   overflow: hidden;
@@ -8,6 +9,7 @@ table {
 .tabelaEstoque {
   width: 100%;
   overflow-x: auto;
+  white-space: nowrap;
 }
 
 th,
