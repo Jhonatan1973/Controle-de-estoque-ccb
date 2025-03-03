@@ -33,7 +33,7 @@ header h1 {
 }
 @media (max-width: 600px) {
   header {
-    width: 150%;
+    width: 130%;
     flex-direction: column;
     align-items: center;
     gap: 10px;
