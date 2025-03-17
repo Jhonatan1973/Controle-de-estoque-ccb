@@ -6,6 +6,7 @@ Este projeto é um sistema de controle de estoque desenvolvido para gerenciar pr
 
 A organização dos diretórios e arquivos facilita a manutenção e evolução do sistema:
 
+```markdown
 Controle-de-estoque-ccb/
 ├── assets/
 │   ├── css/         # Arquivos de estilização (CSS)
@@ -26,7 +27,7 @@ Controle-de-estoque-ccb/
 │
 ├── index.html        # Página principal (front-end)
 ├── server.js         # Ponto de entrada da aplicação (Node.js/Express)
-└── README.md         # Documentação do projeto
+└── README.md
 
 ## Tecnologias Utilizadas
 
