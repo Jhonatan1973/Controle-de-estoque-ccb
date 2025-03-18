@@ -1,0 +1,52 @@
+.modal-exclusivo {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-dialog-exclusivo {
+  max-width: 90%; /* Ajusta o tamanho do modal para ser mais largo */
+  margin: 30px auto;
+}
+
+.modal-content-exclusivo {
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #e0e0e0;
+}
+
+.modal-header-exclusivo {
+  background-color: #007bff;
+  color: white;
+  border-radius: 10px 10px 0 0;
+}
+
+.modal-title-exclusivo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.btn-close-exclusivo {
+  background-color: transparent;
+  border: none;
+  color: white;
+}
+
+.table-exclusivo {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.table-exclusivo th,
+.table-exclusivo td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table-exclusivo th {
+  background-color: #f1f1f1;
+}
+
+.table-exclusivo tbody tr:hover {
+  background-color: #e9ecef;
+}

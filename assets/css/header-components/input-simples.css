@@ -1,0 +1,27 @@
+.input-simple {
+  width: 100px;
+  padding: 1px 2px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  background-color: #f4f4f4;
+  font-size: 16px;
+  font-family: "Arial", sans-serif;
+  color: #333;
+  transition: all 0.3s ease;
+  cursor: text;
+  outline: none;
+  box-sizing: border-box;
+}
+.input-simple:hover {
+  border-color: #999;
+  background-color: #eaeaea;
+}
+.input-simple:focus {
+  border-color: #555;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(85, 85, 85, 0.3);
+}
+.input-simple::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
