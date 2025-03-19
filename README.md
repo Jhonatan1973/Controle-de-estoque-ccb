@@ -34,7 +34,8 @@ Controle-de-estoque-ccb/
 - **HTML5**
 - **CSS3**
 - **JavaScript**
-- *(Opcional)* **Node.js** – para back-end, se implementado
+- **Node.js**
+- **Vercel**
 
 ## Funcionalidades
 
