@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle de Estoque</title>
+    <link
+      rel="shortcut icon"
+      href=""
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="/public/assets/css/header-components/main.css" />
+    <link rel="stylesheet" href="/public/assets/css/header-components/header.css" />
+    <link rel="stylesheet" href="/public/assets/css/table/table.css" />
+    <link rel="stylesheet" href="/public/assets/css/form/form.css" />
+    <link rel="stylesheet" href="/public/assets/css/header-components/model.css" />
+    <link rel="stylesheet" href="/public/assets/css/buttons/buttmodel.css" />
+    <link rel="stylesheet" href="/public/assets/css/modal-alterar-quant/modalterar.css" />
+    <link rel="stylesheet" href="/public/assets/css/esconder/divescolha.css">
+    <link rel="stylesheet" href="/public/assets/css/header-components/login.css">
+    <link rel="stylesheet" href="/public/assets/css/esconder/esconder.css">
+    <link rel="stylesheet" href="/public/assets/css/modal-adicionar-imob/modal-imobilizado.css">
+    <link rel="stylesheet" href="/public/assets/css/modal-adicionar-prod/modal-prod.css">
+    <link rel="stylesheet" href="/public/assets/css/modal-alterar-imob/modal-alterar-mob.css">
+    <link rel="stylesheet" href="/public/assets/css/header-components/select-style.css">
+    <link rel="stylesheet" href="/public/assets/css/modal-historico-prod/modal-historico.css">
+    <link rel="stylesheet" href="/public/assets/css/header-components/img-header.css">
+    <link rel="stylesheet" href="/public/assets/css/transition/loard-geral.css">
+
+  </head>
+  <body>
+    <header>
+      <img src="/public/assets/img/Logo_branco.png" id="img-ccb" alt="Imagem ccb">
+      <h1>Controle de Estoque</h1>
+      <div class="search-container">
+        <div class="select" id="custom-select">
+          <div class="selected" id="selected-option">
+            <span id="selected-text">Nome</span>
+              </div>
+              <input
+                placeholder="Pesquisar..."
+                class="input"
+                type="text"
+                oninput="filtrarTabela()"
+              />
+            </div>
+          
+      </div>
+      <label class="popup" style="display: none;">
+        <input type="checkbox" />
+        <div tabindex="0" class="burger">
+          <svg
+            viewBox="0 0 24 24"
+            fill="white"
+            height="20"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z"
+            ></path>
+          </svg>
+        </div>
+        <nav class="popup-window">
+          <legend>Conectar-se</legend>
+          <ul>
+            <li>
+              <button id="loginBtn">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 4v6.406l-3.753 3.741-6.463-6.462 3.7-3.685h6.516zm2-2h-12.388l1.497 1.5-4.171 4.167 9.291 9.291 4.161-4.193 1.61 1.623v-12.388zm-5 4c.552 0 1 .449 1 1s-.448 1-1 1-1-.449-1-1 .448-1 1-1zm0-1c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm6.708.292l-.708.708v3.097l2-2.065-1.292-1.74zm-12.675 9.294l-1.414 1.414h-2.619v2h-2v2h-2v-2.17l5.636-5.626-1.417-1.407-6.219 6.203v5h6v-2h2v-2h2l1.729-1.729-1.696-1.685z"
+                  ></path>
+                </svg>
+                <span>Logar</span>
+              </button>
+            </li>
+            <li>
+              <button onclick="window.open('/pags/cadaspag.html', '_blank')">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1"
+                  stroke-linecap="round"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M2.598 9h-1.055c1.482-4.638 5.83-8 10.957-8 6.347 0 11.5 5.153 11.5 11.5s-5.153 11.5-11.5 11.5c-5.127 0-9.475-3.362-10.957-8h1.055c1.443 4.076 5.334 7 9.902 7 5.795 0 10.5-4.705 10.5-10.5s-4.705-10.5-10.5-10.5c-4.568 0-8.459 2.923-9.902 7zm12.228 3l-4.604-3.747.666-.753 6.112 5-6.101 5-.679-.737 4.608-3.763h-14.828v-1h14.826z"
+                  ></path>
+                </svg>
+                <span>Cadastrar</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </label>
+      
+      
+
+    </header>
+    <div class="container">
+      <button id="openModalGerenciarProduto" class="btn btn-primary" style="display: none;">Adicionar Produto Cozinha</button>
+      <button id="openModalGerenciarProdutoImobilizados" class="btn btn-primary" style="display: none;">Adicionar Produto Imobilizados</button>
+      <button id="openModalGerenciarProdutoMezanino" class="btn btn-primary" style="display: none;">Adicionar Produto Mezanino</button>
+      
+      <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#historicoModal">Histórico</button>
+  <label for="filtroEstoque">Filtrar:</label>
+  <select id="filtroEstoque" class="select-simple" >
+    <option value="cozinha">Cozinha</option>
+    <option value="imobilizados">Imobilizados</option>
+    <option value="mezanino">Mezanino</option>
+  </select>
+      </div>
+      <div id="loader" class="loader" style="display: none;">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+    
+      <table id="tabelaEstoque">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Uni Compra</th>
+            <th>Uni medida</th>
+            <th>Quantidade</th>
+            <th>Categoria</th>
+            <th>validade</th>
+            <th>Estoque</th>
+            <th>Baixa</th>
+          </tr>
+        </thead>
+        <tbody id="tabelcompleta">
+
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-container">
+<div id="modal-alterar" class="modal-base modal-escolha">
+  <h3>Alterar Estoque</h3>
+  <p>Produto: <span id="nomeProdutoAlterar"></span></p>
+  <input type="hidden" id="produtoIdAlterar" />
+  <button onclick="abrirModalAdicionar()">Adicionar</button>
+  <button onclick="abrirModalRetirar()">Retirar</button>
+  <button onclick="fecharModal('modal-alterar')">Fechar</button>
+</div>
+<div id="modal-adicionar" class="modal-base modal-adicionar">
+  <h3>Adicionar Estoque</h3>
+  <input type="hidden" id="produtoIdAdicionar" />
+
+  <div class="form">
+
+    <label for="fornecedor">Fornecedor:</label>
+    <input type="text" id="fornecedor" class="input-simple" />
+
+    <label for="Produto_id">Produto:</label>
+    <input type="text" id="produto_entrada" class="input-simple" />
+
+    <label for="numeroNota">Número da Nota:</label>
+    <input type="text" id="numeronota" class="input-simple" />
+
+    <label for="valorNota">Valor da Nota:</label>
+    <input type="number" id="valornota" class="input-simple" />
+
+    <label for="dataalteracao">Data:</label>
+    <input type="date" id="data_entrada" class="input-simple" />
+
+    <label for="quantidade">Quantidade:</label>
+    <input type="number" id="inputquantidade" class="input-simple" required />
+
+    <button onclick="adicionarQuantidade(); salvarHistoricoEntrada()">Adicionar</button>
+    <button onclick="fecharModal('modal-adicionar')">Fechar</button>
+  </div>
+</div>
+<div id="modal-retirar" class="modal-base modal-retirar">
+  <h3>Retirar Estoque</h3>
+  <p class="esconder">Produto: <span id="nomeProdutoAlterar"></span></p>
+  <input type="hidden" id="produtoIdRetirar" />
+  <label for="Produto_id" class="esconder">Produto id:</label>
+  <input type="number" id="Prod_id" class="esconder" />
+  <div class="form">
+    <label for="user">Produto:</label>
+    <input type="text" id="nome_saida" class="input-simple" />
+
+    <input type="hidden" id="produtoIdRetirar" />
+    <label for="evento">Evento:</label>
+    <select id="evento">
+      <option value="RGE">RGE</option>
+      <option value="ADM SP">ADM SP</option>
+      <option value="ANCIÃES">ANCIÃES</option>
+      <option value="C.O. BRAS">C.O. BRAS</option>
+      <option value="COMPLEXO BRAS">COMPLEXO BRAS</option>
+      <option value="DARPE/DEPAC/DATEX">DARPE/DEPAC/DATEX</option>
+      <option value="DIÁCONOS">DIÁCONOS</option>
+      <option value="MÚSICA">MÚSICA</option>
+      <option value="SETOR CENTRO">SETOR CENTRO</option>
+    </select>
+
+    <label for="dataalteracao">Data:</label>
+    <input type="date" id="data_saida" class="input-simple" />
+
+    <label for="quantidade">Quantidade:</label>
+    <input type="number" id="quantidadeRetirar" class="input-simple" required />
+
+    <label for="user">Quem retirou:</label>
+    <input type="text" id="quem_retirou" class="input-simple" />
+    
+    <button onclick="retirarQuantidade(); salvarHistoricoSaida()">Retirar</button>
+    <button onclick="fecharModal('modal-retirar')">Fechar</button>
+  </div>
+</div>
+</div>
+<div id="modalAdicionarProduto" class="modal-adicionar-produto">
+  <div class="modal-content-adicionar-produto">
+    <span class="close-adicionar-produto">&times;</span>
+    <h2>Adicionar Produto</h2>
+    <form id="addProductForm">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" class="input-simple" required>
+      <label for="uniCompra">Unidade de Compra:</label>
+      <select id="uniCompra" name="uniCompra" class="select-simple" required>
+        <option value="">Selecionar</option>
+        <option value="kg">Kg</option>
+        <option value="unidade">Uni</option>
+        <option value="litro">L</option>
+        <option value="m2">M²</option>
+        <option value="caixa">Caixa</option>
+      </select>
+      <label for="uniMedida">Unidade de Medida:</label>
+      <select id="uniMedida" name="uniMedida" class="select-simple" required>
+        <option value="">Selecionar</option>
+        <option value="kg">Kg</option>
+        <option value="g">G</option>
+        <option value="ml">ML</option>
+        <option value="unidade">Unidade</option>
+        <option value="litro">Litro</option>
+      </select>
+
+      <label for="quantidade">Quantidade:</label>
+      <input type="number" id="quantidade" name="quantidade" class="input-simple" required>
+
+      <label for="categoria">Categoria:</label>
+      <select id="categoria" name="categoria" class="select-simple" required>
+        <option value="">Selecionar</option>
+        <option value="S">S</option>
+        <option value="C">C</option>
+        <option value="G">G</option>
+        <option value="Hort">Hort</option>
+        <option value="Dc">Dc</option>
+      </select>
+
+      <label for="validade">Validade:</label>
+      <input type="date" id="validade" name="validade" class="input-simple" required>
+
+      <label for="estoqueMax">Estoque Máximo:</label>
+      <input type="number" id="estoqueMax" name="estoqueMax" class="input-simple" required>
+
+      <label for="estoqueMed">Estoque Médio:</label>
+      <input type="number" id="estoqueMed" name="estoqueMed" class="input-simple" required>
+
+      <label for="estoqueMin">Estoque Mínimo:</label>
+      <input type="number" id="estoqueMin" name="estoqueMin" class="input-simple" required>
+
+      <button type="submit" onclick="recarregarPagina()">Confirmar</button>
+
+    </form>
+  </div>
+</div>
+<div class="modal fade custom-modal" id="historicoModal" tabindex="-1" aria-labelledby="historicoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-container">
+    <div class="modal-content modal-box">
+      <div class="modal-body modal-main">
+        <p class="modal-text">Selecione uma opção abaixo:</p>
+        <div class="modal-buttons">
+          <button class="btn close-footer-btn" id="entradaButton">Entrada</button>
+          <button class="btn close-footer-btn" id="saidaButton">Saída</button>
+        </div>
+      </div>
+      <div class="modal-footer modal-bottom">
+        <button type="button" class="btn close-footer-btn" data-bs-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade modal-custom" id="modalHistoricoEntrada" tabindex="-1" aria-labelledby="modalHistoricoEntradaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-custom">
+    <div class="modal-content modal-content-custom">
+      <div class="modal-header modal-header-custom">
+        <h5 class="modal-title modal-title-custom" id="modalHistoricoEntradaLabel">Histórico de Entrada</h5>
+        <button type="button" class="btn-close btn-close-custom" data-bs-dismiss="modal" aria-label="Close">Fechar</button>
+      </div>
+      <div class="modal-body modal-body-custom">
+        <table class="table table-custom" id="tabelaHistoricoEntrada">
+          <thead>
+            <tr>
+              <th>Fornecedor</th>
+              <th>Nome Entrada</th>
+              <th>Quantidade</th>
+              <th>Número Nota</th>
+              <th>Valor Nota</th>
+              <th>Data Entrada</th>
+            </tr>
+          </thead>
+          <tbody id="entradaData"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade modal-custom" id="modalHistoricoSaida" tabindex="-1" aria-labelledby="modalHistoricoSaidaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-custom">
+    <div class="modal-content modal-content-custom">
+      <div class="modal-header modal-header-custom">
+        <h5 class="modal-title modal-title-custom" id="modalHistoricoSaidaLabel">Histórico de Saída</h5>
+        <button type="button" class="btn-close btn-close-custom" data-bs-dismiss="modal" aria-label="Close">Fechar</button>         
+        <select  id="eventoHistoricoSaida">
+          <option value="">Todos</option>
+          <option value="RGE">RGE</option>
+          <option value="ADM SP">ADM SP</option>
+          <option value="ANCIÃES">ANCIÃES</option>
+          <option value="C.O. BRAS">C.O. BRAS</option>
+          <option value="COMPLEXO BRAS">COMPLEXO BRAS</option>
+          <option value="DARPE/DEPAC/DATEX">DARPE/DEPAC/DATEX</option>
+          <option value="DIÁCONOS">DIÁCONOS</option>
+          <option value="MÚSICA">MÚSICA</option>
+          <option value="SETOR CENTRO">SETOR CENTRO</option>
+        </select>
+
+      </div>
+      <div class="modal-body modal-body-custom">
+        <table class="table table-custom" id="tabelaHistoricoSaida">
+          <thead>
+            <tr>
+              <th>Nome Saída</th>
+              <th>Quantidade</th>
+              <th>Evento</th>
+              <th>Data Saída</th>
+              <th>Quem Retirou</th>
+            </tr>
+          </thead>
+          <tbody id="saidaData">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="modalImobilizado" class="modal-imobilizado">
+  <div class="modal-content">
+    <span class="close-imobilizado">&times;</span>
+    <h2>Adicionar Produto Imobilizado</h2>
+    <form id="formImobilizado">
+      <div class="input-field">
+        <label for="codigo_imobilizados">Código</label>
+        <input type="text" id="codigo_imobilizados" name="codigo_imobilizados" value="21-1097 / " required>
+      </div>
+      <div class="input-field">
+        <label for="nome_imobilizados">Nome</label>
+        <input type="text" id="nome_imobilizados" name="nome_imobilizados" required>
+      </div>
+      <div class="input-field">
+        <label for="quantidade_imobilizados">Quantidade</label>
+        <input type="number" id="quantidade_imobilizados" name="quantidade_imobilizados" required>
+      </div>
+      <div class="input-field">
+        <label for="fornecedor_imobilizados">Fornecedor</label>
+        <input type="text" id="fornecedor_imobilizados" name="fornecedor_imobilizados" required>
+      </div>
+      <div class="input-field">
+        <label for="dependencia">Dependência</label>
+        <input type="text" id="dependencia" name="dependencia" required>
+      </div>
+      <div class="input-field">
+        <label for="dt_aquisicao">Data de Aquisição</label>
+        <input type="date" id="dt_aquisicao" name="dt_aquisicao" required>
+      </div>
+      <div class="input-field">
+        <label for="status">Status</label>
+        <select id="status" name="status" required>
+          <option value="ativo">Ativo</option>
+          <option value="inativo">Inativo</option>
+        </select>
+      </div>
+      <button type="submit-imobilizado">Salvar</button>
+    </form>
+  </div>
+</div>
+<div id="modal-imob-ajuste" class="caixa-ajuste-imob">
+  <div class="conteudo-ajuste-imob">
+    <h3 id="modal-title">Alterar Imobilizado</h3>
+
+    <div class="grupo-entrada">
+      <label for="codigo-imobilizado">Código do Imobilizado:</label>
+      <input type="text" id="codigo-imobilizado" name="codigo-imobilizado" 
+             value="21-1097 / " pattern="^\d{2}-\d{4} / \d{5}$" required>
+    </div>
+    
+    
+    <div class="grupo-entrada">
+      <label>Destino:</label>
+      <input type="text" id="destino">
+    </div>
+    <div class="grupo-entrada">
+      <label for="autorizacao">Autorização:</label>
+      <select id="autorizacao" name="autorizacao" required>
+        <option value="" disabled selected>Escolha uma opção</option>
+        <option value="Gisline">Gisline</option>
+        <option value="Vander">Vander</option>
+      </select>
+    </div>
+    
+
+    <div class="grupo-entrada">
+      <label>Quantidade:</label>
+      <input type="number" id="quantidade-imobilizado">
+    </div>
+
+    <div class="grupo-entrada">
+      <label>Data de Saída:</label>
+      <input type="date" id="data_saida">
+    </div>
+
+    <div class="grupo-botoes">
+      <button class="botao-fechar-ajuste" onclick="fecharModAlterarImob()">Fechar</button>
+      <button class="botao-confirmar-ajuste" onclick="retirarImobilizado()">Retirar</button>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="/public/assets/js/main.js"></script>
+    <script src="/public/assets/js/form.js"></script>
+    <script src="/public/assets/js/header.js"></script>
+    <script src="/public/assets/js/modtab.js"></script>
+    <script src="/public/assets/js/input.js"></script>
+    <script src="/public/assets/js/salvarhistorico.js"></script>
+    <script src="/public/assets/js/historicomodal.js"></script>
+    <script src="/public/assets/js/imobilizado-component/retirar-component.js"></script>
+    <script src="/public/assets/js/imobilizado-component/adicionar-component.js"></script>
+    <script>
+function recarregarPagina() {
+  location.reload(); // Isso vai recarregar a página atual
+}
+      const btnCozinha = document.getElementById('openModalGerenciarProduto');
+      const btnImobilizados = document.getElementById('openModalGerenciarProdutoImobilizados');
+      const btnMezanino = document.getElementById('openModalGerenciarProdutoMezanino');
+      function atualizarBotoes() {
+        const filtro = document.getElementById('filtroEstoque').value;
+        if (filtro === 'cozinha') {
+          btnCozinha.style.display = 'inline-block';
+          btnImobilizados.style.display = 'none';
+          btnMezanino.style.display = 'none';
+        } else if (filtro === 'imobilizados') {
+          btnCozinha.style.display = 'none';
+          btnImobilizados.style.display = 'inline-block';
+          btnMezanino.style.display = 'none';
+        } else if (filtro === 'mezanino') {
+          btnCozinha.style.display = 'none';
+          btnImobilizados.style.display = 'none';
+          btnMezanino.style.display = 'inline-block';
+        }
+      }
+      document.getElementById('filtroEstoque').addEventListener('change', atualizarBotoes);
+      atualizarBotoes();
+function openModalImobilizado() {
+  document.getElementById('modalImobilizado').style.display = 'flex';
+}
+function closeModalImobilizado() {
+  document.getElementById('modalImobilizado').style.display = 'none';
+}
+btnImobilizados.addEventListener("click", openModalImobilizado);
+document.querySelector(".close-imobilizado").addEventListener("click", closeModalImobilizado);
+document.getElementById('modalImobilizado').addEventListener("click", function(event) {
+  if (event.target === document.getElementById('modalImobilizado')) {
+    closeModalImobilizado();
+  }
+});
+document.getElementById('formImobilizado').addEventListener('submit', function(event) {
+  event.preventDefault();
+  
+  const imobilizadoData = {
+    codigo_imobilizados: document.getElementById('codigo_imobilizados').value,
+    nome_imobilizados: document.getElementById('nome_imobilizados').value,
+    quantidade_imobilizados: document.getElementById('quantidade_imobilizados').value,
+    fornecedor_imobilizados: document.getElementById('fornecedor_imobilizados').value,
+    dependencia: document.getElementById('dependencia').value,
+    dt_aquisicao: document.getElementById('dt_aquisicao').value,
+    status: document.getElementById('status').value,
+  };
+  
+  console.log(imobilizadoData);
+  closeModalImobilizado();
+});
+document.getElementById("openModalGerenciarProduto").addEventListener("click", function () {
+    document.getElementById("modalAdicionarProduto").style.display = "flex";
+});
+document.querySelector(".close-adicionar-produto").addEventListener("click", function () {
+    document.getElementById("modalAdicionarProduto").style.display = "none";
+});
+document.getElementById("modalAdicionarProduto").addEventListener("click", function(event) {
+    if (event.target === document.getElementById("modalAdicionarProduto")) {
+        document.getElementById("modalAdicionarProduto").style.display = "none";
+    }
+});
+document.getElementById("addProductForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const produto = {
+        nome: document.getElementById("nome").value,
+        uniCompra: document.getElementById("uniCompra").value,
+        uniMedida: document.getElementById("uniMedida").value,
+        quantidade: document.getElementById("quantidade").value,
+        categoria: document.getElementById("categoria").value,
+        validade: document.getElementById("validade").value,
+        estoque: {
+            max: parseInt(document.getElementById("estoqueMax").value),  
+            med: parseInt(document.getElementById("estoqueMed").value),  
+            min: parseInt(document.getElementById("estoqueMin").value)   
+        }
+    };
+    fetch("http://localhost:3000/produtos", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(produto)  // Envia os dados no formato JSON
+    })
+    .then(response => response.json())  // Converte a resposta para JSON
+    .then(data => {
+        console.log("Produto adicionado:", data);  // Exibe o retorno da resposta no console
+        document.getElementById("modalAdicionarProduto").style.display = "none";  // Fecha o modal após adicionar o produto
+    })
+    .catch(error => {
+        console.error("Erro ao adicionar produto:", error);  // Exibe erros caso ocorram
+    });
+});
+    const loginBtn = document.getElementById('loginBtn');
+      loginBtn.addEventListener('click', function() {
+          window.open('/pags/logpag2.html', '_blank');
+      });
+      const cadastrarBtn = document.getElementById('cadastrarBtn');
+      cadastrarBtn.addEventListener('click', function() {
+          window.open('/pags/cadaspag.html', '_blank');
+      });
+  function abrirModalAlterarImob(codigoImob, nomeImob) 
+  {
+    document.getElementById("destino").value = "";
+    document.getElementById("autorizacao").value = "";
+    document.getElementById("quantidade").value = "";
+    document.getElementById("data_saida").value = "";
+    document.getElementById("modal-imob-ajuste").style.display = "flex";
+  }
+  function fecharModAlterarImob() {
+    document.getElementById("modal-imob-ajuste").style.display = "none";
+  }
+  
+    </script>
+  </body>
+</html>

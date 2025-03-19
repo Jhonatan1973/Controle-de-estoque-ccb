@@ -1,0 +1,175 @@
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00000080;
+  overflow: hidden;
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: auto;
+  max-width: 100%;
+  max-height: 70vh;
+  overflow-y: auto;
+  color: black;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: black;
+}
+
+button {
+  appearance: none;
+  background-color: transparent;
+  border: 0.125em solid #1a1a1a;
+  border-radius: 0.9375em;
+  box-sizing: border-box;
+  color: #3b3b3b;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 2.5em;
+  min-width: 6em;
+  outline: none;
+  padding: 0.75em 1.5em;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+}
+
+button:disabled {
+  pointer-events: none;
+}
+
+button:hover {
+  color: #fff;
+  background-color: #1a1a1a;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+button:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.modal-content input,
+.modal-content select {
+  color: black;
+}
+
+.modal-content input:focus,
+.modal-content select:focus {
+  border-color: rgb(133, 133, 133);
+}
+
+.modal-dialog-custom {
+  width: auto;
+  max-width: 90%;
+  margin: 0 auto;
+}
+.table-custom {
+  width: 100%;
+  table-layout: auto;
+}
+.modal-header-custom {
+  padding: 1rem 2rem;
+  overflow-y: auto;
+}
+
+.modal-body-custom {
+  padding: 2.5rem 1rem;
+}
+
+.modal-title-custom {
+  font-size: 1.5rem;
+}
+
+.btn-entrada-custom,
+.btn-saida-custom {
+  padding: 0.75rem 2rem;
+  font-size: 1.25rem;
+}
+.btn-close-custom {
+  font-size: 1rem;
+}
+.custom-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00000080;
+  overflow: hidden;
+}
+.modal-container {
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+}
+.modal-box {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  color: black;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.modal-main {
+  padding: 20px;
+  text-align: center;
+}
+.modal-text {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.close-footer-btn {
+  background-color: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-size: 1.25rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.close-footer-btn:hover {
+  background-color: #333;
+}
+.modal-bottom {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
