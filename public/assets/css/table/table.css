@@ -33,9 +33,34 @@ tr:hover {
   background-color: #ddd;
 }
 @media (max-width: 600px) {
+  table {
+    font-size: 14px;
+  }
+
   th,
   td {
     padding: 8px;
     font-size: 14px;
+  }
+
+  .tabelaEstoque {
+    overflow-x: scroll;
+  }
+}
+
+@media (max-width: 400px) {
+  :root {
+    --table-padding: 6px;
+    --font-size: 12px;
+  }
+
+  table {
+    font-size: var(--font-size);
+  }
+
+  th,
+  td {
+    padding: var(--table-padding);
+    font-size: var(--font-size);
   }
 }
