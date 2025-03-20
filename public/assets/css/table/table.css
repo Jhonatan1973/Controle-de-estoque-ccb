@@ -7,11 +7,25 @@ table {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 .tabelaEstoque {
+  width: max-content;
+  min-width: 100%;
+  border-collapse: collapse;
+}
+.tabela-container {
   width: 100%;
   overflow-x: auto;
+  display: block;
   white-space: nowrap;
 }
-
+.tabelaEstoque thead,
+.tabelaEstoque tbody {
+  display: table;
+  width: 100%;
+}
+.tabela-wrapper {
+  position: relative;
+  width: 100%;
+}
 th,
 td {
   padding: 12px;
@@ -33,34 +47,9 @@ tr:hover {
   background-color: #ddd;
 }
 @media (max-width: 600px) {
-  table {
-    font-size: 14px;
-  }
-
   th,
   td {
     padding: 8px;
     font-size: 14px;
-  }
-
-  .tabelaEstoque {
-    overflow-x: scroll;
-  }
-}
-
-@media (max-width: 400px) {
-  :root {
-    --table-padding: 6px;
-    --font-size: 12px;
-  }
-
-  table {
-    font-size: var(--font-size);
-  }
-
-  th,
-  td {
-    padding: var(--table-padding);
-    font-size: var(--font-size);
   }
 }
