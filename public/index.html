@@ -182,25 +182,24 @@
       <div class="bar"></div>
       <div class="bar"></div>
     </div>
-    <div class="tabela-wrapper">
-      <div class="tabela-container">
-        <table id="tabelaEstoque">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Uni Compra</th>
-              <th>Uni medida</th>
-              <th>Quantidade</th>
-              <th>Categoria</th>
-              <th>validade</th>
-              <th>Estoque</th>
-              <th>Baixa</th>
-            </tr>
-          </thead>
-          <tbody id="tabelcompleta"></tbody>
-        </table>
-      </div>
+    <div class="tabela-container">
+      <table id="tabelaEstoque">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Uni Compra</th>
+            <th>Uni medida</th>
+            <th>Quantidade</th>
+            <th>Categoria</th>
+            <th>validade</th>
+            <th>Estoque</th>
+            <th>Baixa</th>
+          </tr>
+        </thead>
+        <tbody id="tabelcompleta"></tbody>
+      </table>
     </div>
+    <div class="barra-rolagem"></div>
     <div class="modal-container">
       <div id="modal-alterar" class="modal-base modal-escolha">
         <h3>Alterar Estoque</h3>
@@ -791,17 +790,6 @@
       function fecharModAlterarImob() {
         document.getElementById("modal-imob-ajuste").style.display = "none";
       }
-
-      const tabelaContainer = document.querySelector(".tabela-container");
-      const barraRolagem = document.querySelector(".barra-rolagem");
-
-      tabelaContainer.addEventListener("scroll", () => {
-        barraRolagem.scrollLeft = tabelaContainer.scrollLeft;
-      });
-
-      barraRolagem.addEventListener("scroll", () => {
-        tabelaContainer.scrollLeft = barraRolagem.scrollLeft;
-      });
     </script>
   </body>
 </html>
