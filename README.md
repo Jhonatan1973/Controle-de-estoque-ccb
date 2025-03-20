@@ -7,28 +7,39 @@ Este projeto é um sistema de controle de estoque desenvolvido para gerenciar pr
 A organização dos diretórios e arquivos facilita a manutenção e evolução do sistema:
 
 ```markdown
-Controle-de-estoque-ccb/
-├── assets/
-│   ├── css/         # Arquivos de estilização (CSS)
-│   ├── img/         # Imagens utilizadas no projeto
-│   └── js/          # Scripts JavaScript auxiliares (funções, plugins etc.)
+Controle-de-estoque-ccb-main/
+├── public/
+│   ├── assets/
+│   │   ├── css/                   # Arquivos de estilização
+│   │   │   ├── buttons/
+│   │   │   ├── esconder/
+│   │   │   ├── form/
+│   │   │   ├── header-components/
+│   │   │   ├── modal-adicionar-imob/
+│   │   │   ├── modal-adicionar-prod/
+│   │   │   ├── modal-alterar-imob/
+│   │   │   ├── modal-alterar-quant/
+│   │   │   ├── modal-historico-prod/
+│   │   │   ├── paglogin/
+│   │   │   ├── table/
+│   │   │   └── transition/
+│   │   │
+│   │   ├── img/                   # Pasta de imagens
+│   │   │
+│   │   ├── js/                    # Scripts JavaScript
+│   │   │   ├── imobilizado-component/
+│   │   │   ├── paglogin/
+│   │   │   ├── header.js
+│   │   │   ├── historicomodal.js
+│   │   │   ├── input.js
+│   │   │   ├── main.js
+│   │   │   └── modtab.js
 │
-├── estilos-links/    # Arquivos de estilos ou links externos (se necessário)
+├── pags/                           # Páginas adicionais
 │
-├── pags/             # Páginas HTML adicionais (ex: formulários, relatórios)
-│
-├── src/
-│   ├── config/       # Arquivos de configuração (ex: conexão com banco de dados)
-│   ├── controllers/  # Lógica de controle: funções que processam as requisições
-│   ├── models/       # Definição de modelos de dados ou esquemas do banco
-│   ├── program/      # Scripts específicos (rotinas, cron jobs, lógica de negócio)
-│   ├── routes/       # Definição das rotas/endpoints da aplicação
-│   └── services/     # Serviços auxiliares (integrações com APIs, funções reutilizáveis)
-│
-├── index.html        # Página principal (front-end)
-├── server.js         # Ponto de entrada da aplicação (Node.js/Express)
-└── README.md
-
+├── index.html                       # Página principal
+├── vercel.json                       # Configuração do Vercel
+├── .gitignore                        # Ignorar arquivos no Git
 ## Tecnologias Utilizadas
 
 - **HTML5**
