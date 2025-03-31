@@ -2,26 +2,34 @@ const express = require("express");
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+console.log(process.env.DB_HOST); // Deve imprimir mysql.railway.internal
+console.log(process.env.DB_USER); // Deve imprimir root
+console.log(process.env.DB_PASSWORD); // Deve imprimir a senha
+console.log(process.env.DB_NAME); // Deve imprimir railway
+console.log(process.env.DB_PORT); // Deve imprimir 3306
 
+// Conecte-se usando a URL correta e as variáveis de ambiente
 const db = mysql.createConnection({
-  host: "localhost",
+  host: "shuttle.proxy.rlwy.net",
   user: "root",
-  password: "Jhon811@k",
-  database: "controlstoc",
-  port: 3306,
+  password: "zIkWVucHmNXYsTGRtPvAJStlxxyvpTXt",
+  database: "railway",
+  port: 40063, // Porta fornecida pela Railway
 });
 
-db.connect((err) => {
+db.connect(function (err) {
   if (err) {
-    console.error("Erro ao conectar ao banco:", err);
-  } else {
-    console.log("Conectado ao MySQL");
+    console.error("Erro de conexão: " + err.stack);
+    return;
   }
+  console.log("Conectado como id " + db.threadId);
 });
+
 app.use(bodyParser.json());
 app.post("/produtos", (req, res) => {
   const produto = req.body;
@@ -203,7 +211,7 @@ app.post("/historico_entrada", (req, res) => {
     valor_nota,
     data_entrada,
   } = req.body;
-  if (!nome_entrada || !quantidade_entrada || !data_entrada) {
+  if (!quantidade_entrada || !data_entrada) {
     return res
       .status(400)
       .json({ message: "Preencha todos os campos obrigatórios!" });
@@ -226,36 +234,56 @@ app.post("/historico_entrada", (req, res) => {
     res.json({ message: "Entrada salva com sucesso!" });
   });
 });
-app.post("/historico_saida", (req, res) => {
-  const { nome_saida, quantidade_retirada, evento, data_saida, quem_retirou } =
-    req.body;
-  if (
-    !nome_saida ||
-    !quantidade_retirada ||
-    !evento ||
-    !data_saida ||
-    !quem_retirou
-  ) {
-    return res
-      .status(400)
-      .json({ message: "Preencha todos os campos obrigatórios!" });
+app.post("/historico_saida", async (req, res) => {
+  const { produtos } = req.body;
+  if (!produtos || produtos.length === 0) {
+    return res.status(400).json({ message: "Nenhum produto selecionado!" });
   }
-  const sql = `INSERT INTO historico_saida (nome_saida, quantidade_retirada, evento, data_saida, quem_retirou) 
-               VALUES (?, ?, ?, ?, ?)`;
-  const values = [
-    nome_saida,
-    quantidade_retirada,
-    evento,
-    data_saida,
-    quem_retirou,
-  ];
-  db.query(sql, values, (err, result) => {
-    if (err) {
-      console.error("Erro ao inserir no banco de dados:", err);
-      return res.status(500).json({ message: "Erro ao salvar saída." });
-    }
-    res.json({ message: "Saída salva com sucesso!" });
-  });
+  const sql = `
+    INSERT INTO historico_saida (nome_saida, quantidade_retirada, evento, data_saida, quem_retirou)
+    VALUES (?, ?, ?, ?, ?);
+  `;
+  try {
+    await Promise.all(
+      produtos.map((produto) => {
+        const {
+          nome_saida,
+          quantidade_retirada,
+          evento,
+          data_saida,
+          quem_retirou,
+        } = produto;
+        if (
+          !nome_saida ||
+          !quantidade_retirada ||
+          !evento ||
+          !data_saida ||
+          !quem_retirou
+        ) {
+          throw new Error("Preencha todos os campos obrigatórios!");
+        }
+        return new Promise((resolve, reject) => {
+          db.query(
+            sql,
+            [nome_saida, quantidade_retirada, evento, data_saida, quem_retirou],
+            (err) => {
+              if (err) {
+                console.error("Erro ao salvar histórico de saída:", err);
+                reject(err);
+              } else {
+                resolve();
+              }
+            }
+          );
+        });
+      })
+    );
+    res.status(200).json({ message: "Histórico de saída salvo com sucesso!" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Erro ao salvar histórico de saída", error });
+  }
 });
 app.get("/historico_entrada", (req, res) => {
   const query = "SELECT * FROM historico_entrada";
@@ -276,6 +304,69 @@ app.get("/historico_saida", (req, res) => {
       res.json(results);
     }
   });
+});
+app.get("/api/produtos", (req, res) => {
+  const sql = `
+    SELECT 
+        produto_id, 
+        nome_produto, 
+        quantidade
+    FROM produtos;
+  `;
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error("Erro ao buscar os dados:", err);
+      return res.status(500).json({ error: "Erro ao buscar os dados" });
+    } else {
+      res.json(results);
+    }
+  });
+});
+app.post("/api/retirarProdutos", (req, res) => {
+  const produtosParaRetirar = req.body;
+  if (!Array.isArray(produtosParaRetirar) || produtosParaRetirar.length === 0) {
+    return res
+      .status(400)
+      .json({ error: "É necessário informar produtos para retirar." });
+  }
+  produtosParaRetirar.forEach(({ produto_id, quantidadeRetirar }) => {
+    if (
+      !produto_id ||
+      !quantidadeRetirar ||
+      isNaN(quantidadeRetirar) ||
+      quantidadeRetirar <= 0
+    ) {
+      return res
+        .status(400)
+        .json({ error: `Informações inválidas para o produto ${produto_id}.` });
+    }
+
+    const sql = `
+      UPDATE produtos 
+      SET quantidade = quantidade - ? 
+      WHERE produto_id = ? AND quantidade >= ?;
+    `;
+    db.query(
+      sql,
+      [quantidadeRetirar, produto_id, quantidadeRetirar],
+      (err, result) => {
+        if (err) {
+          console.error(`Erro ao retirar produto ${produto_id}:`, err);
+          return res
+            .status(500)
+            .json({ error: "Erro ao atualizar o produto no estoque." });
+        }
+
+        if (result.affectedRows === 0) {
+          return res.status(400).json({
+            error: `Quantidade insuficiente no estoque para o produto ${produto_id}.`,
+          });
+        }
+      }
+    );
+  });
+  res.json({ sucesso: true, message: "Produtos retirados com sucesso!" });
 });
 const PORT = 3000;
 app.listen(PORT, () => {
