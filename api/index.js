@@ -2,35 +2,32 @@ const express = require("express");
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+console.log(process.env.DB_HOST); // Deve imprimir mysql.railway.internal
+console.log(process.env.DB_USER); // Deve imprimir root
+console.log(process.env.DB_PASSWORD); // Deve imprimir a senha
+console.log(process.env.DB_NAME); // Deve imprimir railway
+console.log(process.env.DB_PORT); // Deve imprimir 3306
 
-<<<<<<< HEAD
-const connection = mysql.createConnection({
-  host: "mysql.railway.internal", // O host do seu banco de dados
-  user: "root", // O usuário do banco de dados
-  password: "zIkWVucHmNXYsTGRtPvAJStlxxyvpTXt", // A senha do seu banco de dados
-  database: "railway", // O nome do banco de dados
-  port: 3306, // A porta de conexão
-=======
+// Conecte-se usando a URL correta e as variáveis de ambiente
 const db = mysql.createConnection({
-  host: "localhost",
+  host: "shuttle.proxy.rlwy.net",
   user: "root",
-  password: "Jhon811@k",
-  database: "controlstoc",
-  port: 3306,
->>>>>>> 32cddd7eaa1ec784db14f6c93ed36b4e8ecce5bd
+  password: "zIkWVucHmNXYsTGRtPvAJStlxxyvpTXt",
+  database: "railway",
+  port: 40063, // Porta fornecida pela Railway
 });
 
-// Conexão com o banco de dados
-connection.connect((err) => {
+db.connect(function (err) {
   if (err) {
     console.error("Erro de conexão: " + err.stack);
     return;
   }
-  console.log("Conectado ao banco de dados como id " + connection.threadId);
+  console.log("Conectado como id " + db.threadId);
 });
 
 app.use(bodyParser.json());
