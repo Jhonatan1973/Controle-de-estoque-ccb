@@ -7,12 +7,21 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+<<<<<<< HEAD
 const connection = mysql.createConnection({
   host: "mysql.railway.internal", // O host do seu banco de dados
   user: "root", // O usuário do banco de dados
   password: "zIkWVucHmNXYsTGRtPvAJStlxxyvpTXt", // A senha do seu banco de dados
   database: "railway", // O nome do banco de dados
   port: 3306, // A porta de conexão
+=======
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "Jhon811@k",
+  database: "controlstoc",
+  port: 3306,
+>>>>>>> 32cddd7eaa1ec784db14f6c93ed36b4e8ecce5bd
 });
 
 // Conexão com o banco de dados
