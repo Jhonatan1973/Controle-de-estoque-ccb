@@ -3,7 +3,7 @@ const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
-
+const serverless = require("serverless-http");
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -31,6 +31,10 @@ db.connect(function (err) {
 });
 
 app.use(bodyParser.json());
+app.get("/api/teste", (req, res) => {
+  res.json({ message: "API funcionadno na Vercel!" });
+});
+module.exports = serverless(app);
 app.post("/produtos", (req, res) => {
   const produto = req.body;
 
