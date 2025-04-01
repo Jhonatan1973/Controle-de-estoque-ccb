@@ -62,6 +62,10 @@
       rel="stylesheet"
       href="/public/assets/css/select-retirada/select-retirad.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
   </head>
   <body>
     <header>
@@ -69,6 +73,7 @@
         src="/public/assets/img/Logo_branco.png"
         id="img-ccb"
         alt="Imagem ccb"
+        onclick="toggleSideBar()"
       />
       <h1>Controle de Estoque</h1>
       <div class="search-container">
@@ -144,51 +149,58 @@
         </nav>
       </label>
     </header>
-    <div class="container">
-      <button
-        id="openModalGerenciarProduto"
-        class="btn btn-primary"
-        style="display: none"
-      >
-        Adicionar Produto Cozinha
-      </button>
-      <button
-        id="openModalGerenciarProdutoImobilizados"
-        class="btn btn-primary"
-        style="display: none"
-      >
-        Adicionar Produto Imobilizados
-      </button>
-      <button
-        id="openModalGerenciarProdutoMezanino"
-        class="btn btn-primary"
-        style="display: none"
-      >
-        Adicionar Produto Mezanino
-      </button>
 
-      <button
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#historicoModal"
-      >
-        Histórico
-      </button>
-      <label for="filtroEstoque">Filtrar:</label>
-      <select id="filtroEstoque" class="select-simple">
-        <option value="cozinha">Cozinha</option>
-        <option value="imobilizados">Imobilizados</option>
-        <option value="mezanino">Mezanino</option>
-      </select>
+    <div class="side-bar" id="sideBar">
+      <h2>Menu</h2>
+      <i class="fas fa-times close-icon" onclick="closeSideBar()"></i>
+      <div class="button-container-barra">
+        <label for="filtroEstoque">Filtrar:</label>
+        <select id="filtroEstoque" class="select-simple">
+          <option value="cozinha">Cozinha</option>
+          <option value="imobilizados">Imobilizados</option>
+          <option value="mezanino">Mezanino</option>
+        </select>
+        <button
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#historicoModal"
+        >
+          Histórico
+        </button>
+        <button
+          id="openModalGerenciarProduto"
+          class="btn btn-primary"
+          style="display: none"
+        >
+          Adicionar Produto Cozinha
+        </button>
+        <button
+          id="openModalGerenciarProdutoImobilizados"
+          class="btn btn-primary"
+          style="display: none"
+        >
+          Adicionar Produto Imobilizados
+        </button>
+        <button
+          id="openModalGerenciarProdutoMezanino"
+          class="btn btn-primary"
+          style="display: none"
+        >
+          Adicionar Produto Mezanino
+        </button>
+
+        <button class="btn btn-primary" id="abrirModalSelecionarRetirada">
+          Selecionar Produtos para Retirada
+        </button>
+      </div>
     </div>
+    <div class="container"></div>
     <div id="loader" class="loader" style="display: none">
       <div class="bar"></div>
       <div class="bar"></div>
       <div class="bar"></div>
     </div>
-    <button class="btn btn-primary" id="abrirModalSelecionarRetirada">
-      Selecionar Produtos para Retirada
-    </button>
+
     <div class="tabela-container">
       <table id="tabelaEstoque">
         <thead>
@@ -225,6 +237,9 @@
 
           <label for="Produto_id">Produto:</label>
           <input type="text" id="produto_entrada" class="input-simple" />
+
+          <label for="evento_entrada">Evento:</label>
+          <input type="text" id="evento_entrada" class="input-simple" />
 
           <label for="numeroNota">Número da Nota:</label>
           <input type="text" id="numeronota" class="input-simple" />
@@ -583,6 +598,7 @@
                 <tr>
                   <th>Fornecedor</th>
                   <th>Nome Entrada</th>
+                  <th>Evento</th>
                   <th>Quantidade</th>
                   <th>Número Nota</th>
                   <th>Valor Nota</th>

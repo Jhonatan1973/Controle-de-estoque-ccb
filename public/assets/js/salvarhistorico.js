@@ -62,7 +62,7 @@ document
       const eventosSelecionados = Array.from(eventoSelect.selectedOptions).map(
         (option) => option.value
       );
-      console.log("Eventos selecionados:", eventosSelecionados); // Veja o que aparece no console
+      console.log("Eventos selecionados:", eventosSelecionados);
     }
   });
 
@@ -110,12 +110,13 @@ function formatarData(dataISO) {
 function salvarHistoricoEntrada() {
   const fornecedor = document.getElementById("fornecedor").value;
   const nome_entrada = document.getElementById("produto_entrada").value;
+  const evento_entrada = document.getElementById("evento_entrada").value;
   const quantidade_entrada = document.getElementById("inputquantidade").value;
   const numero_nota = document.getElementById("numeronota").value;
   const valor_nota = document.getElementById("valornota").value;
   const data_entrada = document.getElementById("data_entrada").value;
 
-  if (!nome_entrada || !quantidade_entrada || !data_entrada) {
+  if (!nome_entrada || !nome_entrada || !quantidade_entrada || !data_entrada) {
     alert("Preencha todos os campos obrigatórios!");
     return;
   }
@@ -125,6 +126,7 @@ function salvarHistoricoEntrada() {
     body: JSON.stringify({
       fornecedor,
       nome_entrada,
+      evento_entrada,
       quantidade_entrada,
       numero_nota,
       valor_nota,
@@ -139,7 +141,6 @@ function salvarHistoricoEntrada() {
     .catch((error) => console.error("Erro ao salvar entrada:", error));
 }
 function selecionarProduto(linha) {
-  // Marca a linha como selecionada
   linha.classList.add("selected");
   const produtoId = linha
     .querySelector(".nome-produto")

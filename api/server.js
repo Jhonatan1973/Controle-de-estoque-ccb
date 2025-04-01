@@ -3,25 +3,23 @@ const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
-const serverless = require("serverless-http");
+
 const app = express();
 app.use(cors());
 app.use(express.json());
-console.log(process.env.DB_HOST); // Deve imprimir mysql.railway.internal
-console.log(process.env.DB_USER); // Deve imprimir root
-console.log(process.env.DB_PASSWORD); // Deve imprimir a senha
-console.log(process.env.DB_NAME); // Deve imprimir railway
-console.log(process.env.DB_PORT); // Deve imprimir 3306
+console.log(process.env.DB_HOST);
+console.log(process.env.DB_USER);
+console.log(process.env.DB_PASSWORD);
+console.log(process.env.DB_NAME);
+console.log(process.env.DB_PORT);
 
-// Conecte-se usando a URL correta e as variáveis de ambiente
 const db = mysql.createConnection({
   host: "shuttle.proxy.rlwy.net",
   user: "root",
   password: "zIkWVucHmNXYsTGRtPvAJStlxxyvpTXt",
   database: "railway",
-  port: 40063, // Porta fornecida pela Railway
+  port: 40063,
 });
-
 db.connect(function (err) {
   if (err) {
     console.error("Erro de conexão: " + err.stack);
@@ -29,15 +27,8 @@ db.connect(function (err) {
   }
   console.log("Conectado como id " + db.threadId);
 });
-
-app.use(bodyParser.json());
-app.get("/api/teste", (req, res) => {
-  res.json({ message: "API funcionadno na Vercel!" });
-});
-module.exports = serverless(app);
 app.post("/produtos", (req, res) => {
   const produto = req.body;
-
   if (
     !produto.nome ||
     !produto.uniCompra ||
@@ -210,6 +201,7 @@ app.post("/historico_entrada", (req, res) => {
   const {
     fornecedor,
     nome_entrada,
+    evento_entrada,
     quantidade_entrada,
     numero_nota,
     valor_nota,
@@ -220,11 +212,12 @@ app.post("/historico_entrada", (req, res) => {
       .status(400)
       .json({ message: "Preencha todos os campos obrigatórios!" });
   }
-  const sql = `INSERT INTO historico_entrada (fornecedor, nome_entrada, quantidade_entrada, numero_nota, valor_nota, data_entrada) 
+  const sql = `INSERT INTO historico_entrada (fornecedor, nome_entrada, evento_entrada, quantidade_entrada, numero_nota, valor_nota, data_entrada) 
                VALUES (?, ?, ?, ?, ?, ?)`;
   const values = [
     fornecedor,
     nome_entrada,
+    evento_entrada,
     quantidade_entrada,
     numero_nota || null,
     valor_nota || null,
