@@ -20,98 +20,168 @@ body {
   overflow-x: hidden;
 }
 header h1 {
-  font-size: calc(var(--img-width) / 3);
-  margin: 0;
+  font-size: calc(var(--img-width) / 4);
+  margin-left: -150px;
 }
-.input {
-  margin: 0;
-  background: none;
+.cont-input-header {
+  position: absolute;
+  right: 20px;
+  top: 14%;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+  width: fit-content;
+}
+.mainbox {
+  box-sizing: border-box;
+  position: relative;
+  width: 230px;
+  height: 50px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+  border-radius: 160px;
+  background-color: #a6a6a6;
+  transition: all 0.3s ease;
+}
+.checkbox:focus {
   border: none;
   outline: none;
-  max-width: 190px;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 9999px;
-  box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
-  color: rgb(255, 255, 255);
+}
+.checkbox:checked {
+  right: 10px;
+}
+.checkbox:checked ~ .mainbox {
+  width: 50px;
+}
+.checkbox:checked ~ .mainbox .input {
+  width: 0;
+  height: 0px;
+}
+.checkbox:checked ~ .mainbox .iconcont-input-header {
+  padding-right: 8px;
+}
+.checkbox {
+  box-sizing: border-box;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: 17px;
+  top: 10px;
+  z-index: 9;
+  cursor: pointer;
+  appearance: none;
+}
+.input {
+  box-sizing: border-box;
+  height: 100%;
+  width: 170px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding-bottom: 4px;
+  padding-left: 10px;
+  font-size: 1em;
+  color: white;
+  transition: all 0.3s ease;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.776);
+}
+.iconcont-input-header {
+  box-sizing: border-box;
+  padding-top: 5px;
+  width: fit-content;
+  transition: all 0.3s ease;
+}
+.search_icon {
+  box-sizing: border-box;
+  fill: white;
+  font-size: 1.3em;
 }
 #img-ccb {
   width: var(--img-width);
   height: auto;
 }
-/* Barra lateral */
 .side-bar {
   position: fixed;
   top: 0;
-  left: -300px; /* Inicialmente, a barra está fora da tela */
+  left: -300px;
   width: 300px;
   height: 100%;
   background-color: #9b9b9b;
   color: white;
-  transition: left 0.5s ease; /* Transição suave para mover a barra */
+  transition: left 0.5s ease;
   padding: 20px;
   box-sizing: border-box;
   z-index: 1000;
 }
-
-/* Barra lateral visível */
 .side-bar.active {
-  left: 0; /* Quando ativa, a barra desliza para a posição */
+  left: 0;
 }
-
-/* Estilo da lista na barra lateral */
 .side-bar ul {
   list-style-type: none;
   padding: 0;
 }
-
 .side-bar ul li {
   margin: 15px 0;
 }
-
 .side-bar ul li a {
   color: white;
   text-decoration: none;
   font-size: 18px;
 }
-/* Flexbox para alinhar o botão dentro da div */
 .button-container-barra {
-  display: block; /* Faz o botão se comportar como um item de lista */
-  margin-top: 20px; /* Espaçamento para separar o botão dos links */
+  display: block;
+  margin-top: 20px;
 }
-/* Estilo dos botões */
 .button-container-barra button {
-  display: block; /* Faz o botão se comportar como um item de bloco */
-  width: 100%; /* Faz o botão ocupar toda a largura da div */
+  display: block;
+  width: 100%;
   padding: 10px;
   color: white;
   border: none;
   border-radius: 5px;
-  margin: 10px 0; /* Espaço entre os botões */
+  margin: 10px 0;
   cursor: pointer;
 }
-/* Estilo do ícone de fechar */
 .close-icon {
-  position: absolute; /* Fixa o ícone no canto */
-  top: 20px; /* Distância do topo */
-  right: 20px; /* Distância da direita */
+  position: absolute;
+  top: 20px;
+  right: 20px;
   font-size: 30px;
   color: white;
   cursor: pointer;
 }
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   header {
     flex-direction: column;
     align-items: center;
     gap: 10px;
     padding: 15px;
   }
+  header h1 {
+    margin-left: 0;
+    font-size: calc(var(--img-width) / 4);
+    text-align: center;
+  }
+  .cont-input-header {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin-top: 10px;
+  }
+  .mainbox {
+    width: 200px;
+  }
   .input {
-    width: 50%;
-    max-width: 300px;
+    width: 150px;
   }
 }
-@media (max-width: 400px) {
+@media (max-width: 480px) {
   :root {
     --img-width: 100px;
   }
@@ -121,8 +191,17 @@ header h1 {
   header h1 {
     font-size: calc(var(--img-width) / 3);
   }
+  .cont-input-header {
+    width: 100%;
+    text-align: center;
+  }
+  .mainbox {
+    width: 180px;
+    height: 45px;
+  }
   .input {
-    padding: 8px 16px;
+    width: 140px;
     font-size: 14px;
+    padding: 8px;
   }
 }
