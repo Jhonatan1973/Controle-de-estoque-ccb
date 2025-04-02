@@ -47,6 +47,7 @@ Controle-de-estoque-ccb-main/
 - **JavaScript**
 - **Node.js**
 - **Vercel**
+- **MySQL**
 
 ## Funcionalidades
 
