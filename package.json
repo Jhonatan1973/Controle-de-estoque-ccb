@@ -2,10 +2,10 @@
   "name": "controle-de-estoque",
   "version": "1.0.0",
   "description": "Backend Node.js para controle de estoque",
-  "main": "api/index.js",
+  "main": "api/server.js",
   "scripts": {
-    "start": "node api/index.js",
-    "dev": "node api/index.js"
+    "start": "node api/server.js",
+    "dev": "node api/server.js"
   },
   "dependencies": {
     "express": "^4.17.1",
