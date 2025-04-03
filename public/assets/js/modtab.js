@@ -175,7 +175,6 @@ async function adicionarQuantidadeImob() {
   const quantidade = document.getElementById("inputquantidade").value;
 
   if (!produtoId || isNaN(produtoId) || !quantidade || quantidade <= 0) {
-    alert("Erro: Produto inválido ou quantidade incorreta.");
     return;
   }
 
@@ -204,7 +203,6 @@ async function retirarQuantidadeImob() {
   const quantidade = document.getElementById("quantidadeRetirar").value;
 
   if (!produtoId || isNaN(produtoId) || !quantidade || quantidade <= 0) {
-    alert("Erro: Produto inválido ou quantidade incorreta.");
     return;
   }
   showLoader();
@@ -251,7 +249,6 @@ async function adicionarQuantidade() {
   const quantidade = document.getElementById("inputquantidade").value;
 
   if (!produtoId || isNaN(produtoId) || !quantidade || quantidade <= 0) {
-    alert("Erro: Produto inválido ou quantidade incorreta.");
     return;
   }
   showLoader();
@@ -261,7 +258,7 @@ async function adicionarQuantidade() {
     body: JSON.stringify({ quantidade: parseInt(quantidade) }),
   });
   if (response.ok) {
-    alert("Quantidade adicionada com sucesso!");
+    mostrarAnimacaoSucesso();
     fecharModal("modal-adicionar");
     await atualizarTabela();
   } else {

@@ -47,10 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
           })
           .catch((error) => {
             console.error("Erro ao salvar histórico de saída:", error);
-            alert("Erro ao salvar histórico de saída.");
           });
       } else {
-        alert("Selecione ao menos um produto para retirar.");
       }
     });
 });
@@ -117,7 +115,7 @@ function salvarHistoricoEntrada() {
   const data_entrada = document.getElementById("data_entrada").value;
 
   if (!nome_entrada || !nome_entrada || !quantidade_entrada || !data_entrada) {
-    alert("Preencha todos os campos obrigatórios!");
+    mostrarAnimacaoErro();
     return;
   }
   fetch("http://localhost:3000/historico_entrada", {
@@ -135,7 +133,6 @@ function salvarHistoricoEntrada() {
   })
     .then((response) => response.json())
     .then((data) => {
-      alert(data.message);
       carregarHistoricoEntrada();
     })
     .catch((error) => console.error("Erro ao salvar entrada:", error));

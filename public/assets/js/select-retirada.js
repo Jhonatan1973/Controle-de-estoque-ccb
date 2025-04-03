@@ -80,7 +80,7 @@ document
         .then((data) => {
           console.log("Resposta do servidor:", data);
           if (data.sucesso) {
-            alert("Produtos retirados com sucesso!");
+            mostrarAnimacaoSucesso();
             fecharModalSelecionarRetirada();
             carregarProdutos();
           } else {
@@ -90,9 +90,45 @@ document
         })
         .catch((error) => {
           console.error("Erro na requisição de retirada de produtos:", error);
-          alert("Erro ao comunicar com o servidor.");
+          mostrarAnimacaoErro();
         });
     } else {
-      alert("Selecione ao menos um produto para retirar.");
+      mostrarAnimacaoErro();
     }
   });
+function mostrarAnimacaoSucesso() {
+  const animacao = document.createElement("div");
+  animacao.classList.add("checkbox-wrapper-31");
+  animacao.innerHTML = `
+      <svg viewBox="0 0 35.6 35.6">
+        <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+        <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+        <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+      </svg>
+    `;
+
+  document.body.appendChild(animacao);
+
+  // Remove a animação após um tempo
+  setTimeout(() => {
+    animacao.remove();
+  }, 2000);
+}
+
+function mostrarAnimacaoErro() {
+  const erro = document.createElement("div");
+  erro.classList.add("checkbox-wrapper-31");
+  erro.innerHTML = `
+      <svg viewBox="0 0 35.6 35.6">
+        <circle class="background erro" cx="17.8" cy="17.8" r="17.8"></circle>
+        <line class="erro-linha1" x1="10" y1="10" x2="26" y2="26"></line>
+        <line class="erro-linha2" x1="26" y1="10" x2="10" y2="26"></line>
+      </svg>
+    `;
+
+  document.body.appendChild(erro);
+
+  setTimeout(() => {
+    erro.remove();
+  }, 2000);
+}

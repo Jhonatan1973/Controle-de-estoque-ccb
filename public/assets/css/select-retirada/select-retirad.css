@@ -139,3 +139,106 @@
     padding: 15px;
   }
 }
+/* Centraliza a animação */
+.checkbox-wrapper-31 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  z-index: 1000;
+}
+
+.checkbox-wrapper-31 .background {
+  fill: #00ff88;
+  transition: ease all 0.6s;
+}
+
+.checkbox-wrapper-31 .stroke {
+  fill: none;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+  stroke-width: 2px;
+  stroke-dashoffset: 100;
+  stroke-dasharray: 100;
+  transition: ease all 0.6s;
+}
+
+.checkbox-wrapper-31 .check {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2px;
+  stroke-dashoffset: 22;
+  stroke-dasharray: 22;
+  transition: ease all 0.6s;
+}
+
+/* Animação automática */
+.checkbox-wrapper-31 svg {
+  animation: animateCheck 1s ease-in-out forwards;
+}
+
+@keyframes animateCheck {
+  0% {
+    fill: #ccc;
+  }
+  50% {
+    fill: #6cbe45;
+  }
+  100% {
+    fill: #6cbe45;
+  }
+}
+
+.checkbox-wrapper-31 .stroke {
+  animation: strokeAnimation 1s ease-in-out forwards;
+}
+
+@keyframes strokeAnimation {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.checkbox-wrapper-31 .check {
+  animation: checkAnimation 1s ease-in-out forwards 0.5s;
+}
+
+@keyframes checkAnimation {
+  0% {
+    stroke-dashoffset: 22;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Estilos para erro */
+.checkbox-wrapper-31 .background.erro {
+  fill: #ff4d4d;
+}
+
+.checkbox-wrapper-31 .erro-linha1,
+.checkbox-wrapper-31 .erro-linha2 {
+  stroke: white;
+  stroke-width: 4px;
+  stroke-linecap: round;
+  stroke-dashoffset: 40;
+  stroke-dasharray: 40;
+  animation: erroAnimacao 0.5s ease-in-out forwards;
+}
+
+@keyframes erroAnimacao {
+  0% {
+    stroke-dashoffset: 40;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}

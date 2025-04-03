@@ -213,7 +213,7 @@ app.post("/historico_entrada", (req, res) => {
       .json({ message: "Preencha todos os campos obrigatórios!" });
   }
   const sql = `INSERT INTO historico_entrada (fornecedor, nome_entrada, evento_entrada, quantidade_entrada, numero_nota, valor_nota, data_entrada) 
-               VALUES (?, ?, ?, ?, ?, ?)`;
+               VALUES (?, ?, ?, ?, ?, ?, ?)`;
   const values = [
     fornecedor,
     nome_entrada,
@@ -265,7 +265,6 @@ app.post("/historico_saida", async (req, res) => {
             [nome_saida, quantidade_retirada, evento, data_saida, quem_retirou],
             (err) => {
               if (err) {
-                console.error("Erro ao salvar histórico de saída:", err);
                 reject(err);
               } else {
                 resolve();
@@ -275,11 +274,9 @@ app.post("/historico_saida", async (req, res) => {
         });
       })
     );
-    res.status(200).json({ message: "Histórico de saída salvo com sucesso!" });
+    res.status(200).json();
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Erro ao salvar histórico de saída", error });
+    res.status(500).json();
   }
 });
 app.get("/historico_entrada", (req, res) => {

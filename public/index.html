@@ -209,6 +209,7 @@
         <button class="btn btn-primary" id="abrirModalSelecionarRetirada">
           Selecionar Produtos para Retirada
         </button>
+        <button class="btn btn-primary" id="cardapio">Cardapio</button>
       </div>
     </div>
     <div class="container"></div>
@@ -255,8 +256,148 @@
           <label for="Produto_id">Produto:</label>
           <input type="text" id="produto_entrada" class="input-simple" />
 
-          <label for="evento_entrada">Evento:</label>
-          <input type="text" id="evento_entrada" class="input-simple" />
+          <label for="evento">Evento:</label>
+          <select id="evento_entrada">
+            <option value="Assembleia CF - Trimestral">
+              Assembleia CF - Trimestral
+            </option>
+            <option value="Plantão DARPE">Plantão DARPE</option>
+            <option value="Assist. Farmacêutica">Assist. Farmacêutica</option>
+            <option value="Equipe de Diáconos">Equipe de Diáconos</option>
+            <option value="Coord. Apoio Brasil">Coord. Apoio Brasil</option>
+            <option value="Atendimento CF">Atendimento CF</option>
+            <option value="DCR">DCR</option>
+            <option value="Encontro CA e D - SP (Capital)">
+              Encontro CA e D - SP (Capital)
+            </option>
+            <option value="RRM - Capital">RRM - Capital</option>
+            <option value="Atendimento Posto Médico - Colaboradores">
+              Atendimento Posto Médico - Colaboradores
+            </option>
+            <option value="Comitê Engenharia - Projetos África">
+              Comitê Engenharia - Projetos África
+            </option>
+            <option value="Gestão Estratégica DARPE">
+              Gestão Estratégica DARPE
+            </option>
+            <option value="Videoconf. Coordenadores DARPE">
+              Videoconf. Coordenadores DARPE
+            </option>
+            <option value="Grupo Estudos LIBRAS">Grupo Estudos LIBRAS</option>
+            <option value="Atendimento Engenharia - Plantão">
+              Atendimento Engenharia - Plantão
+            </option>
+            <option value="Supervisão Livro Azul - Plantão">
+              Supervisão Livro Azul - Plantão
+            </option>
+            <option value="GEM - Brás">GEM - Brás</option>
+            <option value="Encontro Representantes Técnicos GTM">
+              Encontro Representantes Técnicos GTM
+            </option>
+            <option value="Reunião Trabalho Semanal - GT Eng. e CTMs">
+              Reunião Trabalho Semanal - GT Eng. e CTMs
+            </option>
+            <option value="Diretoria e Presidência">
+              Diretoria e Presidência
+            </option>
+            <option value="CNS">CNS</option>
+            <option value="Coord. Nacional Apoio e Bombeiros">
+              Coord. Nacional Apoio e Bombeiros
+            </option>
+            <option value="Escritório Processos Organizacionais">
+              Escritório Processos Organizacionais
+            </option>
+            <option value="Plantão Segurança do Trabalho - Brasil">
+              Plantão Segurança do Trabalho - Brasil
+            </option>
+            <option value="GDI">GDI</option>
+            <option value="Planejamento Cozinha - RGE 2025">
+              Planejamento Cozinha - RGE 2025
+            </option>
+            <option value="Organização Alojamentos e Dormitórios">
+              Organização Alojamentos e Dormitórios
+            </option>
+            <option value="Encontro Administrativo - SP">
+              Encontro Administrativo - SP
+            </option>
+            <option value="Agentes Regionais Proteção Dados - LGPD">
+              Agentes Regionais Proteção Dados - LGPD
+            </option>
+            <option value="Secretaria Projetos - África">
+              Secretaria Projetos - África
+            </option>
+            <option value="Ensaio Musical - Eventos Oficiais">
+              Ensaio Musical - Eventos Oficiais
+            </option>
+            <option value="Planejamento Hospedagens - 2025">
+              Planejamento Hospedagens - 2025
+            </option>
+            <option value="Reunião Garçons e Equipe Serviço">
+              Reunião Garçons e Equipe Serviço
+            </option>
+            <option value="Coord. Estacionamento">Coord. Estacionamento</option>
+            <option value="Orientações Irmãs Piedade e Diáconos - Brás">
+              Orientações Irmãs Piedade e Diáconos - Brás
+            </option>
+            <option value="Procedimentos Online Cozinha Brás - RGE 2025">
+              Procedimentos Online Cozinha Brás - RGE 2025
+            </option>
+            <option value="Procedimentos Online Cozinha Hospedaria - RGE 2025">
+              Procedimentos Online Cozinha Hospedaria - RGE 2025
+            </option>
+            <option value="Videoconf. CNS">Videoconf. CNS</option>
+            <option value="Conselho Administração e Liderança DARPE">
+              Conselho Administração e Liderança DARPE
+            </option>
+            <option value="Encontro RGE - CA mais Antigos (Brasil e Ext.)">
+              Encontro RGE - CA mais Antigos (Brasil e Ext.)
+            </option>
+            <option value="Planejamento Departamento Apoio Indígena">
+              Planejamento Departamento Apoio Indígena
+            </option>
+            <option value="CA e D - Brasil e Exterior">
+              CA e D - Brasil e Exterior
+            </option>
+            <option value="Assembleia Virtual RGE">
+              Assembleia Virtual RGE
+            </option>
+            <option value="RMA">RMA</option>
+            <option value="Reunião Conselho Administração SP">
+              Reunião Conselho Administração SP
+            </option>
+            <option value="Planejamento Estratégico - Grupo Gestor">
+              Planejamento Estratégico - Grupo Gestor
+            </option>
+            <option value="Videoconf. Encarregados Regionais e Examinadores">
+              Videoconf. Encarregados Regionais e Examinadores
+            </option>
+            <option value="CA mais Antigos Estado">
+              CA mais Antigos Estado
+            </option>
+            <option value="DEPAC - Online">DEPAC - Online</option>
+            <option value="Reunião Coord. Jovens e Menores">
+              Reunião Coord. Jovens e Menores
+            </option>
+            <option value="Planejamento Equipe RA-SP">
+              Planejamento Equipe RA-SP
+            </option>
+            <option value="Assembleia Desenvolvimento Projetos Comunitários">
+              Assembleia Desenvolvimento Projetos Comunitários
+            </option>
+            <option value="Sessão Estratégica CNS Online">
+              Sessão Estratégica CNS Online
+            </option>
+            <option value="Planejamento Estratégias RRA Online">
+              Planejamento Estratégias RRA Online
+            </option>
+            <option value="Comitê Gestão GEM">Comitê Gestão GEM</option>
+            <option value="Planejamento Atividades DATEX">
+              Planejamento Atividades DATEX
+            </option>
+            <option value="CF - Supervisão e Auditoria">
+              CF - Supervisão e Auditoria
+            </option>
+          </select>
 
           <label for="numeroNota">Número da Nota:</label>
           <input type="text" id="numeronota" class="input-simple" />
@@ -652,7 +793,7 @@
             >
               Fechar
             </button>
-            <select id="eventoHistoricoSaida">
+            <select id="eventoHistoricoSaida" class="select-custom">
               <option value="">Todos</option>
               <option value="RGE">RGE</option>
               <option value="ADM SP">ADM SP</option>
@@ -766,7 +907,7 @@
           <select id="autorizacao" name="autorizacao" required>
             <option value="" disabled selected>Escolha uma opção</option>
             <option value="Gisline">Gisline</option>
-            <option value="wander">wander</option>
+            <option value="Wander">Wander</option>
           </select>
         </div>
         <div class="grupo-entrada">
@@ -979,7 +1120,7 @@
     <script src="/public/assets/js/select-retirada.js"></script>
     <script>
       function recarregarPagina() {
-        location.reload(); // Isso vai recarregar a página atual
+        location.reload();
       }
       const btnCozinha = document.getElementById("openModalGerenciarProduto");
       const btnImobilizados = document.getElementById(

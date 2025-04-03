@@ -20,10 +20,21 @@ function carregarHistoricoEntrada() {
         .getElementById("tabelaHistoricoEntrada")
         .getElementsByTagName("tbody")[0];
       tabelaHistoricoEntrada.innerHTML = "";
+
       data.forEach((item) => {
         item.data_entrada = new Date(item.data_entrada).toLocaleDateString(
           "pt-BR"
         );
+
+        const valorFormatado = parseFloat(item.valor_nota).toLocaleString(
+          "pt-BR",
+          {
+            style: "currency",
+            currency: "BRL",
+            minimumFractionDigits: 2,
+          }
+        );
+
         const row = tabelaHistoricoEntrada.insertRow();
         row.innerHTML = `
               <td>${item.fornecedor}</td>
@@ -31,7 +42,7 @@ function carregarHistoricoEntrada() {
               <td>${item.evento_entrada}</td>
               <td>${item.quantidade_entrada}</td>
               <td>${item.numero_nota}</td>
-              <td>${item.valor_nota}</td>
+              <td>${valorFormatado}</td>
               <td>${item.data_entrada}</td>
             `;
       });
@@ -40,6 +51,7 @@ function carregarHistoricoEntrada() {
       console.error("Erro ao carregar o histórico de entrada:", error);
     });
 }
+
 function carregarHistoricoSaida() {
   fetch("http://localhost:3000/historico_saida")
     .then((response) => response.json())
