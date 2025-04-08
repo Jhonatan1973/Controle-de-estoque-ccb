@@ -104,7 +104,7 @@ header h1 {
 #img-ccb {
   width: var(--img-width);
   height: auto;
-  margin-left: -420px;
+  margin-left: -330px;
 }
 .side-bar {
   position: fixed;
