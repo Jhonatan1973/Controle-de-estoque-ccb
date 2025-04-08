@@ -66,14 +66,25 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/header-components/burger.css"
+    />
   </head>
   <body>
     <header>
+      <!-- From Uiverse.io by ahmedyasserdev -->
+      <input id="burger-checkbox" type="checkbox" />
+      <label class="burger" for="burger-checkbox" onclick="toggleSideBar()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+
       <img
         src="/public/assets/img/Logo_branco.png"
         id="img-ccb"
         alt="Imagem ccb"
-        onclick="toggleSideBar()"
       />
       <h1>Controle de Estoque</h1>
       <div class="search-container">

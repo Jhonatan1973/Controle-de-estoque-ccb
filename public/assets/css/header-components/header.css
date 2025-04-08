@@ -104,6 +104,7 @@ header h1 {
 #img-ccb {
   width: var(--img-width);
   height: auto;
+  margin-left: -420px;
 }
 .side-bar {
   position: fixed;
@@ -162,28 +163,55 @@ header h1 {
     gap: 10px;
     padding: 15px;
   }
-  header h1 {
-    margin-left: 0;
-    font-size: calc(var(--img-width) / 4);
-    text-align: center;
+  #img-ccb {
+    margin: 0 auto;
+    margin-left: 150px;
+    display: block;
+    margin-bottom: 10px;
   }
-  .cont-input-header {
-    position: relative;
-    right: auto;
-    top: auto;
-    transform: none;
-    margin-top: 10px;
-  }
-  .mainbox {
-    width: 200px;
-  }
-  .input {
-    width: 150px;
+
+  .burger {
+    position: absolute;
+    top: 15px;
+    left: -200px;
+    z-index: 1001;
   }
 }
+header h1 {
+  margin-left: 0;
+  font-size: calc(var(--img-width) / 4);
+  text-align: center;
+}
+.cont-input-header {
+  position: relative;
+  right: auto;
+  top: auto;
+  transform: none;
+  margin-top: 10px;
+}
+.mainbox {
+  width: 200px;
+}
+.input {
+  width: 150px;
+}
+
 @media (max-width: 480px) {
   :root {
     --img-width: 100px;
+  }
+  #img-ccb {
+    margin: 0 auto;
+    margin-left: 150px;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .burger {
+    position: absolute;
+    top: 15px;
+    left: -200px;
+    z-index: 1001;
   }
   header {
     padding: 10px;
