@@ -202,7 +202,7 @@ header h1 {
   }
   #img-ccb {
     margin: 0 auto;
-    margin-left: 150px;
+    margin-left: 100px;
     display: block;
     margin-bottom: 10px;
   }
@@ -210,7 +210,7 @@ header h1 {
   .burger {
     position: absolute;
     top: 15px;
-    left: -200px;
+    left: -150px;
     z-index: 1001;
   }
   header {
