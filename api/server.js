@@ -354,6 +354,99 @@ app.post("/api/retirarProdutos", (req, res) => {
   });
   res.json({ sucesso: true, message: "Produtos retirados com sucesso!" });
 });
+app.get("/api/rendimento", (req, res) => {
+  const { tipo, valor, dataInicio, dataFim, ano } = req.query;
+
+  if (!tipo || !valor) {
+    return res.status(400).json({ error: "Parâmetros obrigatórios ausentes." });
+  }
+
+  let sql = "";
+  let params = [];
+
+  // Caso especial para RGE (baseado no ano)
+  if (tipo === "evento" && valor === "RGE" && ano) {
+    sql = `
+      SELECT * FROM historico_entrada
+      WHERE evento_entrada = 'RGE'
+      AND YEAR(data_entrada) = ?
+    `;
+    params = [ano];
+  } else {
+    // Mapeia o campo correto do banco com base no tipo
+    let campo;
+    if (tipo === "produto") {
+      campo = "nome_entrada";
+    } else if (tipo === "evento") {
+      campo = "evento_entrada";
+    } else {
+      return res
+        .status(400)
+        .json({ error: "Tipo inválido. Use 'produto' ou 'evento'." });
+    }
+
+    sql = `SELECT * FROM historico_entrada WHERE ${campo} = ?`;
+    params = [valor];
+
+    if (dataInicio && dataFim) {
+      sql += " AND DATE(data_entrada) BETWEEN ? AND ?";
+      params.push(dataInicio, dataFim);
+    }
+  }
+
+  db.query(sql, params, (err, results) => {
+    if (err) {
+      console.error("Erro ao buscar rendimento:", err);
+      return res.status(500).json({ error: "Erro no servidor." });
+    }
+    res.json(results);
+  });
+});
+
+app.get("/api/comparar-precos", async (req, res) => {
+  const { produto, data } = req.query;
+
+  if (!produto || !data) {
+    return res.status(400).json({ error: "Produto e data são obrigatórios." });
+  }
+
+  let query = `
+    SELECT 
+      nome_entrada, 
+      MONTH(data_entrada) AS mes, 
+      YEAR(data_entrada) AS ano, 
+      SUM(quantidade_entrada) AS total_quantidade,
+      AVG(preco_unit) AS preco_medio
+    FROM historico_entrada
+    WHERE nome_entrada = ?
+  `;
+
+  const params = [produto];
+
+  // Verifica o formato da data
+  if (/^\d{4}-\d{2}$/.test(data)) {
+    // formato YYYY-MM
+    const [ano, mes] = data.split("-");
+    query += ` AND YEAR(data_entrada) = ? AND MONTH(data_entrada) = ?`;
+    params.push(ano, mes);
+  } else {
+    return res
+      .status(400)
+      .json({ error: "Formato de data inválido. Use YYYY-MM." });
+  }
+
+  // Agrupando corretamente para um único resultado por mês
+  query += ` GROUP BY nome_entrada, ano, mes`;
+
+  db.query(query, params, (err, results) => {
+    if (err) {
+      console.error("Erro:", err);
+      return res.status(500).json({ error: "Erro ao buscar dados." });
+    }
+    res.json(results);
+  });
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);

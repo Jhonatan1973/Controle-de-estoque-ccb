@@ -21,7 +21,8 @@ body {
 }
 header h1 {
   font-size: calc(var(--img-width) / 4);
-  margin-left: -150px;
+  position: center;
+  margin-left: -100px;
 }
 .cont-input-header {
   position: absolute;
@@ -103,8 +104,9 @@ header h1 {
 }
 #img-ccb {
   width: var(--img-width);
-  height: auto;
-  margin-left: -330px;
+  height: left;
+  position: absolute;
+  margin-left: 50px;
 }
 .side-bar {
   position: fixed;
@@ -165,7 +167,7 @@ header h1 {
   }
   #img-ccb {
     margin: 0 auto;
-    margin-left: 150px;
+    margin-left: fixed;
     display: block;
     margin-bottom: 10px;
   }
@@ -178,9 +180,12 @@ header h1 {
   }
 }
 header h1 {
-  margin-left: 0;
+  margin-left: fixed;
+  margin-right: -120px;
   font-size: calc(var(--img-width) / 4);
   text-align: center;
+  margin-top: 50px;
+  margin-bottom: 5px;
 }
 .cont-input-header {
   position: relative;
@@ -202,7 +207,7 @@ header h1 {
   }
   #img-ccb {
     margin: 0 auto;
-    margin-left: 100px;
+    margin-left: fixed;
     display: block;
     margin-bottom: 10px;
   }
@@ -218,6 +223,8 @@ header h1 {
   }
   header h1 {
     font-size: calc(var(--img-width) / 3);
+    margin-left: fixed;
+    margin-right: -130px;
   }
   .cont-input-header {
     width: 100%;
