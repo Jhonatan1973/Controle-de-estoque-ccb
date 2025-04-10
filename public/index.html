@@ -74,6 +74,8 @@
       rel="stylesheet"
       href="/public/assets/css/header-components/rendimento-component.css"
     />
+    <link rel="stylesheet" href="/public/assets/css/noticifacao-componet/notification-component.css">
+    <link rel="stylesheet" href="/public/assets/css/validades-components/modal-vali-component.css">
   </head>
   <body>
     <header>
@@ -181,7 +183,6 @@
         </nav>
       </label>
     </header>
-
     <div class="side-bar" id="sideBar">
       <h2>Menu</h2>
       <i class="fas fa-times close-icon" onclick="closeSideBar()"></i>
@@ -230,6 +231,7 @@
         </button>
         <button class="btn btn-primary" id="cardapio" onclick="closeSideBar()">Cardapio</button>
         <button id="btnRendimento" class="btn btn-primary" onclick="closeSideBar()">Rendimento</button>
+        <button id="validades-venci" class="btn btn-primary" onclick="closeSideBar()">Validades</button>
       </div>
     </div>
     <div class="container"></div>
@@ -238,7 +240,35 @@
       <div class="bar"></div>
       <div class="bar"></div>
     </div>
-
+    <body>
+      <div class="notifications-container"></div>
+      <!-- ... resto do seu site ... -->
+    </body>
+    
+<!-- Modal de Validades -->
+<div id="modal-validades" class="modal-validades" style="display:none;">
+  <div class="modal-validades-box">
+    <span class="close" onclick="closeValidadesModal()">&times;</span>
+    <h1>VALIDADES</h1>
+    
+    <div id="tabela_validades_container">
+      <table id="tabela_validades">
+        <thead>
+          <tr>
+            <th>Nome do Produto</th>
+            <th>Quantidade</th>
+            <th>Validade</th>
+            <th>Dias Restantes</th>
+          </tr>
+        </thead>
+        <tbody id="tabela_validades_body">
+          <!-- Dados inseridos via JS -->
+        </tbody>
+      </table>
+      
+    </div>
+  </div>
+</div>
     <div class="tabela-container">
       <table id="tabelaEstoque">
         <thead>
@@ -1192,6 +1222,9 @@
         <button id="btnExecutarComparacao" class="btn btn-primary" type="button">Comparar Preço</button>
         <div id="resultadoComparacao" class="hidden"></div>
       </div>
+
+
+<script src="/public/assets/js/validade-componet/modal-validade.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script src="/public/assets/js/main.js"></script>

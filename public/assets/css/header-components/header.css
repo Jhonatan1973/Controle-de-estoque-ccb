@@ -69,7 +69,7 @@ header h1 {
   position: absolute;
   right: 17px;
   top: 10px;
-  z-index: 9;
+  z-index: 99999;
   cursor: pointer;
   appearance: none;
 }
