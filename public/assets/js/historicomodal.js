@@ -41,7 +41,6 @@ function carregarHistoricoEntrada() {
               <td>${item.nome_entrada}</td>
               <td>${item.evento_entrada}</td>
               <td>${item.quantidade_entrada}</td>
-              <td>${item.numero_nota}</td>
               <td>${valorFormatado}</td>
               <td>${item.data_entrada}</td>
             `;

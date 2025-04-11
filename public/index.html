@@ -76,6 +76,7 @@
     />
     <link rel="stylesheet" href="/public/assets/css/noticifacao-componet/notification-component.css">
     <link rel="stylesheet" href="/public/assets/css/validades-components/modal-vali-component.css">
+    <link rel="stylesheet" href="/public/assets/css/donload-component/donwload-element.css">
   </head>
   <body>
     <header>
@@ -448,16 +449,10 @@
               CF - Supervisão e Auditoria
             </option>
           </select>
-
-          <label for="numeroNota">Número da Nota:</label>
-          <input type="text" id="numeronota" class="input-simple" />
-
           <label for="valorNota">Valor da Nota:</label>
           <input type="number" id="valornota" class="input-simple" />
-
           <label for="dataalteracao">Data:</label>
           <input type="date" id="data_entrada" class="input-simple" />
-
           <label for="quantidade">Quantidade:</label>
           <input
             type="number"
@@ -465,7 +460,6 @@
             class="input-simple"
             required
           />
-
           <button onclick="adicionarQuantidade(); salvarHistoricoEntrada()">
             Adicionar
           </button>
@@ -791,14 +785,42 @@
             >
               Histórico de Entrada
             </h5>
-            <button
-              type="button"
-              class="btn-close btn-close-custom"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            >
-              Fechar
-            </button>
+            <div class="botoes-container">
+              <button
+                type="button"
+                class="btn-close btn-close-custom"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                Fechar
+              </button>
+
+              <div class="container-download" id="downloadExcel">
+                <label class="label-download">
+                  <input type="checkbox" class="input-download" />
+                  <span class="circle">
+                    <svg
+                      class="icon"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M12 19V5m0 14-4-4m4 4 4-4"
+                      ></path>
+                    </svg>
+                    <div class="square"></div>
+                  </span>
+                  <p  id="downloadExcel" class="title">Download</p>
+                  <p id="openExcelBtn" class="title">Open</p>                  
+                </label>
+              </div>
+            </div>
           </div>
           <div class="modal-body modal-body-custom">
             <table class="table table-custom" id="tabelaHistoricoEntrada">
@@ -808,7 +830,6 @@
                   <th>Nome Entrada</th>
                   <th>Evento</th>
                   <th>Quantidade</th>
-                  <th>Número Nota</th>
                   <th>Valor Nota</th>
                   <th>Data Entrada</th>
                 </tr>
@@ -1238,7 +1259,24 @@
     <script src="/public/assets/js/imobilizado-component/adicionar-component.js"></script>
     <script src="/public/assets/js/select-retirada.js"></script>
     <script src="/public/assets/js/header-component/rendimento-component.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
+
+
+function baixarTelaEstoque() {
+    const elemento = document.getElementById("telaEstoque");
+    if (!elemento) return alert("Elemento #telaEstoque não encontrado!");
+
+    html2canvas(elemento).then(canvas => {
+      const link = document.createElement("a");
+      link.download = "tela_estoque.png";
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  }
+
+
+
       function recarregarPagina() {
         location.reload();
       }

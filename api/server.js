@@ -1,6 +1,8 @@
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
+const ExcelJS = require("exceljs");
+
 require("dotenv").config({ path: __dirname + "/.env" });
 const app = express();
 app.use(cors());
@@ -195,7 +197,6 @@ app.post("/historico_entrada", (req, res) => {
     nome_entrada,
     evento_entrada,
     quantidade_entrada,
-    numero_nota,
     valor_nota,
     data_entrada,
   } = req.body;
@@ -204,14 +205,13 @@ app.post("/historico_entrada", (req, res) => {
       .status(400)
       .json({ message: "Preencha todos os campos obrigatórios!" });
   }
-  const sql = `INSERT INTO historico_entrada (fornecedor, nome_entrada, evento_entrada, quantidade_entrada, numero_nota, valor_nota, data_entrada) 
-               VALUES (?, ?, ?, ?, ?, ?, ?)`;
+  const sql = `INSERT INTO historico_entrada (fornecedor, nome_entrada, evento_entrada, quantidade_entrada, valor_nota, data_entrada) 
+               VALUES (?, ?, ?, ?, ?, ?)`;
   const values = [
     fornecedor,
     nome_entrada,
     evento_entrada,
     quantidade_entrada,
-    numero_nota || null,
     valor_nota || null,
     data_entrada,
   ];
@@ -464,6 +464,82 @@ app.get("/api/validades", async (req, res) => {
     res.json(results);
   });
 });
+
+app.get("/download-excel", async (req, res) => {
+  try {
+    const connection = db.promise();
+    const [rows] = await connection.query("SELECT * FROM historico_entrada");
+
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Histórico de Entrada");
+
+    if (rows.length > 0) {
+      const columns = Object.keys(rows[0]).map((key) => ({
+        header: key,
+        key: key,
+        width: 20,
+      }));
+
+      worksheet.columns = columns;
+
+      // Converte os valores para número antes de adicionar
+      rows.forEach((row) => {
+        if (row.valor_nota) {
+          row.valor_nota = parseFloat(row.valor_nota);
+        }
+        if (row.preco_unit) {
+          row.preco_unit = parseFloat(row.preco_unit);
+        }
+        worksheet.addRow(row);
+      });
+
+      // Aplica filtros no cabeçalho
+      worksheet.autoFilter = {
+        from: "A1",
+        to: worksheet.getRow(1).getCell(columns.length)._address,
+      };
+
+      // Formata as colunas com R$
+      const formatCurrency = '"R$"#,##0.00';
+
+      const colIndexValorNota =
+        columns.findIndex((col) => col.key === "valor_nota") + 1;
+      const colIndexPrecoUnit =
+        columns.findIndex((col) => col.key === "preco_unit") + 1;
+
+      const colLetterValorNota = worksheet.getColumn(colIndexValorNota).letter;
+      worksheet.getColumn(colIndexValorNota).numFmt = formatCurrency;
+
+      worksheet.getColumn(colIndexPrecoUnit).numFmt = formatCurrency;
+
+      // Linha do total para valor_nota com fórmula SUBTOTAL
+      const lastDataRow = worksheet.lastRow.number;
+      const totalRow = worksheet.addRow([]);
+      totalRow.getCell(columns.length - 1).value = "TOTAL:";
+      totalRow.getCell(columns.length).value = {
+        formula: `SUBTOTAL(9, ${colLetterValorNota}2:${colLetterValorNota}${lastDataRow})`,
+      };
+      totalRow.getCell(columns.length).numFmt = formatCurrency;
+      totalRow.font = { bold: true };
+    }
+
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=historico_entrada.xlsx"
+    );
+
+    await workbook.xlsx.write(res);
+    res.end();
+  } catch (error) {
+    console.error("Erro ao gerar Excel:", error);
+    res.status(500).send("Erro ao gerar Excel");
+  }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);

@@ -110,11 +110,10 @@ function salvarHistoricoEntrada() {
   const nome_entrada = document.getElementById("produto_entrada").value;
   const evento_entrada = document.getElementById("evento_entrada").value;
   const quantidade_entrada = document.getElementById("inputquantidade").value;
-  const numero_nota = document.getElementById("numeronota").value;
   const valor_nota = document.getElementById("valornota").value;
   const data_entrada = document.getElementById("data_entrada").value;
 
-  if (!nome_entrada || !nome_entrada || !quantidade_entrada || !data_entrada) {
+  if (!nome_entrada || !quantidade_entrada || !data_entrada) {
     mostrarAnimacaoErro();
     return;
   }
@@ -126,7 +125,6 @@ function salvarHistoricoEntrada() {
       nome_entrada,
       evento_entrada,
       quantidade_entrada,
-      numero_nota,
       valor_nota,
       data_entrada,
     }),
@@ -152,3 +150,6 @@ function selecionarProduto(linha) {
     linha.classList.remove("selected");
   }
 }
+document.getElementById("downloadExcel").addEventListener("click", () => {
+  window.location.href = "http://localhost:3000/download-excel"; // ajuste se o servidor for outro
+});
