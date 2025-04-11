@@ -58,9 +58,36 @@
       rel="stylesheet"
       href="/public/assets/css/transition/loard-geral.css"
     />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/select-retirada/select-retirad.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/header-components/burger.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/header-components/rendimento-component.css"
+    />
+    <link rel="stylesheet" href="/public/assets/css/noticifacao-componet/notification-component.css">
+    <link rel="stylesheet" href="/public/assets/css/validades-components/modal-vali-component.css">
+    <link rel="stylesheet" href="/public/assets/css/donload-component/donwload-element.css">
   </head>
   <body>
     <header>
+      <!-- From Uiverse.io by ahmedyasserdev -->
+      <input id="burger-checkbox" type="checkbox" />
+      <label class="burger" for="burger-checkbox" onclick="toggleSideBar()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+
       <img
         src="/public/assets/img/Logo_branco.png"
         id="img-ccb"
@@ -72,12 +99,29 @@
           <div class="selected" id="selected-option">
             <span id="selected-text">Nome</span>
           </div>
-          <input
-            placeholder="Pesquisar..."
-            class="input"
-            type="text"
-            oninput="filtrarTabela()"
-          />
+          <div class="cont-input-header">
+            <input checked="" class="checkbox" type="checkbox" />
+            <div class="mainbox">
+              <div class="iconcont-input-header">
+                <svg
+                  viewBox="0 0 512 512"
+                  height="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="search_icon"
+                >
+                  <path
+                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+                  ></path>
+                </svg>
+              </div>
+              <input
+                class="input"
+                placeholder="Buscar..."
+                type="text"
+                oninput="filtrarTabela()"
+              />
+            </div>
+          </div>
         </div>
       </div>
       <label class="popup" style="display: none">
@@ -140,48 +184,92 @@
         </nav>
       </label>
     </header>
-    <div class="container">
-      <button
-        id="openModalGerenciarProduto"
-        class="btn btn-primary"
-        style="display: none"
-      >
-        Adicionar Produto Cozinha
-      </button>
-      <button
-        id="openModalGerenciarProdutoImobilizados"
-        class="btn btn-primary"
-        style="display: none"
-      >
-        Adicionar Produto Imobilizados
-      </button>
-      <button
-        id="openModalGerenciarProdutoMezanino"
-        class="btn btn-primary"
-        style="display: none"
-      >
-        Adicionar Produto Mezanino
-      </button>
+    <div class="side-bar" id="sideBar">
+      <h2>Menu</h2>
+      <i class="fas fa-times close-icon" onclick="closeSideBar()"></i>
+      <div class="button-container-barra">
+        <label for="filtroEstoque">Filtrar:</label>
+        <select id="filtroEstoque" class="select-simple">
+          <option value="cozinha">Cozinha</option>
+          <option value="imobilizados">Imobilizados</option>
+          <option value="mezanino">Mezanino</option>
+        </select>
+        <button
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#historicoModal"
+          onclick="closeSideBar()"
+        >
+          Histórico
+        </button>
+        <button
+          id="openModalGerenciarProduto"
+          class="btn btn-primary"
+          style="display: none"
+          onclick="closeSideBar()"
+        >
+          Adicionar Produto Cozinha
+        </button>
+        <button
+          id="openModalGerenciarProdutoImobilizados"
+          class="btn btn-primary"
+          style="display: none"
+          onclick="closeSideBar()"
+        >
+          Adicionar Produto Imobilizados
+        </button>
+        <button
+          id="openModalGerenciarProdutoMezanino"
+          class="btn btn-primary"
+          style="display: none"
+          onclick="closeSideBar()"
+        >
+          Adicionar Produto Mezanino
+        </button>
 
-      <button
-        class="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#historicoModal"
-      >
-        Histórico
-      </button>
-      <label for="filtroEstoque">Filtrar:</label>
-      <select id="filtroEstoque" class="select-simple">
-        <option value="cozinha">Cozinha</option>
-        <option value="imobilizados">Imobilizados</option>
-        <option value="mezanino">Mezanino</option>
-      </select>
+        <button class="btn btn-primary" id="abrirModalSelecionarRetirada" onclick="closeSideBar()">
+          Selecionar Produtos para Retirada
+        </button>
+        <button class="btn btn-primary" id="cardapio" onclick="closeSideBar()">Cardapio</button>
+        <button id="btnRendimento" class="btn btn-primary" onclick="closeSideBar()">Rendimento</button>
+        <button id="validades-venci" class="btn btn-primary" onclick="closeSideBar()">Validades</button>
+      </div>
     </div>
+    <div class="container"></div>
     <div id="loader" class="loader" style="display: none">
       <div class="bar"></div>
       <div class="bar"></div>
       <div class="bar"></div>
     </div>
+    <body>
+      <div class="notifications-container"></div>
+      <!-- ... resto do seu site ... -->
+    </body>
+    
+<!-- Modal de Validades -->
+<div id="modal-validades" class="modal-validades" style="display:none;">
+  <div class="modal-validades-box">
+    <span class="close" onclick="closeValidadesModal()">&times;</span>
+    <h1>VALIDADES</h1>
+    
+    <div id="tabela_validades_container">
+      <table id="tabela_validades">
+        <thead>
+          <tr>
+            <th>Nome do Produto</th>
+            <th>Quantidade</th>
+            <th>Validade</th>
+            <th>Dias Restantes</th>
+          </tr>
+        </thead>
+        <tbody id="tabela_validades_body">
+          <!-- Dados inseridos via JS -->
+        </tbody>
+      </table>
+      
+    </div>
+  </div>
+</div>
     <div class="tabela-container">
       <table id="tabelaEstoque">
         <thead>
@@ -206,7 +294,6 @@
         <p>Produto: <span id="nomeProdutoAlterar"></span></p>
         <input type="hidden" id="produtoIdAlterar" />
         <button onclick="abrirModalAdicionar()">Adicionar</button>
-        <button onclick="abrirModalRetirar()">Retirar</button>
         <button onclick="fecharModal('modal-alterar')">Fechar</button>
       </div>
       <div id="modal-adicionar" class="modal-base modal-adicionar">
@@ -220,15 +307,152 @@
           <label for="Produto_id">Produto:</label>
           <input type="text" id="produto_entrada" class="input-simple" />
 
-          <label for="numeroNota">Número da Nota:</label>
-          <input type="text" id="numeronota" class="input-simple" />
-
+          <label for="evento">Evento:</label>
+          <select id="evento_entrada">
+            <option value="Assembleia CF - Trimestral">
+              Assembleia CF - Trimestral
+            </option>
+            <option value="Plantão DARPE">Plantão DARPE</option>
+            <option value="Assist. Farmacêutica">Assist. Farmacêutica</option>
+            <option value="Equipe de Diáconos">Equipe de Diáconos</option>
+            <option value="Coord. Apoio Brasil">Coord. Apoio Brasil</option>
+            <option value="Atendimento CF">Atendimento CF</option>
+            <option value="DCR">DCR</option>
+            <option value="Encontro CA e D - SP (Capital)">
+              Encontro CA e D - SP (Capital)
+            </option>
+            <option value="RRM - Capital">RRM - Capital</option>
+            <option value="Atendimento Posto Médico - Colaboradores">
+              Atendimento Posto Médico - Colaboradores
+            </option>
+            <option value="Comitê Engenharia - Projetos África">
+              Comitê Engenharia - Projetos África
+            </option>
+            <option value="Gestão Estratégica DARPE">
+              Gestão Estratégica DARPE
+            </option>
+            <option value="Videoconf. Coordenadores DARPE">
+              Videoconf. Coordenadores DARPE
+            </option>
+            <option value="Grupo Estudos LIBRAS">Grupo Estudos LIBRAS</option>
+            <option value="Atendimento Engenharia - Plantão">
+              Atendimento Engenharia - Plantão
+            </option>
+            <option value="Supervisão Livro Azul - Plantão">
+              Supervisão Livro Azul - Plantão
+            </option>
+            <option value="GEM - Brás">GEM - Brás</option>
+            <option value="Encontro Representantes Técnicos GTM">
+              Encontro Representantes Técnicos GTM
+            </option>
+            <option value="Reunião Trabalho Semanal - GT Eng. e CTMs">
+              Reunião Trabalho Semanal - GT Eng. e CTMs
+            </option>
+            <option value="Diretoria e Presidência">
+              Diretoria e Presidência
+            </option>
+            <option value="CNS">CNS</option>
+            <option value="Coord. Nacional Apoio e Bombeiros">
+              Coord. Nacional Apoio e Bombeiros
+            </option>
+            <option value="Escritório Processos Organizacionais">
+              Escritório Processos Organizacionais
+            </option>
+            <option value="Plantão Segurança do Trabalho - Brasil">
+              Plantão Segurança do Trabalho - Brasil
+            </option>
+            <option value="GDI">GDI</option>
+            <option value="Planejamento Cozinha - RGE 2025">
+              Planejamento Cozinha - RGE 2025
+            </option>
+            <option value="Organização Alojamentos e Dormitórios">
+              Organização Alojamentos e Dormitórios
+            </option>
+            <option value="Encontro Administrativo - SP">
+              Encontro Administrativo - SP
+            </option>
+            <option value="Agentes Regionais Proteção Dados - LGPD">
+              Agentes Regionais Proteção Dados - LGPD
+            </option>
+            <option value="Secretaria Projetos - África">
+              Secretaria Projetos - África
+            </option>
+            <option value="Ensaio Musical - Eventos Oficiais">
+              Ensaio Musical - Eventos Oficiais
+            </option>
+            <option value="Planejamento Hospedagens - 2025">
+              Planejamento Hospedagens - 2025
+            </option>
+            <option value="Reunião Garçons e Equipe Serviço">
+              Reunião Garçons e Equipe Serviço
+            </option>
+            <option value="Coord. Estacionamento">Coord. Estacionamento</option>
+            <option value="Orientações Irmãs Piedade e Diáconos - Brás">
+              Orientações Irmãs Piedade e Diáconos - Brás
+            </option>
+            <option value="Procedimentos Online Cozinha Brás - RGE 2025">
+              Procedimentos Online Cozinha Brás - RGE 2025
+            </option>
+            <option value="Procedimentos Online Cozinha Hospedaria - RGE 2025">
+              Procedimentos Online Cozinha Hospedaria - RGE 2025
+            </option>
+            <option value="Videoconf. CNS">Videoconf. CNS</option>
+            <option value="Conselho Administração e Liderança DARPE">
+              Conselho Administração e Liderança DARPE
+            </option>
+            <option value="Encontro RGE - CA mais Antigos (Brasil e Ext.)">
+              Encontro RGE - CA mais Antigos (Brasil e Ext.)
+            </option>
+            <option value="Planejamento Departamento Apoio Indígena">
+              Planejamento Departamento Apoio Indígena
+            </option>
+            <option value="CA e D - Brasil e Exterior">
+              CA e D - Brasil e Exterior
+            </option>
+            <option value="Assembleia Virtual RGE">
+              Assembleia Virtual RGE
+            </option>
+            <option value="RMA">RMA</option>
+            <option value="Reunião Conselho Administração SP">
+              Reunião Conselho Administração SP
+            </option>
+            <option value="Planejamento Estratégico - Grupo Gestor">
+              Planejamento Estratégico - Grupo Gestor
+            </option>
+            <option value="Videoconf. Encarregados Regionais e Examinadores">
+              Videoconf. Encarregados Regionais e Examinadores
+            </option>
+            <option value="CA mais Antigos Estado">
+              CA mais Antigos Estado
+            </option>
+            <option value="DEPAC - Online">DEPAC - Online</option>
+            <option value="Reunião Coord. Jovens e Menores">
+              Reunião Coord. Jovens e Menores
+            </option>
+            <option value="Planejamento Equipe RA-SP">
+              Planejamento Equipe RA-SP
+            </option>
+            <option value="Assembleia Desenvolvimento Projetos Comunitários">
+              Assembleia Desenvolvimento Projetos Comunitários
+            </option>
+            <option value="Sessão Estratégica CNS Online">
+              Sessão Estratégica CNS Online
+            </option>
+            <option value="Planejamento Estratégias RRA Online">
+              Planejamento Estratégias RRA Online
+            </option>
+            <option value="Comitê Gestão GEM">Comitê Gestão GEM</option>
+            <option value="Planejamento Atividades DATEX">
+              Planejamento Atividades DATEX
+            </option>
+            <option value="CF - Supervisão e Auditoria">
+              CF - Supervisão e Auditoria
+            </option>
+          </select>
           <label for="valorNota">Valor da Nota:</label>
           <input type="number" id="valornota" class="input-simple" />
-
           <label for="dataalteracao">Data:</label>
           <input type="date" id="data_entrada" class="input-simple" />
-
           <label for="quantidade">Quantidade:</label>
           <input
             type="number"
@@ -236,7 +460,6 @@
             class="input-simple"
             required
           />
-
           <button onclick="adicionarQuantidade(); salvarHistoricoEntrada()">
             Adicionar
           </button>
@@ -255,20 +478,147 @@
 
           <input type="hidden" id="produtoIdRetirar" />
           <label for="evento">Evento:</label>
-          <select id="evento">
-            <option value="RGE">RGE</option>
-            <option value="ADM SP">ADM SP</option>
-            <option value="ANCIÃES">ANCIÃES</option>
-            <option value="C.O. BRAS">C.O. BRAS</option>
-            <option value="COMPLEXO BRAS">COMPLEXO BRAS</option>
-            <option value="DARPE/DEPAC/DATEX">DARPE/DEPAC/DATEX</option>
-            <option value="DIÁCONOS">DIÁCONOS</option>
-            <option value="MÚSICA">MÚSICA</option>
-            <option value="SETOR CENTRO">SETOR CENTRO</option>
+          <select id="0">
+            <option value="Assembleia CF - Trimestral">
+              Assembleia CF - Trimestral
+            </option>
+            <option value="Plantão DARPE">Plantão DARPE</option>
+            <option value="Assist. Farmacêutica">Assist. Farmacêutica</option>
+            <option value="Equipe de Diáconos">Equipe de Diáconos</option>
+            <option value="Coord. Apoio Brasil">Coord. Apoio Brasil</option>
+            <option value="Atendimento CF">Atendimento CF</option>
+            <option value="DCR">DCR</option>
+            <option value="Encontro CA e D - SP (Capital)">
+              Encontro CA e D - SP (Capital)
+            </option>
+            <option value="RRM - Capital">RRM - Capital</option>
+            <option value="Atendimento Posto Médico - Colaboradores">
+              Atendimento Posto Médico - Colaboradores
+            </option>
+            <option value="Comitê Engenharia - Projetos África">
+              Comitê Engenharia - Projetos África
+            </option>
+            <option value="Gestão Estratégica DARPE">
+              Gestão Estratégica DARPE
+            </option>
+            <option value="Videoconf. Coordenadores DARPE">
+              Videoconf. Coordenadores DARPE
+            </option>
+            <option value="Grupo Estudos LIBRAS">Grupo Estudos LIBRAS</option>
+            <option value="Atendimento Engenharia - Plantão">
+              Atendimento Engenharia - Plantão
+            </option>
+            <option value="Supervisão Livro Azul - Plantão">
+              Supervisão Livro Azul - Plantão
+            </option>
+            <option value="GEM - Brás">GEM - Brás</option>
+            <option value="Encontro Representantes Técnicos GTM">
+              Encontro Representantes Técnicos GTM
+            </option>
+            <option value="Reunião Trabalho Semanal - GT Eng. e CTMs">
+              Reunião Trabalho Semanal - GT Eng. e CTMs
+            </option>
+            <option value="Diretoria e Presidência">
+              Diretoria e Presidência
+            </option>
+            <option value="CNS">CNS</option>
+            <option value="Coord. Nacional Apoio e Bombeiros">
+              Coord. Nacional Apoio e Bombeiros
+            </option>
+            <option value="Escritório Processos Organizacionais">
+              Escritório Processos Organizacionais
+            </option>
+            <option value="Plantão Segurança do Trabalho - Brasil">
+              Plantão Segurança do Trabalho - Brasil
+            </option>
+            <option value="GDI">GDI</option>
+            <option value="Planejamento Cozinha - RGE 2025">
+              Planejamento Cozinha - RGE 2025
+            </option>
+            <option value="Organização Alojamentos e Dormitórios">
+              Organização Alojamentos e Dormitórios
+            </option>
+            <option value="Encontro Administrativo - SP">
+              Encontro Administrativo - SP
+            </option>
+            <option value="Agentes Regionais Proteção Dados - LGPD">
+              Agentes Regionais Proteção Dados - LGPD
+            </option>
+            <option value="Secretaria Projetos - África">
+              Secretaria Projetos - África
+            </option>
+            <option value="Ensaio Musical - Eventos Oficiais">
+              Ensaio Musical - Eventos Oficiais
+            </option>
+            <option value="Planejamento Hospedagens - 2025">
+              Planejamento Hospedagens - 2025
+            </option>
+            <option value="Reunião Garçons e Equipe Serviço">
+              Reunião Garçons e Equipe Serviço
+            </option>
+            <option value="Coord. Estacionamento">Coord. Estacionamento</option>
+            <option value="Orientações Irmãs Piedade e Diáconos - Brás">
+              Orientações Irmãs Piedade e Diáconos - Brás
+            </option>
+            <option value="Procedimentos Online Cozinha Brás - RGE 2025">
+              Procedimentos Online Cozinha Brás - RGE 2025
+            </option>
+            <option value="Procedimentos Online Cozinha Hospedaria - RGE 2025">
+              Procedimentos Online Cozinha Hospedaria - RGE 2025
+            </option>
+            <option value="Videoconf. CNS">Videoconf. CNS</option>
+            <option value="Conselho Administração e Liderança DARPE">
+              Conselho Administração e Liderança DARPE
+            </option>
+            <option value="Encontro RGE - CA mais Antigos (Brasil e Ext.)">
+              Encontro RGE - CA mais Antigos (Brasil e Ext.)
+            </option>
+            <option value="Planejamento Departamento Apoio Indígena">
+              Planejamento Departamento Apoio Indígena
+            </option>
+            <option value="CA e D - Brasil e Exterior">
+              CA e D - Brasil e Exterior
+            </option>
+            <option value="Assembleia Virtual RGE">
+              Assembleia Virtual RGE
+            </option>
+            <option value="RMA">RMA</option>
+            <option value="Reunião Conselho Administração SP">
+              Reunião Conselho Administração SP
+            </option>
+            <option value="Planejamento Estratégico - Grupo Gestor">
+              Planejamento Estratégico - Grupo Gestor
+            </option>
+            <option value="Videoconf. Encarregados Regionais e Examinadores">
+              Videoconf. Encarregados Regionais e Examinadores
+            </option>
+            <option value="CA mais Antigos Estado">
+              CA mais Antigos Estado
+            </option>
+            <option value="DEPAC - Online">DEPAC - Online</option>
+            <option value="Reunião Coord. Jovens e Menores">
+              Reunião Coord. Jovens e Menores
+            </option>
+            <option value="Planejamento Equipe RA-SP">
+              Planejamento Equipe RA-SP
+            </option>
+            <option value="Assembleia Desenvolvimento Projetos Comunitários">
+              Assembleia Desenvolvimento Projetos Comunitários
+            </option>
+            <option value="Sessão Estratégica CNS Online">
+              Sessão Estratégica CNS Online
+            </option>
+            <option value="Planejamento Estratégias RRA Online">
+              Planejamento Estratégias RRA Online
+            </option>
+            <option value="Comitê Gestão GEM">Comitê Gestão GEM</option>
+            <option value="Planejamento Atividades DATEX">
+              Planejamento Atividades DATEX
+            </option>
+            <option value="CF - Supervisão e Auditoria">
+              CF - Supervisão e Auditoria
+            </option>
           </select>
-
-          <label for="dataalteracao">Data:</label>
-          <input type="date" id="data_saida" class="input-simple" />
 
           <label for="quantidade">Quantidade:</label>
           <input
@@ -329,7 +679,6 @@
             <option value="unidade">Unidade</option>
             <option value="litro">Litro</option>
           </select>
-
           <label for="quantidade">Quantidade:</label>
           <input
             type="number"
@@ -338,7 +687,6 @@
             class="input-simple"
             required
           />
-
           <label for="categoria">Categoria:</label>
           <select
             id="categoria"
@@ -353,7 +701,6 @@
             <option value="Hort">Hort</option>
             <option value="Dc">Dc</option>
           </select>
-
           <label for="validade">Validade:</label>
           <input
             type="date"
@@ -362,7 +709,6 @@
             class="input-simple"
             required
           />
-
           <label for="estoqueMax">Estoque Máximo:</label>
           <input
             type="number"
@@ -371,7 +717,6 @@
             class="input-simple"
             required
           />
-
           <label for="estoqueMed">Estoque Médio:</label>
           <input
             type="number"
@@ -380,7 +725,6 @@
             class="input-simple"
             required
           />
-
           <label for="estoqueMin">Estoque Mínimo:</label>
           <input
             type="number"
@@ -389,7 +733,6 @@
             class="input-simple"
             required
           />
-
           <button type="submit" onclick="recarregarPagina()">Confirmar</button>
         </form>
       </div>
@@ -442,14 +785,42 @@
             >
               Histórico de Entrada
             </h5>
-            <button
-              type="button"
-              class="btn-close btn-close-custom"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            >
-              Fechar
-            </button>
+            <div class="botoes-container">
+              <button
+                type="button"
+                class="btn-close btn-close-custom"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                Fechar
+              </button>
+
+              <div class="container-download" id="downloadExcel">
+                <label class="label-download">
+                  <input type="checkbox" class="input-download" />
+                  <span class="circle">
+                    <svg
+                      class="icon"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M12 19V5m0 14-4-4m4 4 4-4"
+                      ></path>
+                    </svg>
+                    <div class="square"></div>
+                  </span>
+                  <p  id="downloadExcel" class="title">Download</p>
+                  <p id="openExcelBtn" class="title">Open</p>                  
+                </label>
+              </div>
+            </div>
           </div>
           <div class="modal-body modal-body-custom">
             <table class="table table-custom" id="tabelaHistoricoEntrada">
@@ -457,8 +828,8 @@
                 <tr>
                   <th>Fornecedor</th>
                   <th>Nome Entrada</th>
+                  <th>Evento</th>
                   <th>Quantidade</th>
-                  <th>Número Nota</th>
                   <th>Valor Nota</th>
                   <th>Data Entrada</th>
                 </tr>
@@ -493,7 +864,7 @@
             >
               Fechar
             </button>
-            <select id="eventoHistoricoSaida">
+            <select id="eventoHistoricoSaida" class="select-custom">
               <option value="">Todos</option>
               <option value="RGE">RGE</option>
               <option value="ADM SP">ADM SP</option>
@@ -587,7 +958,6 @@
     <div id="modal-imob-ajuste" class="caixa-ajuste-imob">
       <div class="conteudo-ajuste-imob">
         <h3 id="modal-title">Alterar Imobilizado</h3>
-
         <div class="grupo-entrada">
           <label for="codigo-imobilizado">Código do Imobilizado:</label>
           <input
@@ -599,7 +969,6 @@
             required
           />
         </div>
-
         <div class="grupo-entrada">
           <label>Destino:</label>
           <input type="text" id="destino" />
@@ -609,20 +978,17 @@
           <select id="autorizacao" name="autorizacao" required>
             <option value="" disabled selected>Escolha uma opção</option>
             <option value="Gisline">Gisline</option>
-            <option value="Vander">Vander</option>
+            <option value="Wander">Wander</option>
           </select>
         </div>
-
         <div class="grupo-entrada">
           <label>Quantidade:</label>
           <input type="number" id="quantidade-imobilizado" />
         </div>
-
         <div class="grupo-entrada">
           <label>Data de Saída:</label>
           <input type="date" id="data_saida" />
         </div>
-
         <div class="grupo-botoes">
           <button class="botao-fechar-ajuste" onclick="fecharModAlterarImob()">
             Fechar
@@ -633,6 +999,253 @@
         </div>
       </div>
     </div>
+    <div id="modal-selecao-retirada" style="display: none">
+      <div class="modal-container-retirada">
+        <span id="fecharModalSelecionarRetirada" style="cursor: pointer"
+          >&times;</span
+        >
+        <h2>Selecionar Produtos para Retirada</h2>
+        <input type="hidden" id="produtoIdRetirar" />
+        <label for="evento">Evento:</label>
+        <select id="evento">
+          <option value="Assembleia CF - Trimestral">
+            Assembleia CF - Trimestral
+          </option>
+          <option value="Plantão DARPE">Plantão DARPE</option>
+          <option value="Assist. Farmacêutica">Assist. Farmacêutica</option>
+          <option value="Equipe de Diáconos">Equipe de Diáconos</option>
+          <option value="Coord. Apoio Brasil">Coord. Apoio Brasil</option>
+          <option value="Atendimento CF">Atendimento CF</option>
+          <option value="DCR">DCR</option>
+          <option value="Encontro CA e D - SP (Capital)">
+            Encontro CA e D - SP (Capital)
+          </option>
+          <option value="RRM - Capital">RRM - Capital</option>
+          <option value="Atendimento Posto Médico - Colaboradores">
+            Atendimento Posto Médico - Colaboradores
+          </option>
+          <option value="Comitê Engenharia - Projetos África">
+            Comitê Engenharia - Projetos África
+          </option>
+          <option value="Gestão Estratégica DARPE">
+            Gestão Estratégica DARPE
+          </option>
+          <option value="Videoconf. Coordenadores DARPE">
+            Videoconf. Coordenadores DARPE
+          </option>
+          <option value="Grupo Estudos LIBRAS">Grupo Estudos LIBRAS</option>
+          <option value="Atendimento Engenharia - Plantão">
+            Atendimento Engenharia - Plantão
+          </option>
+          <option value="Supervisão Livro Azul - Plantão">
+            Supervisão Livro Azul - Plantão
+          </option>
+          <option value="GEM - Brás">GEM - Brás</option>
+          <option value="Encontro Representantes Técnicos GTM">
+            Encontro Representantes Técnicos GTM
+          </option>
+          <option value="Reunião Trabalho Semanal - GT Eng. e CTMs">
+            Reunião Trabalho Semanal - GT Eng. e CTMs
+          </option>
+          <option value="Diretoria e Presidência">
+            Diretoria e Presidência
+          </option>
+          <option value="CNS">CNS</option>
+          <option value="Coord. Nacional Apoio e Bombeiros">
+            Coord. Nacional Apoio e Bombeiros
+          </option>
+          <option value="Escritório Processos Organizacionais">
+            Escritório Processos Organizacionais
+          </option>
+          <option value="Plantão Segurança do Trabalho - Brasil">
+            Plantão Segurança do Trabalho - Brasil
+          </option>
+          <option value="GDI">GDI</option>
+          <option value="Planejamento Cozinha - RGE 2025">
+            Planejamento Cozinha - RGE 2025
+          </option>
+          <option value="Organização Alojamentos e Dormitórios">
+            Organização Alojamentos e Dormitórios
+          </option>
+          <option value="Encontro Administrativo - SP">
+            Encontro Administrativo - SP
+          </option>
+          <option value="Agentes Regionais Proteção Dados - LGPD">
+            Agentes Regionais Proteção Dados - LGPD
+          </option>
+          <option value="Secretaria Projetos - África">
+            Secretaria Projetos - África
+          </option>
+          <option value="Ensaio Musical - Eventos Oficiais">
+            Ensaio Musical - Eventos Oficiais
+          </option>
+          <option value="Planejamento Hospedagens - 2025">
+            Planejamento Hospedagens - 2025
+          </option>
+          <option value="Reunião Garçons e Equipe Serviço">
+            Reunião Garçons e Equipe Serviço
+          </option>
+          <option value="Coord. Estacionamento">Coord. Estacionamento</option>
+          <option value="Orientações Irmãs Piedade e Diáconos - Brás">
+            Orientações Irmãs Piedade e Diáconos - Brás
+          </option>
+          <option value="Procedimentos Online Cozinha Brás - RGE 2025">
+            Procedimentos Online Cozinha Brás - RGE 2025
+          </option>
+          <option value="Procedimentos Online Cozinha Hospedaria - RGE 2025">
+            Procedimentos Online Cozinha Hospedaria - RGE 2025
+          </option>
+          <option value="Videoconf. CNS">Videoconf. CNS</option>
+          <option value="Conselho Administração e Liderança DARPE">
+            Conselho Administração e Liderança DARPE
+          </option>
+          <option value="Encontro RGE - CA mais Antigos (Brasil e Ext.)">
+            Encontro RGE - CA mais Antigos (Brasil e Ext.)
+          </option>
+          <option value="Planejamento Departamento Apoio Indígena">
+            Planejamento Departamento Apoio Indígena
+          </option>
+          <option value="CA e D - Brasil e Exterior">
+            CA e D - Brasil e Exterior
+          </option>
+          <option value="Assembleia Virtual RGE">Assembleia Virtual RGE</option>
+          <option value="RMA">RMA</option>
+          <option value="Reunião Conselho Administração SP">
+            Reunião Conselho Administração SP
+          </option>
+          <option value="Planejamento Estratégico - Grupo Gestor">
+            Planejamento Estratégico - Grupo Gestor
+          </option>
+          <option value="Videoconf. Encarregados Regionais e Examinadores">
+            Videoconf. Encarregados Regionais e Examinadores
+          </option>
+          <option value="CA mais Antigos Estado">CA mais Antigos Estado</option>
+          <option value="DEPAC - Online">DEPAC - Online</option>
+          <option value="Reunião Coord. Jovens e Menores">
+            Reunião Coord. Jovens e Menores
+          </option>
+          <option value="Planejamento Equipe RA-SP">
+            Planejamento Equipe RA-SP
+          </option>
+          <option value="Assembleia Desenvolvimento Projetos Comunitários">
+            Assembleia Desenvolvimento Projetos Comunitários
+          </option>
+          <option value="Sessão Estratégica CNS Online">
+            Sessão Estratégica CNS Online
+          </option>
+          <option value="Planejamento Estratégias RRA Online">
+            Planejamento Estratégias RRA Online
+          </option>
+          <option value="Comitê Gestão GEM">Comitê Gestão GEM</option>
+          <option value="Planejamento Atividades DATEX">
+            Planejamento Atividades DATEX
+          </option>
+          <option value="CF - Supervisão e Auditoria">
+            CF - Supervisão e Auditoria
+          </option>
+        </select>
+        <label for="quem">Quem retirou:</label>
+        <input
+          type="text"
+          id="quem-retirou"
+          class="select-custom"
+          placeholder="Digite o nome do usuário"
+        />
+        <label for="dataalteracao">Data:</label>
+        <input type="date" id="data-saida" class="input-simple" />
+        <input
+          type="text"
+          id="input-pesquisa-selecao-retirada"
+          placeholder="Pesquisar produto"
+          oninput="filtrarProdutos()"
+        />
+        <table id="tabela-produtos-selecao">
+          <thead>
+            <tr>
+              <th>Nome do Produto</th>
+              <th>Quantidade</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="produtos-lista-selecao"></tbody>
+        </table>
+        <button
+          id="confirmar-selecao-retirada"
+          onclick="salvarHistoricoSaida()"
+        >
+          Confirmar Seleção
+        </button>
+      </div>
+    </div>
+    <div id="rendimentoBox" class="hidden">
+      <button class="btn btn-primary" id="fecharRendimento">X</button>
+      <h3>Escolha uma opção</h3>
+
+      <div class="opcoes">
+        <label
+          ><input type="radio" name="tipoRendimento" value="produto" /> Por
+          Produto</label
+        >
+        <label
+          ><input type="radio" name="tipoRendimento" value="evento" /> Por
+          Evento</label
+        >
+      </div>
+      <div id="filtroProduto" class="hidden">
+        <label for="produtoSelect">Nome do produto:</label>
+        <select id="produtoSelect">
+          <option value="">Selecione</option>
+          <option value="café">Café</option>
+          <option value="arroz">Arroz</option>
+          <option value="feijão">Feijão</option>
+          <option value="macarrão">Macarrão</option>
+          <option value="bolacha">Bolacha</option>
+          <option value="Tomate">Tomate</option>
+        </select>
+      </div>
+      <div id="filtroEvento" class="hidden">
+        <label for="eventoSelect">Tipo de evento:</label>
+        <select id="eventoSelect">
+          <option value="">Selecione</option>
+          <option value="RGE">RGE</option>
+          <option value="RRM">RRM</option>
+          <option value="COMPLEX">COMPLEX</option>
+          <option value="COZ">COZ</option>
+        </select>
+      </div>
+      <div class="datas">
+        <label for="dataInici">De:</label>
+        <input type="date" id="dataInicio" />
+        <label for="dataFim">Até:</label>
+        <input type="date" id="dataFim" />
+      </div>
+      <div class="botoes-acao">
+        <button id="btnCalcularRendimento">Calcular</button>
+        <button id="btnComparar">Comparar</button>
+        <button id="btnToggleTabelas">Limpar</button>
+      </div>
+      <div id="compararBox" class="hidden">
+        <button class="btn btn-primary" id="fecharComparar">X</button>
+        <h4>Comparar Produto</h4>
+        <label for="produtoComparar">Produto:</label>
+        <select id="produtoComparar">
+          <option value="arroz">Arroz</option>
+          <option value="feijao">Feijão</option>
+          <option value="macarrao">Macarrão</option>
+        </select>
+        <div class="datas">
+          <label for="mesBase">De:</label>
+          <input type="month" id="mesBase" />
+        
+          <label for="mesComparar">Até:</label>
+          <input type="month" id="mesComparar" />
+        </div>
+        <button id="btnExecutarComparacao" class="btn btn-primary" type="button">Comparar Preço</button>
+        <div id="resultadoComparacao" class="hidden"></div>
+      </div>
+
+
+<script src="/public/assets/js/validade-componet/modal-validade.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script src="/public/assets/js/main.js"></script>
@@ -644,9 +1257,28 @@
     <script src="/public/assets/js/historicomodal.js"></script>
     <script src="/public/assets/js/imobilizado-component/retirar-component.js"></script>
     <script src="/public/assets/js/imobilizado-component/adicionar-component.js"></script>
+    <script src="/public/assets/js/select-retirada.js"></script>
+    <script src="/public/assets/js/header-component/rendimento-component.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
+
+
+function baixarTelaEstoque() {
+    const elemento = document.getElementById("telaEstoque");
+    if (!elemento) return alert("Elemento #telaEstoque não encontrado!");
+
+    html2canvas(elemento).then(canvas => {
+      const link = document.createElement("a");
+      link.download = "tela_estoque.png";
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  }
+
+
+
       function recarregarPagina() {
-        location.reload(); // Isso vai recarregar a página atual
+        location.reload();
       }
       const btnCozinha = document.getElementById("openModalGerenciarProduto");
       const btnImobilizados = document.getElementById(
@@ -760,16 +1392,16 @@
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(produto), // Envia os dados no formato JSON
+            body: JSON.stringify(produto),
           })
-            .then((response) => response.json()) // Converte a resposta para JSON
+            .then((response) => response.json())
             .then((data) => {
-              console.log("Produto adicionado:", data); // Exibe o retorno da resposta no console
+              console.log("Produto adicionado:", data);
               document.getElementById("modalAdicionarProduto").style.display =
-                "none"; // Fecha o modal após adicionar o produto
+                "none";
             })
             .catch((error) => {
-              console.error("Erro ao adicionar produto:", error); // Exibe erros caso ocorram
+              console.error("Erro ao adicionar produto:", error);
             });
         });
       const loginBtn = document.getElementById("loginBtn");

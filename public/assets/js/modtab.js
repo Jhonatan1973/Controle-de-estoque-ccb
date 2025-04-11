@@ -1,20 +1,22 @@
-document.addEventListener("DOMContentLoaded", async () => { 
+document.addEventListener("DOMContentLoaded", async () => {
   await atualizarTabela();
-  document.getElementById("filtroEstoque").addEventListener("change", async (event) => {
-    const categoriaSelecionada = event.target.value;
-    console.log(categoriaSelecionada);
-    showLoader();
-    atualizarCabecalhoTabela(categoriaSelecionada);
-    setTimeout(async () => {
-      if (categoriaSelecionada === "cozinha") {
-        await atualizarTabela();
-      } else if (categoriaSelecionada === "imobilizados") {
-        await atualizarTabelaImobilizados();
-      } else {
-        await atualizarTabela();
-      }
-    }, 500); 
-  });
+  document
+    .getElementById("filtroEstoque")
+    .addEventListener("change", async (event) => {
+      const categoriaSelecionada = event.target.value;
+      console.log(categoriaSelecionada);
+      showLoader();
+      atualizarCabecalhoTabela(categoriaSelecionada);
+      setTimeout(async () => {
+        if (categoriaSelecionada === "cozinha") {
+          await atualizarTabela();
+        } else if (categoriaSelecionada === "imobilizados") {
+          await atualizarTabelaImobilizados();
+        } else {
+          await atualizarTabela();
+        }
+      }, 500);
+    });
   document.addEventListener("atualizarTabelaImobilizados", async () => {
     await atualizarTabelaImobilizados();
   });
@@ -23,10 +25,10 @@ function showLoader() {
   const tabela = document.getElementById("tabelaEstoque");
   const loader = document.getElementById("loader");
   tabela.style.display = "none";
-  loader.style.display = "flex"; 
+  loader.style.display = "flex";
   setTimeout(() => {
-      loader.style.display = "none"; 
-      tabela.style.display = "table"; 
+    loader.style.display = "none";
+    tabela.style.display = "table";
   }, 500);
 }
 setInterval;
@@ -73,9 +75,9 @@ function atualizarCabecalhoTabela(categoria) {
 async function atualizarTabela() {
   const response = await fetch("http://localhost:3000/produtos");
   const produtos = await response.json();
-  console.log(produtos); 
+  console.log(produtos);
   const tabela = document.getElementById("tabelcompleta");
-  tabela.innerHTML = ""; 
+  tabela.innerHTML = "";
   if (produtos.length === 0) {
     const tr = document.createElement("tr");
     tr.innerHTML = "<td colspan='8'>Nenhum produto encontrado.</td>";
@@ -98,7 +100,7 @@ async function atualizarTabela() {
     const { quantidade } = produto;
     const { max, med, min } = produto.estoque;
 
-    let corQuantidade = "black"; 
+    let corQuantidade = "black";
     if (!isNaN(quantidade)) {
       const diffMax = Math.abs(quantidade - max);
       const diffMed = Math.abs(quantidade - med);
@@ -173,20 +175,21 @@ async function adicionarQuantidadeImob() {
   const quantidade = document.getElementById("inputquantidade").value;
 
   if (!produtoId || isNaN(produtoId) || !quantidade || quantidade <= 0) {
-    alert("Erro: Produto inválido ou quantidade incorreta.");
     return;
   }
-  
-  const response = await fetch(`http://localhost:3000/imobilizados/${produtoId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ quantidade_imobilizados: parseInt(quantidade) }),
-  });
+
+  const response = await fetch(
+    `http://localhost:3000/imobilizados/${produtoId}`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ quantidade_imobilizados: parseInt(quantidade) }),
+    }
+  );
 
   if (response.ok) {
     alert("Quantidade de imobilizado adicionada com sucesso!");
     fecharModal("modal-adicionar");
-    // Verifica se o filtro está selecionado para imobilizados e atualiza a tabela
     if (document.getElementById("filtroEstoque").value === "imobilizados") {
       await atualizarTabelaImobilizados();
     }
@@ -200,21 +203,21 @@ async function retirarQuantidadeImob() {
   const quantidade = document.getElementById("quantidadeRetirar").value;
 
   if (!produtoId || isNaN(produtoId) || !quantidade || quantidade <= 0) {
-    alert("Erro: Produto inválido ou quantidade incorreta.");
     return;
   }
   showLoader();
-  const response = await fetch(`http://localhost:3000/imobilizados/${produtoId}/retirar`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ quantidade_imobilizados: -parseInt(quantidade) }),
-  });
+  const response = await fetch(
+    `http://localhost:3000/imobilizados/${produtoId}/retirar`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ quantidade_imobilizados: -parseInt(quantidade) }),
+    }
+  );
 
   if (response.ok) {
     alert("Quantidade de imobilizado retirada com sucesso!");
-    
     fecharModal("modal-retirar");
-    // Verifica se o filtro está selecionado para imobilizados e atualiza a tabela
     if (document.getElementById("filtroEstoque").value === "imobilizados") {
       await atualizarTabelaImobilizados();
     }
@@ -222,7 +225,6 @@ async function retirarQuantidadeImob() {
     alert("Erro ao retirar quantidade.");
   }
 }
-
 function abrirModalAlterar(produtoId, nomeProduto) {
   document.getElementById("produtoIdAlterar").value = produtoId;
   document.getElementById("modal-adicionar").style.display = "none";
@@ -233,24 +235,11 @@ function abrirModalAlterar(produtoId, nomeProduto) {
 function fecharModal(idModal) {
   document.getElementById(idModal).style.display = "none";
 }
-function abrirModalAlterar(produtoId, nomeProduto) {
-  document.getElementById("produtoIdAlterar").value = produtoId;
-  document.getElementById("modal-adicionar").style.display = "none";
-  document.getElementById("modal-retirar").style.display = "none";
-  document.getElementById("nomeProdutoAlterar").textContent = nomeProduto;
-  document.getElementById("modal-alterar").style.display = "block";
-}
 function abrirModalAdicionar() {
   document.getElementById("modal-alterar").style.display = "none";
   document.getElementById("modal-adicionar").style.display = "block";
   const produtoId = document.getElementById("produtoIdAlterar").value;
   document.getElementById("produtoIdAdicionar").value = produtoId;
-}
-function abrirModalRetirar() {
-  document.getElementById("modal-alterar").style.display = "none";
-  document.getElementById("modal-retirar").style.display = "block";
-  const produtoId = document.getElementById("produtoIdAlterar").value;
-  document.getElementById("produtoIdRetirar").value = produtoId;
 }
 function fecharModal(idModal) {
   document.getElementById(idModal).style.display = "none";
@@ -260,7 +249,6 @@ async function adicionarQuantidade() {
   const quantidade = document.getElementById("inputquantidade").value;
 
   if (!produtoId || isNaN(produtoId) || !quantidade || quantidade <= 0) {
-    alert("Erro: Produto inválido ou quantidade incorreta.");
     return;
   }
   showLoader();
@@ -270,7 +258,7 @@ async function adicionarQuantidade() {
     body: JSON.stringify({ quantidade: parseInt(quantidade) }),
   });
   if (response.ok) {
-    alert("Quantidade adicionada com sucesso!");
+    mostrarAnimacaoSucesso();
     fecharModal("modal-adicionar");
     await atualizarTabela();
   } else {

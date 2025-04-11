@@ -1,0 +1,240 @@
+section h3,
+section h4 {
+  margin-bottom: 15px;
+  color: #696969;
+  font-weight: 600;
+}
+
+section label {
+  color: #101010;
+  font-weight: 500;
+}
+
+select,
+input[type="date"],
+input[type="month"] {
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  margin-bottom: 15px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+select:focus,
+input[type="date"]:focus,
+input[type="month"]:focus {
+  border-color: #666;
+  outline: none;
+}
+
+.opcoes {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.datas {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.datas span {
+  font-weight: bold;
+  color: #484848;
+}
+
+.botoes-acao {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+#rendimentoBox,
+#compararBox,
+.comparativo-detalhado,
+.resultado-comparacao {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+  margin-top: 100px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #bbb;
+  border-radius: 12px;
+  max-width: 650px;
+
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.hidden {
+  display: none;
+}
+
+.tabelaRendimento {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Destaques visuais para comparações */
+.variacao-positiva {
+  color: green;
+  font-weight: bold;
+}
+
+.variacao-negativa {
+  color: red;
+  font-weight: bold;
+}
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.3s;
+}
+
+.close-modal:hover {
+  color: #ff0000;
+}
+/* Responsividade específica para 400px e 738px */
+@media (max-width: 738px) {
+  #rendimentoBox,
+  #compararBox {
+    max-width: 75%;
+    top: -100%;
+  }
+}
+
+@media (max-width: 400px) {
+  #rendimentoBox,
+  #compararBox {
+    max-width: 75%;
+    padding: 15px;
+  }
+
+  .close-modal {
+    font-size: 20px;
+    top: 5px;
+    right: 10px;
+  }
+
+  .tabelaRendimento {
+    font-size: 12px;
+  }
+
+  .opcoes,
+  .datas,
+  .botoes-acao {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+}
+
+/* Estilos gerais continuam os mesmos */
+section h3,
+section h4 {
+  margin-bottom: 15px;
+  color: #696969;
+  font-weight: 600;
+}
+
+section label {
+  color: #101010;
+  font-weight: 500;
+}
+
+select,
+input[type="date"],
+input[type="month"] {
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  margin-bottom: 15px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+select:focus,
+input[type="date"]:focus,
+input[type="month"]:focus {
+  border-color: #666;
+  outline: none;
+}
+
+.opcoes {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.datas {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.datas span {
+  font-weight: bold;
+  color: #484848;
+}
+
+.botoes-acao {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.hidden {
+  display: none;
+}
+
+.variacao-positiva {
+  color: green;
+  font-weight: bold;
+}
+
+.variacao-negativa {
+  color: red;
+  font-weight: bold;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.3s;
+}
+
+.close-modal:hover {
+  color: #ff0000;
+}
+#rendimentoBox,
+#compararBox,
+.comparativo-detalhado,
+.resultado-comparacao {
+  top: 50%;
+}

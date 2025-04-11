@@ -2,13 +2,13 @@
   padding: 7px 10px;
   border: unset;
   border-radius: 15px;
-  color: #212121;
+  color: #d0d0d0;
   z-index: 1;
   background: #e8e8e8;
   position: relative;
   font-weight: 1000;
   font-size: 12px;
-  -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+  -webkit-box-shadow: 4px 8px 19px -3px rgba(196, 196, 196, 0.27);
   box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
   transition: all 250ms;
   overflow: hidden;

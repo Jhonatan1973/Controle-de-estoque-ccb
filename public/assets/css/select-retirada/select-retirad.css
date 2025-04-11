@@ -1,0 +1,244 @@
+#modal-selecao-retirada {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.modal-container-retirada {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 50%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+#fecharModalSelecionarRetirada {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5em;
+  color: #333;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+#fecharModalSelecionarRetirada:hover {
+  color: red;
+  transform: scale(1.1);
+}
+.modal-container-retirada h2 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+#input-pesquisa-selecao-retirada {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1em;
+  color: black;
+}
+#evento {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1em;
+  color: black;
+}
+#tabela-produtos-selecao {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+#tabela-produtos-selecao th,
+#tabela-produtos-selecao td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 1em;
+  color: black;
+}
+#tabela-produtos-selecao th {
+  background-color: #f4f4f4;
+}
+#confirmar-selecao-retirada {
+  display: block;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #979c98;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+#confirmar-selecao-retirada:hover {
+  background-color: #9fa39f;
+}
+.select-custom {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1em;
+  color: black;
+  background-color: #fff;
+}
+.select-custom:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+.select-custom option {
+  padding: 10px;
+  background-color: #fff;
+  color: black;
+}
+.select-custom:hover {
+  border-color: #bbb;
+}
+.select-data {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1em;
+  color: black;
+  background-color: #fff;
+}
+.select-data:focus {
+  border-color: #4caf50;
+  outline: none;
+}
+.select-data option {
+  padding: 10px;
+  background-color: #fff;
+  color: black;
+}
+#select-data:hover {
+  border-color: #bbb;
+}
+@media (max-width: 600px) {
+  .modal-container-retirada {
+    width: 90%;
+    padding: 15px;
+  }
+}
+/* Centraliza a animação */
+.checkbox-wrapper-31 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  z-index: 1000;
+}
+
+.checkbox-wrapper-31 .background {
+  fill: #00ff88;
+  transition: ease all 0.6s;
+}
+
+.checkbox-wrapper-31 .stroke {
+  fill: none;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+  stroke-width: 2px;
+  stroke-dashoffset: 100;
+  stroke-dasharray: 100;
+  transition: ease all 0.6s;
+}
+
+.checkbox-wrapper-31 .check {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2px;
+  stroke-dashoffset: 22;
+  stroke-dasharray: 22;
+  transition: ease all 0.6s;
+}
+
+/* Animação automática */
+.checkbox-wrapper-31 svg {
+  animation: animateCheck 1s ease-in-out forwards;
+}
+
+@keyframes animateCheck {
+  0% {
+    fill: #ccc;
+  }
+  50% {
+    fill: #6cbe45;
+  }
+  100% {
+    fill: #6cbe45;
+  }
+}
+
+.checkbox-wrapper-31 .stroke {
+  animation: strokeAnimation 1s ease-in-out forwards;
+}
+
+@keyframes strokeAnimation {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.checkbox-wrapper-31 .check {
+  animation: checkAnimation 1s ease-in-out forwards 0.5s;
+}
+
+@keyframes checkAnimation {
+  0% {
+    stroke-dashoffset: 22;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Estilos para erro */
+.checkbox-wrapper-31 .background.erro {
+  fill: #ff4d4d;
+}
+
+.checkbox-wrapper-31 .erro-linha1,
+.checkbox-wrapper-31 .erro-linha2 {
+  stroke: white;
+  stroke-width: 4px;
+  stroke-linecap: round;
+  stroke-dashoffset: 40;
+  stroke-dasharray: 40;
+  animation: erroAnimacao 0.5s ease-in-out forwards;
+}
+
+@keyframes erroAnimacao {
+  0% {
+    stroke-dashoffset: 40;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
