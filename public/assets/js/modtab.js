@@ -73,7 +73,7 @@ function atualizarCabecalhoTabela(categoria) {
   }
 }
 async function atualizarTabela() {
-  const response = await fetch("http://localhost:3000/produtos");
+  const response = await fetch("https://controle-de-estoque-ccb.onrender.com/produtos");
   const produtos = await response.json();
   console.log(produtos);
   const tabela = document.getElementById("tabelcompleta");
