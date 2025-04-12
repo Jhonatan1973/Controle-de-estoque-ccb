@@ -1385,7 +1385,7 @@ function baixarTelaEstoque() {
               min: parseInt(document.getElementById("estoqueMin").value),
             },
           };
-          fetch("http://localhost:3000/produtos", {
+          fetch("https://controle-de-estoque-ccb.onrender.com/produtos", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
