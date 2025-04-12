@@ -12,7 +12,7 @@ function retirarImobilizado() {
   // Encode the code to ensure it's valid in the URL
   const codigoCodificado = encodeURIComponent(codigo);
 
-  fetch(`http://localhost:3000/imobilizados/${codigoCodificado}/retirar`, {
+  fetch(`https://controle-de-estoque-ccb.onrender.com/imobilizados/${codigoCodificado}/retirar`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
