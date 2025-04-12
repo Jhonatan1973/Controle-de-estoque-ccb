@@ -130,7 +130,7 @@ async function atualizarTabela() {
 }
 async function atualizarTabelaImobilizados() {
   console.log("Atualizando tabela de imobilizados...");
-  const response = await fetch("http://localhost:3000/imobilizados");
+  const response = await fetch("https://controle-de-estoque-ccb.onrender.com/imobilizados");
   if (!response.ok) {
     console.error("Erro ao buscar imobilizados:", response.statusText);
     return;
@@ -179,7 +179,7 @@ async function adicionarQuantidadeImob() {
   }
 
   const response = await fetch(
-    `http://localhost:3000/imobilizados/${produtoId}`,
+    `https://controle-de-estoque-ccb.onrender.com/imobilizados/${produtoId}`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -207,7 +207,7 @@ async function retirarQuantidadeImob() {
   }
   showLoader();
   const response = await fetch(
-    `http://localhost:3000/imobilizados/${produtoId}/retirar`,
+    `https://controle-de-estoque-ccb.onrender.com/imobilizados/${produtoId}/retirar`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -252,7 +252,7 @@ async function adicionarQuantidade() {
     return;
   }
   showLoader();
-  const response = await fetch(`http://localhost:3000/produtos/${produtoId}`, {
+  const response = await fetch(`https://controle-de-estoque-ccb.onrender.com/produtos/${produtoId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ quantidade: parseInt(quantidade) }),
@@ -274,7 +274,7 @@ async function retirarQuantidade() {
   }
   showLoader();
   const response = await fetch(
-    `http://localhost:3000/produtos/${produtoId}/retirar`,
+    `https://controle-de-estoque-ccb.onrender.com/produtos/${produtoId}/retirar`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
