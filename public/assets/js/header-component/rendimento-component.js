@@ -86,7 +86,7 @@ $("#btnCalcularRendimento").addEventListener("click", async () => {
   }
 
   try {
-    let url = `http://localhost:3000/api/rendimento?tipo=${tipo}&valor=${encodeURIComponent(
+    let url = `https://controle-de-estoque-ccb.onrender.com/api/rendimento?tipo=${tipo}&valor=${encodeURIComponent(
       valor
     )}`;
 
@@ -186,7 +186,7 @@ $("#btnExecutarComparacao").addEventListener("click", async () => {
   }
 
   try {
-    const url = "http://localhost:3000/api/comparar-precos";
+    const url = "https://controle-de-estoque-ccb.onrender.com/api/comparar-precos";
 
     const [resBase, resComparar] = await Promise.all([
       fetch(`${url}?produto=${encodeURIComponent(produto)}&data=${mesBase}`),
