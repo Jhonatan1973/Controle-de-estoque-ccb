@@ -13,7 +13,7 @@ document.getElementById("saidaButton").addEventListener("click", function () {
   carregarHistoricoSaida();
 });
 function carregarHistoricoEntrada() {
-  fetch("http://localhost:3000/historico_entrada")
+  fetch("https://controle-de-estoque-ccb.onrender.com/historico_entrada")
     .then((response) => response.json())
     .then((data) => {
       const tabelaHistoricoEntrada = document
@@ -52,7 +52,7 @@ function carregarHistoricoEntrada() {
 }
 
 function carregarHistoricoSaida() {
-  fetch("http://localhost:3000/historico_saida")
+  fetch("https://controle-de-estoque-ccb.onrender.com/historico_saida")
     .then((response) => response.json())
     .then((data) => {
       const tabelaHistoricoSaida = document
