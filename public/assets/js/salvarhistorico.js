@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
       if (produtosParaRetirar.length > 0) {
-        fetch("http://localhost:3000/historico_saida", {
+        fetch("https://controle-de-estoque-ccb.onrender.com/historico_saida", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -68,7 +68,7 @@ function filtrarHistoricoSaida() {
   const eventoSelecionado = document.getElementById(
     "eventoHistoricoSaida"
   ).value;
-  fetch("http://localhost:3000/historico_saida")
+  fetch("https://controle-de-estoque-ccb.onrender.com/historico_saida")
     .then((response) => response.json())
     .then((dados) => {
       // Filtrando os dados pelo evento selecionado
@@ -117,7 +117,7 @@ function salvarHistoricoEntrada() {
     mostrarAnimacaoErro();
     return;
   }
-  fetch("http://localhost:3000/historico_entrada", {
+  fetch("https://controle-de-estoque-ccb.onrender.com/historico_entrada", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -151,5 +151,5 @@ function selecionarProduto(linha) {
   }
 }
 document.getElementById("downloadExcel").addEventListener("click", () => {
-  window.location.href = "http://localhost:3000/download-excel"; // ajuste se o servidor for outro
+  window.location.href = "https://controle-de-estoque-ccb.onrender.com/download-excel"; // ajuste se o servidor for outro
 });
