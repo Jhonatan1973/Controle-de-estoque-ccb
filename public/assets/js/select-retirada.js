@@ -108,8 +108,6 @@ function mostrarAnimacaoSucesso() {
     `;
 
   document.body.appendChild(animacao);
-
-  // Remove a animação após um tempo
   setTimeout(() => {
     animacao.remove();
   }, 2000);

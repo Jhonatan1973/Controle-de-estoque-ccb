@@ -8,8 +8,6 @@ function retirarImobilizado() {
     alert("Informe um código válido e uma quantidade maior que zero.");
     return;
   }
-
-  // Encode the code to ensure it's valid in the URL
   const codigoCodificado = encodeURIComponent(codigo);
 
   fetch(`http://localhost:3000/imobilizados/${codigoCodificado}/retirar`, {
@@ -25,7 +23,7 @@ function retirarImobilizado() {
         alert(data.error);
       } else {
         alert("Quantidade retirada com sucesso!");
-        fecharModAlterarImob(); // Fecha o modal após a operação
+        fecharModAlterarImob();
       }
     })
     .catch((error) => {

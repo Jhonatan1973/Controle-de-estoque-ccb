@@ -8,13 +8,10 @@ function testarSelecao() {
   );
   alert("Selecionados: " + selecionados.join(", "));
 }
-// Função para abrir/fechar a barra lateral
 function toggleSideBar() {
   const sideBar = document.getElementById("sideBar");
   sideBar.classList.toggle("active");
 }
-
-// Função para fechar a barra lateral
 function closeSideBar() {
   const sideBar = document.getElementById("sideBar");
   sideBar.classList.remove("active");

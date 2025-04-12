@@ -356,15 +356,11 @@ app.post("/api/retirarProdutos", (req, res) => {
 });
 app.get("/api/rendimento", (req, res) => {
   const { tipo, valor, dataInicio, dataFim, ano } = req.query;
-
   if (!tipo || !valor) {
     return res.status(400).json({ error: "Parâmetros obrigatórios ausentes." });
   }
-
   let sql = "";
   let params = [];
-
-  // Caso especial para RGE (baseado no ano)
   if (tipo === "evento" && valor === "RGE" && ano) {
     sql = `
       SELECT * FROM historico_entrada
@@ -373,7 +369,6 @@ app.get("/api/rendimento", (req, res) => {
     `;
     params = [ano];
   } else {
-    // Mapeia o campo correto do banco com base no tipo
     let campo;
     if (tipo === "produto") {
       campo = "nome_entrada";
@@ -402,7 +397,6 @@ app.get("/api/rendimento", (req, res) => {
     res.json(results);
   });
 });
-
 app.get("/api/comparar-precos", async (req, res) => {
   const { produto, data } = req.query;
 
@@ -420,12 +414,8 @@ app.get("/api/comparar-precos", async (req, res) => {
     FROM historico_entrada
     WHERE nome_entrada = ?
   `;
-
   const params = [produto];
-
-  // Verifica o formato da data
   if (/^\d{4}-\d{2}$/.test(data)) {
-    // formato YYYY-MM
     const [ano, mes] = data.split("-");
     query += ` AND YEAR(data_entrada) = ? AND MONTH(data_entrada) = ?`;
     params.push(ano, mes);
@@ -434,8 +424,6 @@ app.get("/api/comparar-precos", async (req, res) => {
       .status(400)
       .json({ error: "Formato de data inválido. Use YYYY-MM." });
   }
-
-  // Agrupando corretamente para um único resultado por mês
   query += ` GROUP BY nome_entrada, ano, mes`;
 
   db.query(query, params, (err, results) => {
@@ -446,7 +434,6 @@ app.get("/api/comparar-precos", async (req, res) => {
     res.json(results);
   });
 });
-
 app.get("/api/validades", async (req, res) => {
   const { dias = 30 } = req.query;
 
@@ -464,25 +451,19 @@ app.get("/api/validades", async (req, res) => {
     res.json(results);
   });
 });
-
 app.get("/download-excel", async (req, res) => {
   try {
     const connection = db.promise();
     const [rows] = await connection.query("SELECT * FROM historico_entrada");
-
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Histórico de Entrada");
-
     if (rows.length > 0) {
       const columns = Object.keys(rows[0]).map((key) => ({
         header: key,
         key: key,
         width: 20,
       }));
-
       worksheet.columns = columns;
-
-      // Converte os valores para número antes de adicionar
       rows.forEach((row) => {
         if (row.valor_nota) {
           row.valor_nota = parseFloat(row.valor_nota);
@@ -492,27 +473,18 @@ app.get("/download-excel", async (req, res) => {
         }
         worksheet.addRow(row);
       });
-
-      // Aplica filtros no cabeçalho
       worksheet.autoFilter = {
         from: "A1",
         to: worksheet.getRow(1).getCell(columns.length)._address,
       };
-
-      // Formata as colunas com R$
       const formatCurrency = '"R$"#,##0.00';
-
       const colIndexValorNota =
         columns.findIndex((col) => col.key === "valor_nota") + 1;
       const colIndexPrecoUnit =
         columns.findIndex((col) => col.key === "preco_unit") + 1;
-
       const colLetterValorNota = worksheet.getColumn(colIndexValorNota).letter;
       worksheet.getColumn(colIndexValorNota).numFmt = formatCurrency;
-
       worksheet.getColumn(colIndexPrecoUnit).numFmt = formatCurrency;
-
-      // Linha do total para valor_nota com fórmula SUBTOTAL
       const lastDataRow = worksheet.lastRow.number;
       const totalRow = worksheet.addRow([]);
       totalRow.getCell(columns.length - 1).value = "TOTAL:";

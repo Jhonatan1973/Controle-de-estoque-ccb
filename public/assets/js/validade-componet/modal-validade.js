@@ -67,7 +67,6 @@ function closeValidadesModal() {
   document.getElementById("modal-validades").style.display = "none";
 }
 document.addEventListener("DOMContentLoaded", function () {
-  // Verifica se há produtos com validade próxima
   fetch("http://localhost:3000/api/validades?dias=30")
     .then((res) => res.json())
     .then((produtos) => {

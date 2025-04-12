@@ -1,8 +1,5 @@
-// Utilitários
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => document.querySelectorAll(selector);
-
-// Botão para esconder todas as tabelas e parágrafos
 $("#btnToggleTabelas").addEventListener("click", () => {
   $$(
     "#rendimentoBox table, #rendimentoBox p, #compararBox table, #compararBox p, .comparativo-detalhado"
@@ -10,17 +7,12 @@ $("#btnToggleTabelas").addEventListener("click", () => {
     el.style.display = "none";
   });
 });
-
-// Alterna exibição do rendimento
 $("#btnRendimento").addEventListener("click", () => {
   $("#rendimentoBox").classList.toggle("hidden");
 });
-// Fecha rendimentoBox
 $("#fecharRendimento").addEventListener("click", () => {
   $("#rendimentoBox").classList.add("hidden");
 });
-
-// Alterna entre filtro por produto ou evento
 $$("input[name='tipoRendimento']").forEach((radio) => {
   radio.addEventListener("change", () => {
     const isProduto = radio.value === "produto";
@@ -29,13 +21,9 @@ $$("input[name='tipoRendimento']").forEach((radio) => {
     isProduto ? resetarDatasParaMes() : null;
   });
 });
-
-// Ajusta campos de data para evento RGE (só ano)
 $("#eventoSelect").addEventListener("change", (e) => {
   e.target.value === "RGE" ? alterarDatasParaAno() : resetarDatasParaMes();
 });
-
-// Função para ajustar datas para apenas ano
 function alterarDatasParaAno() {
   const dataInicio = $("#dataInicio");
   const dataFim = $("#dataFim");
@@ -51,8 +39,6 @@ function alterarDatasParaAno() {
 
   dataFim.classList.add("hidden");
 }
-
-// Função para resetar campos para formato de data normal
 function resetarDatasParaMes() {
   const dataInicio = $("#dataInicio");
   const dataFim = $("#dataFim");
@@ -69,8 +55,6 @@ function resetarDatasParaMes() {
   dataInicio.classList.remove("hidden");
   dataFim.classList.remove("hidden");
 }
-
-// Evento para calcular rendimento
 $("#btnCalcularRendimento").addEventListener("click", async () => {
   const tipo = $("input[name='tipoRendimento']:checked")?.value;
   const dataInicio = $("#dataInicio").value;
@@ -162,19 +146,14 @@ $("#btnCalcularRendimento").addEventListener("click", async () => {
   }
 });
 document.addEventListener("DOMContentLoaded", () => {
-  // Alterna exibição do box de comparação
   $("#btnComparar").addEventListener("click", () => {
     $("#compararBox").classList.toggle("hidden");
     $("#resultadoRendimento")?.remove();
   });
-
-  // Fecha compararBox
   $("#fecharComparar").addEventListener("click", () => {
     $("#compararBox").classList.add("hidden");
   });
 });
-
-// Executa comparação de preços
 $("#btnExecutarComparacao").addEventListener("click", async () => {
   const produto = $("#produtoComparar").value;
   const mesBase = $("#mesBase").value;

@@ -151,5 +151,5 @@ function selecionarProduto(linha) {
   }
 }
 document.getElementById("downloadExcel").addEventListener("click", () => {
-  window.location.href = "http://localhost:3000/download-excel"; // ajuste se o servidor for outro
+  window.location.href = "http://localhost:3000/download-excel";
 });

@@ -1,7 +1,5 @@
 document.getElementById("formImobilizado").onsubmit = function (event) {
-  event.preventDefault(); // Impede o comportamento padrão do formulário (não recarregar a página)
-
-  // Coletar os dados dos campos do formulário
+  event.preventDefault();
   const codigo_imobilizados = document.getElementById(
     "codigo_imobilizados"
   ).value;
@@ -16,11 +14,10 @@ document.getElementById("formImobilizado").onsubmit = function (event) {
   const dt_aquisicao = document.getElementById("dt_aquisicao").value;
   const status = document.getElementById("status").value;
 
-  // Mostrar um carregando enquanto a requisição está em andamento (opcional)
-  const loadingIndicator = document.getElementById("loadingIndicator"); // Assumindo que você tenha esse elemento
-  if (loadingIndicator) loadingIndicator.style.display = "block"; // Mostrar o carregamento
 
-  // Enviar os dados para o backend via Fetch API
+  const loadingIndicator = document.getElementById("loadingIndicator");
+  if (loadingIndicator) loadingIndicator.style.display = "block";
+
   fetch("http://localhost:3000/imobilizados", {
     method: "POST",
     headers: {
@@ -38,28 +35,20 @@ document.getElementById("formImobilizado").onsubmit = function (event) {
   })
     .then((response) => {
       if (response.ok) {
-        return response.json(); // Espera a resposta JSON do servidor
+        return response.json(); 
       } else {
         throw new Error("Erro ao adicionar produto imobilizado");
       }
     })
     .then((data) => {
       console.log("Produto imobilizado adicionado com sucesso:", data);
-
-      // Fechar o modal após o sucesso
       document.getElementById("modalImobilizado").style.display = "none";
-
-      // Feedback de sucesso para o usuário
       alert("Produto imobilizado adicionado com sucesso!");
-
-      // Ocultar o indicador de carregamento
       if (loadingIndicator) loadingIndicator.style.display = "none";
     })
     .catch((error) => {
       console.error("Erro ao adicionar produto imobilizado:", error);
       alert("Erro ao adicionar produto. Tente novamente.");
-
-      // Ocultar o indicador de carregamento
       if (loadingIndicator) loadingIndicator.style.display = "none";
     });
 };
