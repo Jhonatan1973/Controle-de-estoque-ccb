@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function openValidadesModal() {
   document.getElementById("modal-validades").style.display = "flex";
 
-  fetch("http://localhost:3000/api/validades?dias=30")
+  fetch("https://controle-de-estoque-ccb.onrender.com/api/validades?dias=30")
     .then((response) => response.json())
     .then((data) => {
       const tbody = document.getElementById("tabela_validades_body");
@@ -68,7 +68,7 @@ function closeValidadesModal() {
 }
 document.addEventListener("DOMContentLoaded", function () {
   // Verifica se há produtos com validade próxima
-  fetch("http://localhost:3000/api/validades?dias=30")
+  fetch("https://controle-de-estoque-ccb.onrender.com/api/validades?dias=30")
     .then((res) => res.json())
     .then((produtos) => {
       if (produtos.length > 0) {
