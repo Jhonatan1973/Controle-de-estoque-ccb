@@ -12,7 +12,7 @@ function fecharModalSelecionarRetirada() {
   document.getElementById("modal-selecao-retirada").style.display = "none";
 }
 function carregarProdutos() {
-  fetch("http://localhost:3000/api/produtos")
+  fetch("https://controle-de-estoque-ccb.onrender.com/api/produtos")
     .then((response) => response.json())
     .then((produtos) => {
       const tabela = document.getElementById("produtos-lista-selecao");
@@ -69,7 +69,7 @@ document
     });
     console.log("Produtos para retirar:", produtosParaRetirar);
     if (produtosParaRetirar.length > 0) {
-      fetch("http://localhost:3000/api/retirarProdutos", {
+      fetch("https://controle-de-estoque-ccb.onrender.com/api/retirarProdutos", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
