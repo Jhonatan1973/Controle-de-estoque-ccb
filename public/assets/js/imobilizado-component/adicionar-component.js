@@ -21,7 +21,7 @@ document.getElementById("formImobilizado").onsubmit = function (event) {
   if (loadingIndicator) loadingIndicator.style.display = "block"; // Mostrar o carregamento
 
   // Enviar os dados para o backend via Fetch API
-  fetch("http://localhost:3000/imobilizados", {
+  fetch("https://controle-de-estoque-ccb.onrender.com/imobilizados", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
