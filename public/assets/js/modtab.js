@@ -5,21 +5,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     .addEventListener("change", async (event) => {
       const categoriaSelecionada = event.target.value;
       console.log(categoriaSelecionada);
+
       showLoader();
       atualizarCabecalhoTabela(categoriaSelecionada);
-      setTimeout(async () => {
-        if (categoriaSelecionada === "cozinha") {
-          await atualizarTabela();
-        } else if (categoriaSelecionada === "imobilizados") {
-          await atualizarTabelaImobilizados();
-        } else {
-          await atualizarTabela();
-        }
-      }, 500);
+      if (categoriaSelecionada === "cozinha") {
+        await atualizarTabela();
+      } else if (categoriaSelecionada === "imobilizados") {
+        await atualizarTabelaImobilizados();
+      } else if (categoriaSelecionada === "limpeza") {
+        await atualizarTabelaLimpeza();
+      } else {
+        await atualizarTabela();
+      }
     });
-  document.addEventListener("atualizarTabelaImobilizados", async () => {
-    await atualizarTabelaImobilizados();
-  });
 });
 function showLoader() {
   const tabela = document.getElementById("tabelaEstoque");
@@ -31,7 +29,6 @@ function showLoader() {
     tabela.style.display = "table";
   }, 500);
 }
-setInterval;
 function atualizarCabecalhoTabela(categoria) {
   const cabecalho = document
     .getElementById("tabelaEstoque")
@@ -41,7 +38,7 @@ function atualizarCabecalhoTabela(categoria) {
     cabecalho.innerHTML = `
       <th>Nome</th>
       <th>Uni Compra</th>
-      <th>Uni medida</th>
+      <th>Uni Medida</th>
       <th>Quantidade</th>
       <th>Categoria</th>
       <th>Validade</th>
@@ -59,11 +56,22 @@ function atualizarCabecalhoTabela(categoria) {
       <th>Status</th>
       <th>Alterar</th>
     `;
+  } else if (categoria === "limpeza") {
+    cabecalho.innerHTML = `
+      <th>Produto</th>
+      <th>Uni Compra</th>
+      <th>Uni Medida</th>
+      <th>Quantidade</th>
+      <th>Categoria</th>
+      <th>Validade</th>
+      <th>Estoque</th>
+      <th>Alterar</th>
+    `;
   } else {
     cabecalho.innerHTML = `
       <th>Nome</th>
       <th>Uni Compra</th>
-      <th>Uni medida</th>
+      <th>Uni Medida</th>
       <th>Quantidade</th>
       <th>Categoria</th>
       <th>Validade</th>
@@ -72,8 +80,68 @@ function atualizarCabecalhoTabela(categoria) {
     `;
   }
 }
+
+async function atualizarTabelaLimpeza() {
+  const response = await fetch(
+    "https://controle-de-estoque-ccb.onrender.com/limpeza"
+  );
+  const produtosLimpeza = await response.json();
+  console.log(produtosLimpeza);
+
+  const tabela = document.getElementById("tabelcompleta");
+  tabela.innerHTML = "";
+
+  if (produtosLimpeza.length === 0) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = "<td colspan='8'>Nenhum produto de limpeza encontrado.</td>";
+    tabela.appendChild(tr);
+    return;
+  }
+
+  produtosLimpeza.forEach((produto) => {
+    produto.validade = new Date(produto.validade).toLocaleDateString("pt-BR");
+
+    const tr = document.createElement("tr");
+    const estoqueHtml =
+      (produto.estoque.max || produto.estoque.med || produto.estoque.min) === 0
+        ? ""
+        : `<span style="color: green;">Max: ${produto.estoque.max}</span>,
+           <span style="color: orange;">Med: ${produto.estoque.med}</span>,
+           <span style="color: red;">Min: ${produto.estoque.min}</span>`;
+
+    const { quantidade_limp } = produto;
+    let corQuantidade = "black";
+    if (!isNaN(quantidade_limp)) {
+      if (quantidade_limp <= produto.estoque.min) {
+        corQuantidade = "red";
+      } else if (quantidade_limp <= produto.estoque.med) {
+        corQuantidade = "orange";
+      } else {
+        corQuantidade = "green";
+      }
+    }
+    tr.innerHTML = `
+      <td>${produto.limp_produto}</td>
+      <td>${produto.uni_compra}</td>
+      <td>${produto.uni_media}</td>
+      <td style="color: ${corQuantidade}; font-weight: bold;">${quantidade_limp}</td>
+      <td>${produto.categoria || "N/A"}</td>
+      <td>${produto.validade}</td>
+      <td>${estoqueHtml}</td>
+      <td>
+        <button class="btn-alterar" onclick="abrirModalAlterar(${
+          produto.produto_id_limpeza
+        }, '${produto.limp_produto}')">Alterar</button>
+      </td>
+    `;
+
+    tabela.appendChild(tr);
+  });
+}
 async function atualizarTabela() {
-  const response = await fetch("https://controle-de-estoque-ccb.onrender.com/produtos");
+  const response = await fetch(
+    "https://controle-de-estoque-ccb.onrender.com/produtos"
+  );
   const produtos = await response.json();
   console.log(produtos);
   const tabela = document.getElementById("tabelcompleta");
@@ -130,7 +198,9 @@ async function atualizarTabela() {
 }
 async function atualizarTabelaImobilizados() {
   console.log("Atualizando tabela de imobilizados...");
-  const response = await fetch("https://controle-de-estoque-ccb.onrender.com/imobilizados");
+  const response = await fetch(
+    "https://controle-de-estoque-ccb.onrender.com/imobilizados"
+  );
   if (!response.ok) {
     console.error("Erro ao buscar imobilizados:", response.statusText);
     return;
@@ -252,11 +322,14 @@ async function adicionarQuantidade() {
     return;
   }
   showLoader();
-  const response = await fetch(`https://controle-de-estoque-ccb.onrender.com/produtos/${produtoId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ quantidade: parseInt(quantidade) }),
-  });
+  const response = await fetch(
+    `https://controle-de-estoque-ccb.onrender.com/produtos/${produtoId}`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ quantidade: parseInt(quantidade) }),
+    }
+  );
   if (response.ok) {
     mostrarAnimacaoSucesso();
     fecharModal("modal-adicionar");

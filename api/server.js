@@ -481,8 +481,6 @@ app.get("/download-excel", async (req, res) => {
       }));
 
       worksheet.columns = columns;
-
-      // Converte os valores para número antes de adicionar
       rows.forEach((row) => {
         if (row.valor_nota) {
           row.valor_nota = parseFloat(row.valor_nota);
@@ -492,14 +490,10 @@ app.get("/download-excel", async (req, res) => {
         }
         worksheet.addRow(row);
       });
-
-      // Aplica filtros no cabeçalho
       worksheet.autoFilter = {
         from: "A1",
         to: worksheet.getRow(1).getCell(columns.length)._address,
       };
-
-      // Formata as colunas com R$
       const formatCurrency = '"R$"#,##0.00';
 
       const colIndexValorNota =
@@ -511,8 +505,6 @@ app.get("/download-excel", async (req, res) => {
       worksheet.getColumn(colIndexValorNota).numFmt = formatCurrency;
 
       worksheet.getColumn(colIndexPrecoUnit).numFmt = formatCurrency;
-
-      // Linha do total para valor_nota com fórmula SUBTOTAL
       const lastDataRow = worksheet.lastRow.number;
       const totalRow = worksheet.addRow([]);
       totalRow.getCell(columns.length - 1).value = "TOTAL:";
@@ -547,11 +539,8 @@ app.get("/download-produtos", async (req, res) => {
     if (!rows.length) {
       return res.status(404).send("Nenhum produto encontrado.");
     }
-
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Produtos");
-
-    // Definindo as colunas
     const columns = Object.keys(rows[0]).map((key) => ({
       header: key,
       key: key,
@@ -559,19 +548,14 @@ app.get("/download-produtos", async (req, res) => {
     }));
 
     worksheet.columns = columns;
-
-    // Adiciona os dados de cada linha na planilha
     rows.forEach((row) => {
       worksheet.addRow(row);
     });
 
-    // Aplica o filtro na coluna F
     worksheet.autoFilter = {
-      from: "A1", // Começa no cabeçalho da primeira coluna
-      to: worksheet.getRow(1).getCell(columns.length)._address, // Vai até o cabeçalho da última coluna
+      from: "A1",
+      to: worksheet.getRow(1).getCell(columns.length)._address,
     };
-
-    // Envia o arquivo com o filtro aplicado
     res.setHeader(
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -584,6 +568,16 @@ app.get("/download-produtos", async (req, res) => {
     console.error("Erro ao gerar Excel:", error);
     res.status(500).send("Erro ao gerar Excel");
   }
+});
+
+app.get("/limpeza", (req, res) => {
+  db.query("SELECT * FROM limpeza", (err, results) => {
+    if (err) {
+      console.error("Erro ao buscar produtos de limpeza:", err);
+      return res.status(500).json({ erro: "Erro ao buscar dados." });
+    }
+    res.json(results);
+  });
 });
 
 const PORT = 3000;
