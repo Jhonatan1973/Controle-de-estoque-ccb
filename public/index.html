@@ -1398,7 +1398,8 @@
       });
       function baixarProdutos() {
         const link = document.createElement("a");
-        link.href = "http://localhost:3000/download-produtos"; // URL da rota
+        link.href =
+          "https://controle-de-estoque-ccb.onrender.com/download-produtos"; // URL da rota
         link.download = "produtos.xlsx";
         document.body.appendChild(link);
         link.click();
