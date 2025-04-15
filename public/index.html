@@ -270,6 +270,9 @@
         >
           Validades
         </button>
+        <button class="btn btn-primary" onclick="baixarProdutos()">
+          Baixar Excel
+        </button>
       </div>
     </div>
     <div class="container"></div>
@@ -1350,6 +1353,7 @@
     <script src="/public/assets/js/select-retirada.js"></script>
     <script src="/public/assets/js/header-component/rendimento-component.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.1/axios.min.js"></script>
     <script src="/public/assets/js/lixeira-component/lixeira-produto.js"></script>
     <script>
       // Obter o modal e o botão de ajuda
@@ -1392,6 +1396,14 @@
           }
         });
       });
+      function baixarProdutos() {
+        const link = document.createElement("a");
+        link.href = "http://localhost:3000/download-produtos"; // URL da rota
+        link.download = "produtos.xlsx";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
 
       function baixarTelaEstoque() {
         const elemento = document.getElementById("telaEstoque");

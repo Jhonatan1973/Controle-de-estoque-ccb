@@ -539,6 +539,53 @@ app.get("/download-excel", async (req, res) => {
     res.status(500).send("Erro ao gerar Excel");
   }
 });
+app.get("/download-produtos", async (req, res) => {
+  try {
+    const connection = db.promise();
+    const [rows] = await connection.query("SELECT * FROM produtos");
+
+    if (!rows.length) {
+      return res.status(404).send("Nenhum produto encontrado.");
+    }
+
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Produtos");
+
+    // Definindo as colunas
+    const columns = Object.keys(rows[0]).map((key) => ({
+      header: key,
+      key: key,
+      width: 20,
+    }));
+
+    worksheet.columns = columns;
+
+    // Adiciona os dados de cada linha na planilha
+    rows.forEach((row) => {
+      worksheet.addRow(row);
+    });
+
+    // Aplica o filtro na coluna F
+    worksheet.autoFilter = {
+      from: "A1", // Começa no cabeçalho da primeira coluna
+      to: worksheet.getRow(1).getCell(columns.length)._address, // Vai até o cabeçalho da última coluna
+    };
+
+    // Envia o arquivo com o filtro aplicado
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader("Content-Disposition", "attachment; filename=produtos.xlsx");
+
+    await workbook.xlsx.write(res);
+    res.end();
+  } catch (error) {
+    console.error("Erro ao gerar Excel:", error);
+    res.status(500).send("Erro ao gerar Excel");
+  }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
