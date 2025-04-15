@@ -74,13 +74,33 @@
       rel="stylesheet"
       href="/public/assets/css/header-components/rendimento-component.css"
     />
-    <link rel="stylesheet" href="/public/assets/css/noticifacao-componet/notification-component.css">
-    <link rel="stylesheet" href="/public/assets/css/validades-components/modal-vali-component.css">
-    <link rel="stylesheet" href="/public/assets/css/donload-component/donwload-element.css">
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/noticifacao-componet/notification-component.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/validades-components/modal-vali-component.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/donload-component/donwload-element.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/ajuda-component/ajuda-component.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/help-component/help-component.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/lixeria-component/lixerira-produtos.css"
+    />
   </head>
   <body>
     <header>
-      <!-- From Uiverse.io by ahmedyasserdev -->
       <input id="burger-checkbox" type="checkbox" />
       <label class="burger" for="burger-checkbox" onclick="toggleSideBar()">
         <span></span>
@@ -226,12 +246,30 @@
           Adicionar Produto Mezanino
         </button>
 
-        <button class="btn btn-primary" id="abrirModalSelecionarRetirada" onclick="closeSideBar()">
+        <button
+          class="btn btn-primary"
+          id="abrirModalSelecionarRetirada"
+          onclick="closeSideBar()"
+        >
           Selecionar Produtos para Retirada
         </button>
-        <button class="btn btn-primary" id="cardapio" onclick="closeSideBar()">Cardapio</button>
-        <button id="btnRendimento" class="btn btn-primary" onclick="closeSideBar()">Rendimento</button>
-        <button id="validades-venci" class="btn btn-primary" onclick="closeSideBar()">Validades</button>
+        <button class="btn btn-primary" id="cardapio" onclick="closeSideBar()">
+          Cardapio
+        </button>
+        <button
+          id="btnRendimento"
+          class="btn btn-primary"
+          onclick="closeSideBar()"
+        >
+          Rendimento
+        </button>
+        <button
+          id="validades-venci"
+          class="btn btn-primary"
+          onclick="closeSideBar()"
+        >
+          Validades
+        </button>
       </div>
     </div>
     <div class="container"></div>
@@ -242,32 +280,28 @@
     </div>
     <body>
       <div class="notifications-container"></div>
-
     </body>
-  
-<div id="modal-validades" class="modal-validades" style="display:none;">
-  <div class="modal-validades-box">
-    <span class="close" onclick="closeValidadesModal()">&times;</span>
-    <h1>VALIDADES</h1>
-    
-    <div id="tabela_validades_container">
-      <table id="tabela_validades">
-        <thead>
-          <tr>
-            <th>Nome do Produto</th>
-            <th>Quantidade</th>
-            <th>Validade</th>
-            <th>Dias Restantes</th>
-          </tr>
-        </thead>
-        <tbody id="tabela_validades_body">
-          <!-- Dados inseridos via JS -->
-        </tbody>
-      </table>
-      
+
+    <div id="modal-validades" class="modal-validades" style="display: none">
+      <div class="modal-validades-box">
+        <span class="close" onclick="closeValidadesModal()">&times;</span>
+        <h1>VALIDADES</h1>
+
+        <div id="tabela_validades_container">
+          <table id="tabela_validades">
+            <thead>
+              <tr>
+                <th>Nome do Produto</th>
+                <th>Quantidade</th>
+                <th>Validade</th>
+                <th>Dias Restantes</th>
+              </tr>
+            </thead>
+            <tbody id="tabela_validades_body"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
     <div class="tabela-container">
       <table id="tabelaEstoque">
         <thead>
@@ -658,7 +692,7 @@
           >
             <option value="">Selecionar</option>
             <option value="kg">Kg</option>
-            <option value="unidade">Uni</option>
+            <option value="Unidade">Uni</option>
             <option value="litro">L</option>
             <option value="Fardo">Fardo</option>
             <option value="Cx">Cx</option>
@@ -667,7 +701,6 @@
             <option value="Lata">Lata</option>
             <option value="Rolos">Rolos</option>
             <option value="BAG">BAG</option>
-
           </select>
           <label for="uniMedida">Unidade de Medida:</label>
           <select
@@ -678,7 +711,7 @@
           >
             <option value="">Selecionar</option>
             <option value="kg">Kg</option>
-            <option value="unidade">Uni</option>
+            <option value="Unidade">Uni</option>
             <option value="litro">L</option>
             <option value="Fardo">Fardo</option>
             <option value="Cx">Cx</option>
@@ -711,9 +744,12 @@
             <option value="BL E BI">BL E BI</option>
             <option value="MAC">MAC</option>
             <option value="O">O</option>
-            <option value="S"></option>
+            <option value="S">S</option>
             <option value="TEMP">TEMP</option>
+            <option value="DESC">DESC</option>
           </select>
+          <!-- Botão de Ajuda -->
+          <button id="helpButton">Ajuda</button>
           <label for="validade">Validade:</label>
           <input
             type="date"
@@ -746,7 +782,7 @@
             class="input-simple"
             required
           />
-          <button type="submit" onclick="recarregarPagina()">Confirmar</button>
+          <button id="submit1">Confirmar</button>
         </form>
       </div>
     </div>
@@ -829,8 +865,8 @@
                     </svg>
                     <div class="square"></div>
                   </span>
-                  <p  id="downloadExcel" class="title">Download</p>
-                  <p id="openExcelBtn" class="title">Open</p>                  
+                  <p id="downloadExcel" class="title">Download</p>
+                  <p id="openExcelBtn" class="title">Open</p>
                 </label>
               </div>
             </div>
@@ -1249,16 +1285,57 @@
         <div class="datas">
           <label for="mesBase">De:</label>
           <input type="month" id="mesBase" />
-        
+
           <label for="mesComparar">Até:</label>
           <input type="month" id="mesComparar" />
         </div>
-        <button id="btnExecutarComparacao" class="btn btn-primary" type="button">Comparar Preço</button>
+        <button
+          id="btnExecutarComparacao"
+          class="btn btn-primary"
+          type="button"
+        >
+          Comparar Preço
+        </button>
         <div id="resultadoComparacao" class="hidden"></div>
       </div>
+    </div>
 
+    <div id="modalAjuda" class="modal-ajuda">
+      <div class="modal-ajuda-content">
+        <span class="modal-ajuda-close" id="closeAjuda">&times;</span>
+        <h2>SIGLAS - ESTOQUE/GELADEIRA/FREEZER</h2>
+        <p>
+          SEC. Secos<br />
+          BEB. Bebida<br />
+          C. Cereais<br />
+          CH. Chá<br />
+          CONS. Conserva<br />
+          BL. BI. Bolachas e Biscoitos<br />
+          MAC. SEC macarrão Seco<br />
+          O. Óleo<br />
+          S. Sachê<br />
+          TEMP. Tempero<br /><br />
 
-<script src="/public/assets/js/validade-componet/modal-validade.js"></script>
+          CAR. Carnes<br />
+          FAG. Frango<br />
+          PEX. Peixe<br />
+          FRI. Frios<br />
+          HORT. LEG. Hortifruti Legumes<br />
+          LEG. CONG. Legumes Congelados<br />
+          F. Frutas<br />
+          MASS. FRES. Massas Frescas<br />
+          MIS. PRONT. Mistura Pronta<br /><br />
+
+          SIGLAS - DESCARTÁVEIS<br />
+          DesC. Descartáveis<br /><br />
+
+          SIGLAS - LIMPEZA<br />
+          Limp. Limpeza
+        </p>
+      </div>
+    </div>
+
+    <script src="/public/assets/js/validade-componet/modal-validade.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script src="/public/assets/js/main.js"></script>
@@ -1273,22 +1350,60 @@
     <script src="/public/assets/js/select-retirada.js"></script>
     <script src="/public/assets/js/header-component/rendimento-component.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="/public/assets/js/lixeira-component/lixeira-produto.js"></script>
     <script>
+      // Obter o modal e o botão de ajuda
+      document.getElementById("helpButton").onclick = function () {
+        document.getElementById("modalAjuda").style.display = "block";
+      };
 
+      document.getElementById("closeAjuda").onclick = function () {
+        document.getElementById("modalAjuda").style.display = "none";
+      };
 
-function baixarTelaEstoque() {
-    const elemento = document.getElementById("telaEstoque");
-    if (!elemento) return alert("Elemento #telaEstoque não encontrado!");
+      window.onclick = function (event) {
+        const modal = document.getElementById("modalAjuda");
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      };
 
-    html2canvas(elemento).then(canvas => {
-      const link = document.createElement("a");
-      link.download = "tela_estoque.png";
-      link.href = canvas.toDataURL();
-      link.click();
-    });
-  }
+      // Espera até o DOM estar completamente carregado
+      document.addEventListener("DOMContentLoaded", function () {
+        // Seleciona o ícone de ajuda e o modal
+        const iconeAjuda = document.getElementById("icone-ajuda");
+        const modalAjuda = document.getElementById("modal-ajuda");
+        const fecharModal = document.getElementById("fechar");
 
+        // Adiciona o evento de clique ao ícone de ajuda
+        iconeAjuda.addEventListener("click", function () {
+          modalAjuda.style.display = "block";
+        });
 
+        // Função para fechar o modal
+        fecharModal.addEventListener("click", function () {
+          modalAjuda.style.display = "none";
+        });
+
+        // Fecha o modal se clicar fora do conteúdo
+        window.addEventListener("click", function (event) {
+          if (event.target === modalAjuda) {
+            modalAjuda.style.display = "none";
+          }
+        });
+      });
+
+      function baixarTelaEstoque() {
+        const elemento = document.getElementById("telaEstoque");
+        if (!elemento) return alert("Elemento #telaEstoque não encontrado!");
+
+        html2canvas(elemento).then((canvas) => {
+          const link = document.createElement("a");
+          link.download = "tela_estoque.png";
+          link.href = canvas.toDataURL();
+          link.click();
+        });
+      }
 
       function recarregarPagina() {
         location.reload();
@@ -1387,12 +1502,14 @@ function baixarTelaEstoque() {
         .getElementById("addProductForm")
         .addEventListener("submit", function (event) {
           event.preventDefault();
+
+          // Captura os dados do formulário
           const produto = {
-            nome: document.getElementById("nome").value,
-            uniCompra: document.getElementById("uniCompra").value,
-            uniMedida: document.getElementById("uniMedida").value,
-            quantidade: document.getElementById("quantidade").value,
-            categoria: document.getElementById("categoria").value,
+            nome: document.getElementById("nome").value.trim(),
+            uniCompra: document.getElementById("uniCompra").value.trim(),
+            uniMedida: document.getElementById("uniMedida").value.trim(),
+            quantidade: parseInt(document.getElementById("quantidade").value),
+            categoria: document.getElementById("categoria").value.trim(),
             validade: document.getElementById("validade").value,
             estoque: {
               max: parseInt(document.getElementById("estoqueMax").value),
@@ -1400,6 +1517,24 @@ function baixarTelaEstoque() {
               min: parseInt(document.getElementById("estoqueMin").value),
             },
           };
+
+          // Verificação de campos obrigatórios
+          if (
+            !produto.nome ||
+            !produto.uniCompra ||
+            !produto.uniMedida ||
+            isNaN(produto.quantidade) ||
+            !produto.categoria ||
+            !produto.validade ||
+            isNaN(produto.estoque.max) ||
+            isNaN(produto.estoque.med) ||
+            isNaN(produto.estoque.min)
+          ) {
+            alert("Todos os campos devem ser preenchidos corretamente!");
+            return;
+          }
+
+          // Envio dos dados para o backend
           fetch("https://controle-de-estoque-ccb.onrender.com/produtos", {
             method: "POST",
             headers: {
@@ -1409,14 +1544,21 @@ function baixarTelaEstoque() {
           })
             .then((response) => response.json())
             .then((data) => {
-              console.log("Produto adicionado:", data);
-              document.getElementById("modalAdicionarProduto").style.display =
-                "none";
+              if (data.error) {
+                alert("Erro ao adicionar produto: " + data.error);
+              } else {
+                console.log("Produto adicionado:", data);
+                alert("Produto adicionado com sucesso!");
+                document.getElementById("modalAdicionarProduto").style.display =
+                  "none";
+              }
             })
             .catch((error) => {
               console.error("Erro ao adicionar produto:", error);
+              alert("Erro ao adicionar produto.");
             });
         });
+
       const loginBtn = document.getElementById("loginBtn");
       loginBtn.addEventListener("click", function () {
         window.open("/pags/logpag2.html", "_blank");

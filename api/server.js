@@ -539,7 +539,6 @@ app.get("/download-excel", async (req, res) => {
     res.status(500).send("Erro ao gerar Excel");
   }
 });
-
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
