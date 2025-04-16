@@ -579,6 +579,57 @@ app.get("/limpeza", (req, res) => {
     res.json(results);
   });
 });
+app.post("/limpeza", (req, res) => {
+  const {
+    nomeLimpeza,
+    uniCompraLimpeza,
+    uniMedidaLimpeza,
+    quantidadeLimpeza,
+    validadeLimpeza,
+    estoqueMaxLimpeza,
+    estoqueMedLimpeza,
+    estoqueMinLimpeza,
+  } = req.body;
+
+  const estoqueJSON = JSON.stringify({
+    max: estoqueMaxLimpeza,
+    med: estoqueMedLimpeza,
+    min: estoqueMinLimpeza,
+  });
+
+  const sql = `
+    INSERT INTO limpeza (
+      limp_produto,
+      uni_compra,
+      uni_media,
+      quantidade_limp,
+      validade,
+      estoque
+    ) VALUES (?, ?, ?, ?, ?, ?)
+  `;
+
+  db.query(
+    sql,
+    [
+      nomeLimpeza,
+      uniCompraLimpeza,
+      uniMedidaLimpeza,
+      quantidadeLimpeza,
+      validadeLimpeza,
+      estoqueJSON,
+    ],
+    (err, result) => {
+      if (err) {
+        console.error("Erro ao inserir produto de limpeza:", err);
+        return res.status(500).json({ erro: "Erro ao salvar produto." });
+      }
+
+      res
+        .status(201)
+        .json({ mensagem: "Produto de limpeza adicionado com sucesso!" });
+    }
+  );
+});
 
 const PORT = 3000;
 app.listen(PORT, () => {
