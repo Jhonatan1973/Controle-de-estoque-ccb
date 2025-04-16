@@ -630,6 +630,62 @@ app.post("/limpeza", (req, res) => {
     }
   );
 });
+app.post("/limpeza/retirar", (req, res) => {
+  const produtosParaRetirar = req.body;
+
+  if (!Array.isArray(produtosParaRetirar) || produtosParaRetirar.length === 0) {
+    return res
+      .status(400)
+      .json({ error: "É necessário informar produtos para retirar." });
+  }
+
+  let erros = [];
+
+  produtosParaRetirar.forEach(({ produto_id, quantidadeRetirar }) => {
+    if (
+      !produto_id ||
+      !quantidadeRetirar ||
+      isNaN(quantidadeRetirar) ||
+      quantidadeRetirar <= 0
+    ) {
+      erros.push(`Informações inválidas para o produto ${produto_id}.`);
+      return;
+    }
+
+    const sql = `
+      UPDATE limpeza 
+      SET quantidade_limp = quantidade_limp - ? 
+      WHERE produto_id_limpeza = ? AND quantidade_limp >= ?;
+    `;
+
+    db.query(
+      sql,
+      [quantidadeRetirar, produto_id, quantidadeRetirar],
+      (err, result) => {
+        if (err) {
+          console.error(`Erro ao retirar produto ${produto_id}:`, err);
+          erros.push(`Erro ao atualizar o produto ${produto_id}.`);
+          return;
+        }
+
+        if (result.affectedRows === 0) {
+          erros.push(
+            `Quantidade insuficiente no estoque para o produto ${produto_id}.`
+          );
+        }
+      }
+    );
+  });
+
+  if (erros.length > 0) {
+    return res.status(400).json({ sucesso: false, erros });
+  }
+
+  res.json({
+    sucesso: true,
+    message: "Produtos de limpeza retirados com sucesso!",
+  });
+});
 
 const PORT = 3000;
 app.listen(PORT, () => {

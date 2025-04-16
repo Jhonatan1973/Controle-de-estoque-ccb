@@ -62,7 +62,6 @@ function atualizarCabecalhoTabela(categoria) {
       <th>Uni Compra</th>
       <th>Uni Medida</th>
       <th>Quantidade</th>
-      <th>Categoria</th>
       <th>Validade</th>
       <th>Estoque</th>
       <th>Alterar</th>
@@ -97,7 +96,8 @@ async function atualizarTabelaLimpeza() {
     tabela.appendChild(tr);
     return;
   }
-
+  // Ordenar em ordem alfabética
+  produtosLimpeza.sort((a, b) => a.limp_produto.localeCompare(b.limp_produto));
   produtosLimpeza.forEach((produto) => {
     produto.validade = new Date(produto.validade).toLocaleDateString("pt-BR");
 
@@ -125,13 +125,10 @@ async function atualizarTabelaLimpeza() {
       <td>${produto.uni_compra}</td>
       <td>${produto.uni_media}</td>
       <td style="color: ${corQuantidade}; font-weight: bold;">${quantidade_limp}</td>
-      <td>${produto.categoria || "N/A"}</td>
       <td>${produto.validade}</td>
       <td>${estoqueHtml}</td>
       <td>
-        <button class="btn-alterar" onclick="abrirModalAlterar(${
-          produto.produto_id_limpeza
-        }, '${produto.limp_produto}')">Alterar</button>
+        <button class="btn-alterar" onclick="abrirModalAlterar(${produto.produto_id_limpeza}, '${produto.limp_produto}')">Alterar</button>
       </td>
     `;
 
@@ -152,6 +149,13 @@ async function atualizarTabela() {
     tabela.appendChild(tr);
     return;
   }
+  // Ordenar por categoria e depois por nome
+  produtos.sort((a, b) => {
+    if (a.categoria === b.categoria) {
+      return a.nome_produto.localeCompare(b.nome_produto);
+    }
+    return a.categoria.localeCompare(b.categoria);
+  });
   produtos.forEach((produto) => {
     produto.validade = new Date(produto.validade).toLocaleDateString("pt-BR", {
       timeZone: "UTC" || "N/A",
@@ -190,7 +194,9 @@ async function atualizarTabela() {
       <td>${produto.validade}</td>
       <td>${estoqueHtml}</td>
       <td>
-        <button class="btn-alterar" onclick="abrirModalAlterar(${produto.produto_id}, '${produto.nome_produto}')">Alterar</button>
+                <button class="btn-adicionar" onclick="abrirModalAdicionarQuantidade(${produto.produto_id_limpeza}, '${produto.limp_produto}')">
+          Adicionar Quantidade
+        </button>
       </td>
     `;
     tabela.appendChild(tr);

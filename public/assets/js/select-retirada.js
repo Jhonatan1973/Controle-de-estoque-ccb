@@ -69,13 +69,16 @@ document
     });
     console.log("Produtos para retirar:", produtosParaRetirar);
     if (produtosParaRetirar.length > 0) {
-      fetch("https://controle-de-estoque-ccb.onrender.com/api/retirarProdutos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(produtosParaRetirar),
-      })
+      fetch(
+        "https://controle-de-estoque-ccb.onrender.com/api/retirarProdutos",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(produtosParaRetirar),
+        }
+      )
         .then((response) => response.json())
         .then((data) => {
           console.log("Resposta do servidor:", data);
