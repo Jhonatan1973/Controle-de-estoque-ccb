@@ -121,6 +121,24 @@ header h1 {
   padding: 20px;
   box-sizing: border-box;
   z-index: 1000;
+  overflow-y: auto;
+  direction: rtl;
+}
+
+.side-bar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.side-bar::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 6px;
+}
+
+.side-bar::-webkit-scrollbar-track {
+  background-color: #ccc;
+}
+.side-bar * {
+  direction: ltr;
 }
 .side-bar.active {
   left: 0;
