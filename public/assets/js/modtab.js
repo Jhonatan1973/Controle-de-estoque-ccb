@@ -194,9 +194,7 @@ async function atualizarTabela() {
       <td>${produto.validade}</td>
       <td>${estoqueHtml}</td>
       <td>
-                <button class="btn-adicionar" onclick="abrirModalAdicionarQuantidade(${produto.produto_id_limpeza}, '${produto.limp_produto}')">
-          Adicionar Quantidade
-        </button>
+ <button class="btn-alterar" onclick="abrirModalAlterar(${produto.produto_id}, '${produto.nome_produto}')">Alterar</button>
       </td>
     `;
     tabela.appendChild(tr);
