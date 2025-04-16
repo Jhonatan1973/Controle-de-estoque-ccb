@@ -63,7 +63,7 @@ input[type="month"]:focus {
   left: 50%;
   top: 30%;
   transform: translate(-50%, -50%);
-  margin-top: 100px;
+  margin-top: 10px;
   padding: 20px;
   background-color: #f0f0f0;
   border: 1px solid #bbb;
@@ -144,7 +144,6 @@ input[type="month"]:focus {
   }
 }
 
-/* Estilos gerais continuam os mesmos */
 section h3,
 section h4 {
   margin-bottom: 15px;
