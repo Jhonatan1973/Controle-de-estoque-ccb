@@ -494,7 +494,23 @@ app.get("/api/validades-limpeza", async (req, res) => {
     res.json(results);
   });
 });
+app.get("/api/validades", async (req, res) => {
+  const { dias = 30 } = req.query;
 
+  const query = `
+    SELECT nome_produto, quantidade, validade
+    FROM produtos
+    WHERE validade <= CURDATE() + INTERVAL ? DAY
+    ORDER BY validade ASC
+  `;
+  db.query(query, [parseInt(dias)], (err, results) => {
+    if (err) {
+      console.error("Erro:", err);
+      return res.status(500).json({ error: "Erro ao buscar dados." });
+    }
+    res.json(results);
+  });
+});
 app.get("/download-excel", async (req, res) => {
   try {
     const connection = db.promise();

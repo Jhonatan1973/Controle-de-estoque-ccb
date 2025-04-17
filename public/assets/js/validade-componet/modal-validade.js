@@ -23,6 +23,7 @@ function carregarValidades() {
     url =
       "https://controle-de-estoque-ccb.onrender.com/api/validades-limpeza?dias=30";
   }
+  console.log("Tabela selecionada:", tabela);
 
   fetch(url)
     .then((response) => response.json())
