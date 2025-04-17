@@ -102,6 +102,7 @@
       rel="stylesheet"
       href="/public/assets/css/limpeza-component/limpeza-modal.css"
     />
+    <link rel="stylesheet" href="/public/assets/css/table/filtrar-seleca.css" />
   </head>
   <body>
     <header>
@@ -207,11 +208,12 @@
         </nav>
       </label>
     </header>
+
     <div class="side-bar" id="sideBar">
       <h2>Menu</h2>
       <i class="fas fa-times close-icon" onclick="closeSideBar()"></i>
       <div class="button-container-barra">
-        <label for="filtroEstoque">Filtrar:</label>
+        <label for="filtroEstoque">Trocar tabela:</label>
         <select id="filtroEstoque" class="select-simple">
           <option value="cozinha">Cozinha</option>
           <option value="imobilizados">Imobilizados</option>
@@ -321,6 +323,23 @@
         </div>
       </div>
     </div>
+    <div class="header-filtro"></div>
+    <label for="filtroCategoria">Filtrar por categoria:</label>
+    <select id="filtroCategoria" class="filtroCategoria">
+      <option value="TODOS">Todos</option>
+      <option value="SEC">SEC</option>
+      <option value="BEB">BEB</option>
+      <option value="CH">CH</option>
+      <option value="CONSERV">CONSERV</option>
+      <option value="BL e BI">BL e BI</option>
+      <option value="MAC">MAC</option>
+      <option value="O">O</option>
+      <option value="S">S</option>
+      <option value="TEMP">TEMP</option>
+      <option value="DESC">DESC</option>
+      <option value="SOBRE">SOBRE</option>
+    </select>
+</div>
     <div class="tabela-container">
       <table id="tabelaEstoque">
         <thead>
@@ -605,6 +624,7 @@
             id="quantidade"
             name="quantidade"
             class="input-simple"
+            step="any"
             required
           />
           <label for="categoria">Categoria:</label>
@@ -619,7 +639,7 @@
             <option value="BEB">BEB</option>
             <option value="CH">CH</option>
             <option value="CONSERV">CONSERV</option>
-            <option value="BL E BI">BL E BI</option>
+            <option value="BL e BI">BL e BI</option>
             <option value="MAC">MAC</option>
             <option value="O">O</option>
             <option value="S">S</option>
@@ -1192,11 +1212,7 @@
           MAC. SEC macarrão Seco<br />
           O. Óleo<br />
           S. Sachê<br />
-<<<<<<< HEAD
-          SOBRE. Sobremesas<br>
-=======
           SOBRE. Sobremesas<br />
->>>>>>> f8323a1 (alteracao nas siglas)
           TEMP. Tempero<br /><br />
 
           CAR. Carnes<br />
@@ -1524,7 +1540,9 @@
             nome: document.getElementById("nome").value.trim(),
             uniCompra: document.getElementById("uniCompra").value.trim(),
             uniMedida: document.getElementById("uniMedida").value.trim(),
-            quantidade: parseInt(document.getElementById("quantidade").value),
+            quantidade: document
+              .getElementById("quantidade")
+              .value.replace(",", "."), // Altere aqui
             categoria: document.getElementById("categoria").value.trim(),
             validade: document.getElementById("validade").value,
             estoque: {

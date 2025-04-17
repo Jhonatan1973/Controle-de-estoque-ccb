@@ -1,0 +1,36 @@
+/* Label simples */
+label[for="filtroCategoria"] {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-right: 8px;
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
+/* Select estilizado mais simples */
+#filtroCategoria {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #333;
+  min-width: 100px;
+  max-width: 140px;
+  height: 30px;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='14' viewBox='0 0 24 24' width='14' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  background-size: 12px;
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Foco simples no select */
+#filtroCategoria:focus {
+  outline: none;
+  border-color: #999;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+}

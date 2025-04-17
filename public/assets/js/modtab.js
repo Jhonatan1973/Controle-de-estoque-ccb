@@ -135,44 +135,47 @@ async function atualizarTabelaLimpeza() {
     tabela.appendChild(tr);
   });
 }
-async function atualizarTabela() {
+async function atualizarTabela(filtroCategoria = "TODOS") {
   const response = await fetch(
     "https://controle-de-estoque-ccb.onrender.com/produtos"
   );
   const produtos = await response.json();
-  console.log(produtos);
+
   const tabela = document.getElementById("tabelcompleta");
   tabela.innerHTML = "";
+
   if (produtos.length === 0) {
     const tr = document.createElement("tr");
     tr.innerHTML = "<td colspan='8'>Nenhum produto encontrado.</td>";
     tabela.appendChild(tr);
     return;
   }
-  // Ordenar por categoria e depois por nome
-  produtos.sort((a, b) => {
+
+  // Aplicar filtro se necessário
+  const produtosFiltrados =
+    filtroCategoria === "TODOS"
+      ? produtos
+      : produtos.filter((p) => p.categoria === filtroCategoria);
+
+  // Ordenar
+  produtosFiltrados.sort((a, b) => {
     if (a.categoria === b.categoria) {
       return a.nome_produto.localeCompare(b.nome_produto);
     }
     return a.categoria.localeCompare(b.categoria);
   });
-  produtos.forEach((produto) => {
+
+  // Preencher tabela
+  produtosFiltrados.forEach((produto) => {
     produto.validade = new Date(produto.validade).toLocaleDateString("pt-BR", {
       timeZone: "UTC" || "N/A",
     });
-    const tr = document.createElement("tr");
-    const estoqueHtml =
-      produto.estoque.max === 0 &&
-      produto.estoque.med === 0 &&
-      produto.estoque.min === 0
-        ? ""
-        : `<span style="color: green;">Max: ${produto.estoque.max}</span>,
-           <span style="color: orange;">Med: ${produto.estoque.med}</span>,
-           <span style="color: red;">Min: ${produto.estoque.min}</span>`;
+
+    // lógica da cor da quantidade
     const { quantidade } = produto;
     const { max, med, min } = produto.estoque;
-
     let corQuantidade = "black";
+
     if (!isNaN(quantidade)) {
       const diffMax = Math.abs(quantidade - max);
       const diffMed = Math.abs(quantidade - med);
@@ -185,6 +188,15 @@ async function atualizarTabela() {
         corQuantidade = "red";
       }
     }
+
+    const estoqueHtml =
+      max === 0 && med === 0 && min === 0
+        ? ""
+        : `<span style="color: green;">Max: ${max}</span>,
+           <span style="color: orange;">Med: ${med}</span>,
+           <span style="color: red;">Min: ${min}</span>`;
+
+    const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${produto.nome_produto}</td>
       <td>${produto.uni_compra}</td>
@@ -194,12 +206,20 @@ async function atualizarTabela() {
       <td>${produto.validade}</td>
       <td>${estoqueHtml}</td>
       <td>
- <button class="btn-alterar" onclick="abrirModalAlterar(${produto.produto_id}, '${produto.nome_produto}')">Alterar</button>
+        <button class="btn-alterar" onclick="abrirModalAlterar(${produto.produto_id}, '${produto.nome_produto}')">Alterar</button>
       </td>
     `;
     tabela.appendChild(tr);
   });
 }
+
+document
+  .getElementById("filtroCategoria")
+  .addEventListener("change", function () {
+    const categoriaSelecionada = this.value;
+    atualizarTabela(categoriaSelecionada); // passa a categoria como parâmetro
+  });
+
 async function atualizarTabelaImobilizados() {
   console.log("Atualizando tabela de imobilizados...");
   const response = await fetch(

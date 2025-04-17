@@ -23,11 +23,22 @@ db.connect(function (err) {
 });
 app.post("/produtos", (req, res) => {
   const produto = req.body;
+
+  let quantidadeBruta = produto.quantidade.toString().trim();
+
+  if (quantidadeBruta.includes(",")) {
+    quantidadeBruta = quantidadeBruta.replace(",", ".");
+  }
+
+  produto.quantidade = quantidadeBruta.includes(".")
+    ? parseFloat(quantidadeBruta)
+    : parseInt(quantidadeBruta, 10);
+
   if (
     !produto.nome ||
     !produto.uniCompra ||
     !produto.uniMedida ||
-    !produto.quantidade ||
+    isNaN(produto.quantidade) ||
     !produto.categoria ||
     !produto.validade ||
     !produto.estoque
@@ -36,6 +47,7 @@ app.post("/produtos", (req, res) => {
       .status(400)
       .json({ error: "Todos os campos devem ser preenchidos!" });
   }
+
   const sql = `
     INSERT INTO produtos (nome_produto, uni_compra, uni_media, quantidade, categoria, validade, estoque)
     VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -49,6 +61,7 @@ app.post("/produtos", (req, res) => {
     produto.validade,
     JSON.stringify(produto.estoque),
   ];
+
   db.query(sql, values, (err, result) => {
     if (err) {
       console.error("Erro ao adicionar produto:", err);
@@ -61,28 +74,49 @@ app.post("/produtos", (req, res) => {
     });
   });
 });
+
 app.get("/produtos", (req, res) => {
   const sql = `
-        SELECT 
-            produto_id, 
-            nome_produto, 
-            uni_compra,
-            uni_media,
-            quantidade, 
-            categoria, 
-            validade, 
-            estoque 
-        FROM produtos;
-    `;
+    SELECT 
+      produto_id, 
+      nome_produto, 
+      uni_compra,
+      uni_media,
+      quantidade, 
+      categoria, 
+      validade, 
+      estoque 
+    FROM produtos;
+  `;
+
   db.query(sql, (err, results) => {
     if (err) {
       console.error("Erro ao buscar os dados:", err);
-      res.status(500).json({ error: "Erro ao buscar os dados" });
-    } else {
-      res.json(results);
+      return res.status(500).json({ error: "Erro ao buscar os dados" });
     }
+
+    const produtosFormatados = results.map((produto) => {
+      // Aqui só formata visualmente se precisar (ex: exibir como string com vírgula)
+      if (produto.uni_media !== "L" && produto.uni_media !== "kg") {
+        produto.quantidade = parseInt(produto.quantidade, 10);
+      }
+
+      // Se necessário, parse do JSON do estoque
+      if (produto.estoque) {
+        try {
+          produto.estoque = JSON.parse(produto.estoque);
+        } catch (e) {
+          console.warn("Erro ao parsear estoque:", e);
+        }
+      }
+
+      return produto;
+    });
+
+    res.json(produtosFormatados);
   });
 });
+
 app.get("/imobilizados", (req, res) => {
   db.query("SELECT * FROM imobilizados", (err, results) => {
     if (err) {

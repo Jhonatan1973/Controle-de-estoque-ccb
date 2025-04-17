@@ -1,31 +1,47 @@
+/* Zera a margem geral da tabela e do container */
+table,
+.tabela-wrapper,
+.tabela-container {
+  margin: 0 !important;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilo principal da tabela */
 table {
-  width: max-content;
-  min-width: 100%;
+  width: 100%;
   border-collapse: collapse;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
+
+/* Ajustes para responsividade e scroll */
 .tabelaEstoque {
-  width: max-content;
-  min-width: 100%;
+  width: 100%;
   border-collapse: collapse;
 }
+
 .tabela-container {
   width: 100%;
   overflow-x: auto;
   display: block;
   white-space: nowrap;
 }
+
+/* Estrutura da tabela */
 .tabelaEstoque thead,
 .tabelaEstoque tbody {
   display: table;
   width: 100%;
 }
+
 .tabela-wrapper {
   position: relative;
   width: 100%;
 }
+
+/* Estilo das células */
 th,
 td {
   padding: 12px;
@@ -46,6 +62,8 @@ tr:nth-child(even) {
 tr:hover {
   background-color: #ddd;
 }
+
+/* Responsivo */
 @media (max-width: 600px) {
   th,
   td {
