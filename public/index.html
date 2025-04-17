@@ -323,22 +323,32 @@
         </div>
       </div>
     </div>
-    <div class="header-filtro"></div>
-    <label for="filtroCategoria">Filtrar por categoria:</label>
-    <select id="filtroCategoria" class="filtroCategoria">
-      <option value="TODOS">Todos</option>
-      <option value="SEC">SEC</option>
-      <option value="BEB">BEB</option>
-      <option value="CH">CH</option>
-      <option value="CONSERV">CONSERV</option>
-      <option value="BL e BI">BL e BI</option>
-      <option value="MAC">MAC</option>
-      <option value="O">O</option>
-      <option value="S">S</option>
-      <option value="TEMP">TEMP</option>
-      <option value="DESC">DESC</option>
-      <option value="SOBRE">SOBRE</option>
-    </select>
+    <div class="filtros-container">
+      <label for="filtroCategoria">Filtrar por categoria:</label>
+      <select id="filtroCategoria" class="filtroCategoria">
+        <option value="TODOS">Todos</option>
+        <option value="SEC">SEC</option>
+        <option value="BEB">BEB</option>
+        <option value="CH">CH</option>
+        <option value="CONSERV">CONSERV</option>
+        <option value="BL e BI">BL e BI</option>
+        <option value="MAC">MAC</option>
+        <option value="O">O</option>
+        <option value="S">S</option>
+        <option value="TEMP">TEMP</option>
+        <option value="DESC">DESC</option>
+        <option value="SOBRE">SOBRE</option>
+      </select>
+    
+      <label for="filtroCor">Filtrar por cor:</label>
+      <select id="filtroCor" onchange="filtrarTabelaPorCor()">
+        <option value="todas">Todas</option>
+        <option value="red">Vermelho</option>
+        <option value="orange">Laranja</option>
+        <option value="green">Verde</option>
+      </select>
+    </div>
+    
 </div>
     <div class="tabela-container">
       <table id="tabelaEstoque">

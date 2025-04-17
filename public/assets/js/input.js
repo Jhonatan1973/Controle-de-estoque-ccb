@@ -51,3 +51,30 @@ function capitalizeFirstLetter(input) {
     input.value = value; // Atualiza o valor do campo de input
   }
 }
+function filtrarTabelaPorCor() {
+  const corSelecionada = document.getElementById("filtroCor").value;
+  const linhas = document.querySelectorAll("#tabelcompleta tr");
+
+  linhas.forEach((linha) => {
+    const celulas = linha.querySelectorAll("td");
+    if (celulas.length > 0) {
+      const celulaQuantidade = celulas[3]; // 4ª coluna é a de quantidade
+      const corTexto = window.getComputedStyle(celulaQuantidade).color;
+
+      // Transforma cor RGB em nome de cor básico
+      const mapaCor = {
+        "rgb(255, 0, 0)": "red",
+        "rgb(255, 165, 0)": "orange",
+        "rgb(0, 128, 0)": "green",
+      };
+
+      const cor = mapaCor[corTexto] || "outra";
+
+      if (corSelecionada === "todas" || cor === corSelecionada) {
+        linha.style.display = "";
+      } else {
+        linha.style.display = "none";
+      }
+    }
+  });
+}

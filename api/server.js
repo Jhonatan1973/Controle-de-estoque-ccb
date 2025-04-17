@@ -573,16 +573,49 @@ app.get("/download-produtos", async (req, res) => {
     if (!rows.length) {
       return res.status(404).send("Nenhum produto encontrado.");
     }
+
+    // Aplicando a lógica da cor no backend
+    const produtosComCor = rows.map((produto) => {
+      const quantidade = Number(produto.quantidade);
+      const max = Number(produto.max);
+      const med = Number(produto.med);
+      const min = Number(produto.min);
+
+      let corQuantidade = "black";
+      if (!isNaN(quantidade)) {
+        const diffMax = Math.abs(quantidade - max);
+        const diffMed = Math.abs(quantidade - med);
+        const diffMin = Math.abs(quantidade - min);
+
+        if (diffMax <= diffMed && diffMax <= diffMin) {
+          corQuantidade = "verde";
+        } else if (diffMed <= diffMax && diffMed <= diffMin) {
+          corQuantidade = "laranja";
+        } else {
+          corQuantidade = "vermelho";
+        }
+      }
+
+      return {
+        ...produto,
+        cor_quantidade: corQuantidade, // coluna nova para o Excel
+      };
+    });
+
+    // Gerando planilha com a nova coluna
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Produtos");
-    const columns = Object.keys(rows[0]).map((key) => ({
+
+    // Inclui a nova coluna na definição
+    const columns = Object.keys(produtosComCor[0]).map((key) => ({
       header: key,
       key: key,
       width: 20,
     }));
 
     worksheet.columns = columns;
-    rows.forEach((row) => {
+
+    produtosComCor.forEach((row) => {
       worksheet.addRow(row);
     });
 
@@ -590,6 +623,7 @@ app.get("/download-produtos", async (req, res) => {
       from: "A1",
       to: worksheet.getRow(1).getCell(columns.length)._address,
     };
+
     res.setHeader(
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"

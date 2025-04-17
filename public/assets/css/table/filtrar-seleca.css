@@ -1,14 +1,22 @@
-/* Label simples */
-label[for="filtroCategoria"] {
+.filtros-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+/* Aqui a mágica: o label fica mais alto */
+.filtros-container label {
   font-size: 14px;
   font-weight: 500;
   color: #333;
-  margin-right: 8px;
   font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+  position: relative;
+  top: -2px; /* <-- isso levanta o texto */
 }
 
-/* Select estilizado mais simples */
-#filtroCategoria {
+/* Estilização dos selects */
+.filtros-container select {
   padding: 5px 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -28,8 +36,7 @@ label[for="filtroCategoria"] {
   transition: all 0.2s ease-in-out;
 }
 
-/* Foco simples no select */
-#filtroCategoria:focus {
+.filtros-container select:focus {
   outline: none;
   border-color: #999;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
