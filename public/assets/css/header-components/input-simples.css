@@ -25,3 +25,7 @@
   color: #aaa;
   font-style: italic;
 }
+/* Estilo para garantir que a primeira letra será maiúscula */
+.input-uppercase {
+  text-transform: capitalize;
+}

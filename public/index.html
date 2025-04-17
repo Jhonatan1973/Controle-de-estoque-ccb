@@ -576,8 +576,9 @@
             type="text"
             id="nome"
             name="nome"
-            class="input-simple"
+            class="input-simple input-uppercase"
             required
+            oninput="capitalizeFirstLetter(this)"
           />
           <label for="uniCompra">Unidade de Compra:</label>
           <select

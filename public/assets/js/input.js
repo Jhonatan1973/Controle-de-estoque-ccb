@@ -41,3 +41,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   };
 });
+function capitalizeFirstLetter(input) {
+  // Pega o valor do input
+  let value = input.value;
+
+  // Se o primeiro caractere for minúsculo, transforma ele em maiúsculo
+  if (value.length > 0) {
+    value = value.charAt(0).toUpperCase() + value.slice(1);
+    input.value = value; // Atualiza o valor do campo de input
+  }
+}
