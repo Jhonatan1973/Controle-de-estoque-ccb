@@ -565,6 +565,8 @@ app.get("/download-excel", async (req, res) => {
     res.status(500).send("Erro ao gerar Excel");
   }
 });
+const ExcelJS = require("exceljs");
+
 app.get("/download-produtos", async (req, res) => {
   try {
     const connection = db.promise();
@@ -574,40 +576,12 @@ app.get("/download-produtos", async (req, res) => {
       return res.status(404).send("Nenhum produto encontrado.");
     }
 
-    // Aplicando a lógica da cor no backend
-    const produtosComCor = rows.map((produto) => {
-      const quantidade = Number(produto.quantidade);
-      const max = Number(produto.max);
-      const med = Number(produto.med);
-      const min = Number(produto.min);
-
-      let corQuantidade = "black";
-      if (!isNaN(quantidade)) {
-        const diffMax = Math.abs(quantidade - max);
-        const diffMed = Math.abs(quantidade - med);
-        const diffMin = Math.abs(quantidade - min);
-
-        if (diffMax <= diffMed && diffMax <= diffMin) {
-          corQuantidade = "verde";
-        } else if (diffMed <= diffMax && diffMed <= diffMin) {
-          corQuantidade = "laranja";
-        } else {
-          corQuantidade = "vermelho";
-        }
-      }
-
-      return {
-        ...produto,
-        cor_quantidade: corQuantidade, // coluna nova para o Excel
-      };
-    });
-
-    // Gerando planilha com a nova coluna
+    // Criação do workbook e worksheet
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Produtos");
 
-    // Inclui a nova coluna na definição
-    const columns = Object.keys(produtosComCor[0]).map((key) => ({
+    // Definir as colunas do Excel
+    const columns = Object.keys(rows[0]).map((key) => ({
       header: key,
       key: key,
       width: 20,
@@ -615,21 +589,63 @@ app.get("/download-produtos", async (req, res) => {
 
     worksheet.columns = columns;
 
-    produtosComCor.forEach((row) => {
-      worksheet.addRow(row);
+    // Adicionar linhas e aplicar lógica de cor na coluna "quantidade" (coluna E)
+    rows.forEach((produto) => {
+      const { quantidade, estoque } = produto;
+      const { max, med, min } = estoque;
+
+      let corQuantidade = "000000"; // Cor padrão preta
+
+      if (!isNaN(quantidade)) {
+        // Lógica para definir a cor com base na comparação de max, med, min
+        const diffMax = Math.abs(quantidade - max);
+        const diffMed = Math.abs(quantidade - med);
+        const diffMin = Math.abs(quantidade - min);
+
+        // Aplicar a cor conforme proximidade da quantidade com max, med ou min
+        if (diffMax <= diffMed && diffMax <= diffMin) {
+          corQuantidade = "00FF00"; // Verde
+        } else if (diffMed <= diffMax && diffMed <= diffMin) {
+          corQuantidade = "FFA500"; // Laranja
+        } else {
+          corQuantidade = "FF0000"; // Vermelho
+        }
+      }
+
+      // Formatar o valor de 'estoque' para evitar a notação {""}
+      const estoqueFormatado = `Max: ${max}, Med: ${med}, Min: ${min}`;
+
+      // Adicionar a linha ao Excel
+      const row = worksheet.addRow([
+        produto.nome_produto,
+        produto.uni_compra,
+        produto.uni_media,
+        produto.categoria,
+        produto.validade,
+        estoqueFormatado, // Usando o valor formatado
+        quantidade,
+      ]);
+
+      // Aplique a cor na célula de "quantidade" (coluna E) - índice 7 (lembrando que a contagem começa do 1)
+      const quantidadeCell = row.getCell(7); // Coluna de quantidade
+      quantidadeCell.font = { color: { argb: corQuantidade } };
+      quantidadeCell.bold = true;
     });
 
+    // Adicionar o filtro automático na coluna de "quantidade" (coluna G - índice 7)
     worksheet.autoFilter = {
       from: "A1",
       to: worksheet.getRow(1).getCell(columns.length)._address,
     };
 
+    // Configurar o cabeçalho para o download do arquivo Excel
     res.setHeader(
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
     res.setHeader("Content-Disposition", "attachment; filename=produtos.xlsx");
 
+    // Gerar e enviar o arquivo Excel
     await workbook.xlsx.write(res);
     res.end();
   } catch (error) {
