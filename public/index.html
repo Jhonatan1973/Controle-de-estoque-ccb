@@ -102,6 +102,7 @@
       rel="stylesheet"
       href="/public/assets/css/limpeza-component/limpeza-modal.css"
     />
+    <link rel="stylesheet" href="/public/assets/css/modals-component-agenda/agenda-modal.css">
     <link rel="stylesheet" href="/public/assets/css/table/filtrar-seleca.css" />
   </head>
   <body>
@@ -291,6 +292,7 @@
         >
           Baixar Excel
         </button>
+        <button class="btn btn-primary" onclick="abrirModalAgendamento(); closeSideBar()">Agendar Produtos</button>
       </div>
     </div>
     <div class="container"></div>
@@ -306,8 +308,7 @@
       <div class="modal-validades-box">
         <span class="close" onclick="closeValidadesModal()">&times;</span>
         <h1>VALIDADES</h1>
-    
-        <!-- SELECT PARA ESCOLHER A TABELA -->
+    <h2>Escolha a tabela:</h2>
         <select id="tabela-select" onchange="carregarValidades()">
           <option value="produtos">Produtos</option>
           <option value="limpeza">Limpeza</option>
@@ -328,7 +329,25 @@
         </div>
       </div>
     </div>
-    
+<!-- Filtro de Data Fora do Modal (caso necessário) -->
+<div id="filtroDataContainer" style="display: none; margin-top: 10px;">
+  <input type="date" id="dataFiltroExterno" />
+  <button id="btnConfirmarDataExterno">Confirmar</button>
+</div>
+
+<div id="modalMostrarPedidos" style="display: none;">
+  <div>
+    <span class="fechar" onclick="fecharModal()">Fechar</span>
+    <h3>Escolha a Data para Ver os Pedidos</h3>
+    <label>Selecione a data:
+      <input type="date" id="dataFiltroModal"> 
+    </label><br><br>
+    <button id="btnConfirmarData">✔️ Confirmar</button>
+    <div id="resultadoPedidos"></div>
+  </div>
+</div>
+
+
     <div class="filtros-container">
       <label for="filtroCategoria">Filtrar por categoria:</label>
       <select id="filtroCategoria" class="filtroCategoria">
@@ -356,6 +375,48 @@
     </div>
     
 </div>
+
+<div id="modalAgendamento" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="close" onclick="fecharModalAgendamento()">&times;</span>
+    <h3>Agendar Produtos</h3>
+    <form id="formAgendamento">
+
+      <div id="produtosContainer">
+        <div class="produtoItem">
+          <label>Produto:</label>
+          <input type="text" name="nomeProduto" required>
+          <label>Quantidade:</label>
+          <input type="number" name="qtdProduto" required>
+          <button type="button" class="removerItem" onclick="removerItem(this)">Remover</button>
+          <hr>
+        </div>
+      </div>
+
+      <button type="button" onclick="adicionarProduto()">+ Adicionar Produto</button>
+      <br><br>
+
+      <label for="dataAgendamento">Data de Agendamento:</label>
+      <input type="date" id="dataAgendamento" name="dataAgendamento" required><br><br>
+
+      <label for="eventoAgendamento">Evento:</label>
+      <input type="text" id="eventoAgendamento" name="eventoAgendamento" required><br><br>
+
+      <label for="refeicaoAgendamento">Refeição:</label>
+      <select id="refeicaoAgendamento" name="refeicaoAgendamento" required>
+        <option value="Almoço">Almoço</option>
+        <option value="Jantar">Jantar</option>
+        <option value="Café da Manhã">Café da Manhã</option>
+      </select><br><br>
+
+      <button type="submit">Agendar</button>
+    </form>
+  </div>
+</div>
+
+<div class="notifications-container"></div>
+
+<div class="notifications-container" id="notificacoesAgenda" style="margin-top: 20px;"></div>
     <div class="tabela-container">
       <table id="tabelaEstoque">
         <thead>
@@ -419,7 +480,7 @@
         <div class="form">
           <label for="user">Produto:</label>
           <input type="text" id="nome_saida" class="input-simple" />
-
+          
           <input type="hidden" id="produtoIdRetirar" />
           <label for="evento">Evento:</label>
           <select id="0">
@@ -969,6 +1030,7 @@
           >&times;</span
         >
         <h2>Selecionar Produtos para Retirada</h2>
+        <button id="btnMostrarPedidos">Mostrar Pedidos</button><br><br>
         <input type="hidden" id="produtoIdRetirar" />
         <label for="evento">Evento:</label>
         <select id="evento">
@@ -1388,6 +1450,7 @@
     <script src="/public/assets/js/lixeira-component/lixeira-produto.js"></script>
     <script src="/public/assets/js/limpeza-component/limpeza-modal.js"></script>
     <script src="/public/assets/js/select-retirada-limp.js"></script>
+    <script src="/public/assets/js/reserva-component/reserva-modal.js"></script>
     <script>
       document.getElementById("helpButton").onclick = function () {
         document.getElementById("modalAjuda").style.display = "block";

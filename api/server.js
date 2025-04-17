@@ -736,6 +736,84 @@ app.post("/limpeza/retirar", (req, res) => {
     message: "Produtos de limpeza retirados com sucesso!",
   });
 });
+app.post("/api/agendar", (req, res) => {
+  // Extraindo os dados do corpo da requisição
+  const { data_agenda, evento, refeicao, produtos } = req.body;
+
+  // Verificando se os dados necessários foram fornecidos
+  if (!data_agenda || !evento || !refeicao || !Array.isArray(produtos)) {
+    return res.status(400).json({ message: "Dados incompletos." });
+  }
+
+  // Criando o array de valores para inserir no banco
+  const values = produtos.map((p) => [
+    data_agenda,
+    evento,
+    refeicao,
+    p.nome,
+    p.qtd,
+  ]);
+
+  // A consulta SQL para inserir os dados na tabela agenda_reservas
+  const sql = `INSERT INTO agenda_reservas (data_agenda, evento, refeicao, produto_agendado, quantidade_agendada) VALUES ?`;
+
+  db.query(sql, [values], (err, result) => {
+    if (err) {
+      return res.status(500).json({ message: "Erro ao salvar", error: err });
+    }
+    res.status(201).json({ message: "Reservas salvas com sucesso!", result });
+  });
+});
+
+app.delete("/api/agendar-deletar", (req, res) => {
+  const { data_agenda, evento, refeicao } = req.body;
+
+  const sql = `
+    DELETE FROM agenda_reservas 
+    WHERE data_agenda = ? AND evento = ? AND refeicao = ?
+  `;
+
+  db.query(sql, [data_agenda, evento, refeicao], (err, result) => {
+    if (err)
+      return res.status(500).json({ message: "Erro ao deletar", error: err });
+    res.status(200).json({ message: "Reservas baixadas com sucesso", result });
+  });
+});
+app.get("/api/agendados", async (req, res) => {
+  const { data_agenda, evento, refeicao } = req.query;
+
+  try {
+    const [rows] = await db.promise().query(
+      `SELECT produto_agendado AS produto, quantidade_agendada 
+         FROM agenda_reservas 
+         WHERE data_agenda = ? AND evento = ? AND refeicao = ?`,
+      [data_agenda, evento, refeicao]
+    );
+
+    res.json(rows);
+  } catch (err) {
+    console.error("Erro MySQL:", err);
+    res.status(500).json({ error: "Erro ao buscar agendamentos" });
+  }
+});
+app.get("/api/agendados-todos", async (req, res) => {
+  const { data_agenda } = req.query;
+
+  try {
+    const [rows] = await db.promise().query(
+      `SELECT evento, refeicao, produto_agendado AS produto, quantidade_agendada 
+         FROM agenda_reservas 
+         WHERE data_agenda = ?`,
+      [data_agenda]
+    );
+
+    res.json(rows);
+  } catch (err) {
+    console.error("Erro MySQL:", err);
+    res.status(500).json({ error: "Erro ao buscar agendamentos do dia" });
+  }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);

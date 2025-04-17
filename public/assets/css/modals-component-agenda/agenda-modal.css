@@ -1,0 +1,240 @@
+/* Filtro de Data Fora do Modal */
+#filtroDataContainer {
+  margin-top: 10px;
+  text-align: center;
+}
+
+#filtroDataContainer input {
+  padding: 8px;
+  font-size: 16px;
+}
+
+#filtroDataContainer button {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #b0b3b0;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+#filtroDataContainer button:hover {
+  background-color: #a8a8a8;
+}
+
+/* Modal de Mostrar Pedidos */
+#modalMostrarPedidos {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo semitransparente */
+  overflow: auto;
+  padding-top: 60px;
+}
+
+#modalMostrarPedidos > div {
+  background-color: white;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%;
+  max-width: 600px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#modalMostrarPedidos h3 {
+  margin-bottom: 20px;
+}
+
+#modalMostrarPedidos label {
+  font-size: 16px;
+}
+
+#modalMostrarPedidos input,
+#modalMostrarPedidos select {
+  padding: 8px;
+  font-size: 16px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+#modalMostrarPedidos button {
+  padding: 10px 20px;
+  background-color: #b6b6b6;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+#modalMostrarPedidos button:hover {
+  background-color: #c4c4c4;
+}
+
+#modalMostrarPedidos .close {
+  position: relative;
+  top: 10px;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+#resultadoPedidos {
+  margin-top: 20px;
+}
+
+/* Modal de Agendamento */
+#modalAgendamento {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo semitransparente */
+  overflow: auto;
+  padding-top: 60px;
+}
+
+#modalAgendamento > div {
+  background-color: white;
+  margin: 5% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%;
+  max-width: 600px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#modalAgendamento h3 {
+  margin-bottom: 20px;
+}
+
+#modalAgendamento label {
+  font-size: 16px;
+}
+
+#modalAgendamento input,
+#modalAgendamento select {
+  padding: 8px;
+  font-size: 16px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+#modalAgendamento button {
+  padding: 10px 20px;
+  background-color: #b3b5b3;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+#modalAgendamento button:hover {
+  background-color: #d4d4d4;
+}
+
+#modalAgendamento .close {
+  position: relative;
+  top: 10px;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+#produtosContainer {
+  margin-bottom: 20px;
+}
+
+.produtoItem {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.produtoItem label {
+  display: block;
+}
+
+.produtoItem input {
+  width: calc(50% - 10px);
+  margin-right: 10px;
+}
+
+.produtoItem button {
+  background-color: #bbbbbb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.produtoItem button:hover {
+  background-color: #cacaca;
+}
+/* Modal de Mostrar Pedidos */
+#modalMostrarPedidos {
+  display: none;
+  position: fixed; /* Fixa o modal na tela */
+  top: 50%; /* Centraliza verticalmente */
+  right: 0; /* Alinha à direita */
+  transform: translateY(-50%); /* Ajuste para centralizar verticalmente */
+  width: 300px; /* Largura do modal */
+  max-height: 80vh; /* Altura máxima do modal */
+  background-color: white; /* Cor de fundo do modal */
+  box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
+  padding: 20px; /* Espaçamento interno */
+  border-radius: 8px; /* Cantos arredondados */
+  z-index: 99999; /* Garante que o modal esteja acima de outros elementos */
+  overflow-y: auto; /* Adiciona a barra de rolagem vertical */
+}
+
+#modalMostrarPedidos .fechar {
+  position: absolute;
+  top: 10px;
+  left: 10px; /* Coloca o botão de fechar no canto superior esquerdo do modal */
+  font-size: 20px;
+  cursor: pointer;
+  color: #f44336;
+}
+
+#modalMostrarPedidos .fechar:hover {
+  color: #e53935;
+}
+
+#modalMostrarPedidos h3 {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+#modalMostrarPedidos input,
+#modalMostrarPedidos select,
+#modalMostrarPedidos button {
+  width: 100%;
+  margin: 5px 0;
+  padding: 8px;
+  font-size: 16px;
+}
+
+#modalMostrarPedidos #resultadoPedidos {
+  margin-top: 15px;
+}
