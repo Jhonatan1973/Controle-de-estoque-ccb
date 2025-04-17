@@ -83,8 +83,6 @@ input[type="month"]:focus {
   margin-top: 10px;
   font-size: 14px;
 }
-
-/* Destaques visuais para comparações */
 .variacao-positiva {
   color: green;
   font-weight: bold;
@@ -109,7 +107,6 @@ input[type="month"]:focus {
 .close-modal:hover {
   color: #ff0000;
 }
-/* Responsividade específica para 400px e 738px */
 @media (max-width: 738px) {
   #rendimentoBox,
   #compararBox {
