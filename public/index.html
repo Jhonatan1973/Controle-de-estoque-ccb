@@ -302,12 +302,17 @@
     <body>
       <div class="notifications-container"></div>
     </body>
-
     <div id="modal-validades" class="modal-validades" style="display: none">
       <div class="modal-validades-box">
         <span class="close" onclick="closeValidadesModal()">&times;</span>
         <h1>VALIDADES</h1>
-
+    
+        <!-- SELECT PARA ESCOLHER A TABELA -->
+        <select id="tabela-select" onchange="carregarValidades()">
+          <option value="produtos">Produtos</option>
+          <option value="limpeza">Limpeza</option>
+        </select>
+    
         <div id="tabela_validades_container">
           <table id="tabela_validades">
             <thead>
@@ -323,6 +328,7 @@
         </div>
       </div>
     </div>
+    
     <div class="filtros-container">
       <label for="filtroCategoria">Filtrar por categoria:</label>
       <select id="filtroCategoria" class="filtroCategoria">

@@ -74,7 +74,6 @@ app.post("/produtos", (req, res) => {
     });
   });
 });
-
 app.get("/produtos", (req, res) => {
   const sql = `
     SELECT 
@@ -116,7 +115,6 @@ app.get("/produtos", (req, res) => {
     res.json(produtosFormatados);
   });
 });
-
 app.get("/imobilizados", (req, res) => {
   db.query("SELECT * FROM imobilizados", (err, results) => {
     if (err) {
@@ -436,7 +434,6 @@ app.get("/api/rendimento", (req, res) => {
     res.json(results);
   });
 });
-
 app.get("/api/comparar-precos", async (req, res) => {
   const { produto, data } = req.query;
 
@@ -480,13 +477,12 @@ app.get("/api/comparar-precos", async (req, res) => {
     res.json(results);
   });
 });
-
-app.get("/api/validades", async (req, res) => {
+app.get("/api/validades-limpeza", async (req, res) => {
   const { dias = 30 } = req.query;
 
   const query = `
-    SELECT nome_produto, quantidade, validade
-    FROM produtos
+    SELECT limp_produto AS nome_produto, quantidade_limp AS quantidade, validade
+    FROM limpeza
     WHERE validade <= CURDATE() + INTERVAL ? DAY
     ORDER BY validade ASC
   `;
@@ -565,8 +561,6 @@ app.get("/download-excel", async (req, res) => {
     res.status(500).send("Erro ao gerar Excel");
   }
 });
-const ExcelJS = require("exceljs");
-
 app.get("/download-produtos", async (req, res) => {
   try {
     const connection = db.promise();
@@ -589,50 +583,7 @@ app.get("/download-produtos", async (req, res) => {
 
     worksheet.columns = columns;
 
-    // Adicionar linhas e aplicar lógica de cor na coluna "quantidade" (coluna E)
-    rows.forEach((produto) => {
-      const { quantidade, estoque } = produto;
-      const { max, med, min } = estoque;
-
-      let corQuantidade = "000000"; // Cor padrão preta
-
-      if (!isNaN(quantidade)) {
-        // Lógica para definir a cor com base na comparação de max, med, min
-        const diffMax = Math.abs(quantidade - max);
-        const diffMed = Math.abs(quantidade - med);
-        const diffMin = Math.abs(quantidade - min);
-
-        // Aplicar a cor conforme proximidade da quantidade com max, med ou min
-        if (diffMax <= diffMed && diffMax <= diffMin) {
-          corQuantidade = "00FF00"; // Verde
-        } else if (diffMed <= diffMax && diffMed <= diffMin) {
-          corQuantidade = "FFA500"; // Laranja
-        } else {
-          corQuantidade = "FF0000"; // Vermelho
-        }
-      }
-
-      // Formatar o valor de 'estoque' para evitar a notação {""}
-      const estoqueFormatado = `Max: ${max}, Med: ${med}, Min: ${min}`;
-
-      // Adicionar a linha ao Excel
-      const row = worksheet.addRow([
-        produto.nome_produto,
-        produto.uni_compra,
-        produto.uni_media,
-        produto.categoria,
-        produto.validade,
-        estoqueFormatado, // Usando o valor formatado
-        quantidade,
-      ]);
-
-      // Aplique a cor na célula de "quantidade" (coluna E) - índice 7 (lembrando que a contagem começa do 1)
-      const quantidadeCell = row.getCell(7); // Coluna de quantidade
-      quantidadeCell.font = { color: { argb: corQuantidade } };
-      quantidadeCell.bold = true;
-    });
-
-    // Adicionar o filtro automático na coluna de "quantidade" (coluna G - índice 7)
+    // Adicionar o filtro automático (pode ser útil para filtrar os dados no Excel)
     worksheet.autoFilter = {
       from: "A1",
       to: worksheet.getRow(1).getCell(columns.length)._address,
@@ -653,7 +604,6 @@ app.get("/download-produtos", async (req, res) => {
     res.status(500).send("Erro ao gerar Excel");
   }
 });
-
 app.get("/limpeza", (req, res) => {
   db.query("SELECT * FROM limpeza", (err, results) => {
     if (err) {
@@ -770,7 +720,6 @@ app.post("/limpeza/retirar", (req, res) => {
     message: "Produtos de limpeza retirados com sucesso!",
   });
 });
-
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);

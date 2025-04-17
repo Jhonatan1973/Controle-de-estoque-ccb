@@ -10,8 +10,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function openValidadesModal() {
   document.getElementById("modal-validades").style.display = "flex";
+  carregarValidades();
+}
 
-  fetch("https://controle-de-estoque-ccb.onrender.com/api/validades?dias=30")
+function carregarValidades() {
+  const tabela = document.getElementById("tabela-select").value;
+  let url = "";
+
+  if (tabela === "produtos") {
+    url = "https://controle-de-estoque-ccb.onrender.com/api/validades?dias=30";
+  } else if (tabela === "limpeza") {
+    url =
+      "https://controle-de-estoque-ccb.onrender.com/api/validades-limpeza?dias=30";
+  }
+
+  fetch(url)
     .then((response) => response.json())
     .then((data) => {
       const tbody = document.getElementById("tabela_validades_body");
@@ -20,22 +33,22 @@ function openValidadesModal() {
       data.forEach((produto) => {
         const diasRestantes = calcularDiasRestantes(produto.validade);
 
-        if (diasRestantes <= 30);
         let corDias = "";
         if (diasRestantes >= 20 && diasRestantes <= 30) {
           corDias = "color: orange;";
         } else if (diasRestantes < 20) {
           corDias = "color: red;";
         }
+
         const validadeFormatada = formatarDataBrasileira(produto.validade);
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
-            <td>${produto.nome_produto}</td>
-            <td>${produto.quantidade}</td>
-            <td style="color: red;">${validadeFormatada}</td>
-<td style="${corDias}">${diasRestantes} dias</td>
-          `;
+          <td>${produto.nome_produto}</td>
+          <td>${produto.quantidade}</td>
+          <td style="color: red;">${validadeFormatada}</td>
+          <td style="${corDias}">${diasRestantes} dias</td>
+        `;
         tbody.appendChild(tr);
       });
     })
