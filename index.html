@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle de Estoque</title>
+    <link rel="shortcut icon" href="" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/header-components/main.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/header-components/header.css"
+    />
+    <link rel="stylesheet" href="/public/assets/css/table/table.css" />
+    <link rel="stylesheet" href="/public/assets/css/form/form.css" />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/header-components/modal.css"
+    />
+    <link rel="stylesheet" href="/public/assets/css/buttons/buttmodel.css" />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/modal-alterar-quant/modalterar.css"
+    />
+    <link rel="stylesheet" href="/public/assets/css/esconder/divescolha.css" />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/header-components/login.css"
+    />
+    <link rel="stylesheet" href="/public/assets/css/esconder/esconder.css" />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/modal-adicionar-imob/modal-imobilizado.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/modal-adicionar-prod/modal-prod.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/modal-alterar-imob/modal-alterar-mob.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/header-components/select-style.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/modal-historico-prod/modal-historico.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/header-components/img-header.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/transition/loard-geral.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/select-retirada/select-retirad.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/header-components/burger.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/header-components/rendimento-component.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/noticifacao-componet/notification-component.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/validades-components/modal-vali-component.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/download-component/donwload-element.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/ajuda-component/ajuda-component.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/help-component/help-component.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/lixeria-component/lixerira-produtos.css"
+    />
+    <link
+      rel="stylesheet"
+      href="/public/assets/css/limpeza-component/limpeza-modal.css"
+    />
+    <link rel="stylesheet" href="/public/assets/css/modals-component-agenda/agenda-modal.css">
+    <link rel="stylesheet" href="/public/assets/css/table/filtrar-seleca.css" />
+  </head>
+  <body>
+    <header>
+      <input id="burger-checkbox" type="checkbox" />
+      <label class="burger" for="burger-checkbox" onclick="toggleSideBar()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <img
+        src="/public/assets/img/Logo_branco.png"
+        id="img-ccb"
+        alt="Imagem ccb"
+      />
+      <h1>Controle de Estoque</h1>
+      <div class="search-container">
+        <div class="select" id="custom-select">
+          <div class="selected" id="selected-option">
+            <span id="selected-text">Nome</span>
+          </div>
+          <div class="cont-input-header">
+            <input checked="" class="checkbox" type="checkbox" />
+            <div class="mainbox">
+              <div class="iconcont-input-header">
+                <svg
+                  viewBox="0 0 512 512"
+                  height="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="search_icon"
+                >
+                  <path
+                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+                  ></path>
+                </svg>
+              </div>
+              <input
+                class="input"
+                placeholder="Buscar..."
+                type="text"
+                oninput="filtrarTabela()"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <label class="popup" style="display: none">
+        <input type="checkbox" />
+        <div tabindex="0" class="burger">
+          <svg
+            viewBox="0 0 24 24"
+            fill="white"
+            height="20"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2c2.757 0 5 2.243 5 5.001 0 2.756-2.243 5-5 5s-5-2.244-5-5c0-2.758 2.243-5.001 5-5.001zm0-2c-3.866 0-7 3.134-7 7.001 0 3.865 3.134 7 7 7s7-3.135 7-7c0-3.867-3.134-7.001-7-7.001zm6.369 13.353c-.497.498-1.057.931-1.658 1.302 2.872 1.874 4.378 5.083 4.972 7.346h-19.387c.572-2.29 2.058-5.503 4.973-7.358-.603-.374-1.162-.811-1.658-1.312-4.258 3.072-5.611 8.506-5.611 10.669h24c0-2.142-1.44-7.557-5.631-10.647z"
+            ></path>
+          </svg>
+        </div>
+        <nav class="popup-window">
+          <legend>Conectar-se</legend>
+          <ul>
+            <li>
+              <button id="loginBtn">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 4v6.406l-3.753 3.741-6.463-6.462 3.7-3.685h6.516zm2-2h-12.388l1.497 1.5-4.171 4.167 9.291 9.291 4.161-4.193 1.61 1.623v-12.388zm-5 4c.552 0 1 .449 1 1s-.448 1-1 1-1-.449-1-1 .448-1 1-1zm0-1c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm6.708.292l-.708.708v3.097l2-2.065-1.292-1.74zm-12.675 9.294l-1.414 1.414h-2.619v2h-2v2h-2v-2.17l5.636-5.626-1.417-1.407-6.219 6.203v5h6v-2h2v-2h2l1.729-1.729-1.696-1.685z"
+                  ></path>
+                </svg>
+                <span>Logar</span>
+              </button>
+            </li>
+            <li>
+              <button onclick="window.open('/pags/cadaspag.html', '_blank')">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1"
+                  stroke-linecap="round"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M2.598 9h-1.055c1.482-4.638 5.83-8 10.957-8 6.347 0 11.5 5.153 11.5 11.5s-5.153 11.5-11.5 11.5c-5.127 0-9.475-3.362-10.957-8h1.055c1.443 4.076 5.334 7 9.902 7 5.795 0 10.5-4.705 10.5-10.5s-4.705-10.5-10.5-10.5c-4.568 0-8.459 2.923-9.902 7zm12.228 3l-4.604-3.747.666-.753 6.112 5-6.101 5-.679-.737 4.608-3.763h-14.828v-1h14.826z"
+                  ></path>
+                </svg>
+                <span>Cadastrar</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </label>
+    </header>
+
+    <div class="side-bar" id="sideBar">
+      <h2>Menu</h2>
+      <i class="fas fa-times close-icon" onclick="closeSideBar()"></i>
+      <div class="button-container-barra">
+        <label for="filtroEstoque">Trocar tabela:</label>
+        <select id="filtroEstoque" class="select-simple">
+          <option value="cozinha">Cozinha</option>
+          <option value="imobilizados">Imobilizados</option>
+          <option value="mezanino">Mezanino</option>
+          <option value="limpeza">Limpeza</option>
+        </select>
+        <button
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#historicoModal"
+          onclick="closeSideBar()"
+        >
+          Histórico
+        </button>
+        <button
+          id="openModalGerenciarProduto"
+          class="btn btn-primary"
+          style="display: none"
+          onclick="closeSideBar()"
+        >
+          Adicionar Produto Cozinha
+        </button>
+        <button
+          id="openModalGerenciarProdutoImobilizados"
+          class="btn btn-primary"
+          style="display: none"
+          onclick="closeSideBar()"
+        >
+          Adicionar Produto Imobilizados
+        </button>
+        <button
+          id="openModalGerenciarProdutoMezanino"
+          class="btn btn-primary"
+          style="display: none"
+          onclick="closeSideBar()"
+        >
+          Adicionar Produto Mezanino
+        </button>
+        <button
+          id="openModalGerenciarProdutolimpeza"
+          class="btn btn-primary"
+          style="display: none"
+          onclick="closeSideBar()"
+        >
+          Adicionar Produto Limpeza
+        </button>
+
+        <button
+          class="btn btn-primary"
+          id="abrirModalSelecionarRetirada"
+          onclick="closeSideBar()"
+        >
+          Selecionar Produtos para Retirada
+        </button>
+        <button class="btn btn-primary" id="cardapio" onclick="closeSideBar()">
+          Cardapio
+        </button>
+        <button
+          id="btnRendimento"
+          class="btn btn-primary"
+          onclick="closeSideBar()"
+        >
+          Rendimento
+        </button>
+        <button
+          id="validades-venci"
+          class="btn btn-primary"
+          onclick="closeSideBar()"
+        >
+          Validades
+        </button>
+        <button
+          class="btn btn-primary"
+          onclick="baixarProdutos(); closeSideBar()"
+        >
+          Baixar Excel
+        </button>
+        <button class="btn btn-primary" onclick="abrirModalAgendamento(); closeSideBar()">Agendar Produtos</button>
+      </div>
+    </div>
+    <div class="container"></div>
+    <div id="loader" class="loader" style="display: none">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <body>
+      <div class="notifications-container"></div>
+    </body>
+    <div id="modal-validades" class="modal-validades" style="display: none">
+      <div class="modal-validades-box">
+        <span class="close" onclick="closeValidadesModal()">&times;</span>
+        <h1>VALIDADES</h1>
+    <h2>Escolha a tabela:</h2>
+        <select id="tabela-select" onchange="carregarValidades()">
+          <option value="produtos">Produtos</option>
+          <option value="limpeza">Limpeza</option>
+        </select>
+    
+        <div id="tabela_validades_container">
+          <table id="tabela_validades">
+            <thead>
+              <tr>
+                <th>Nome do Produto</th>
+                <th>Quantidade</th>
+                <th>Validade</th>
+                <th>Dias Restantes</th>
+              </tr>
+            </thead>
+            <tbody id="tabela_validades_body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+<!-- Filtro de Data Fora do Modal (caso necessário) -->
+<div id="filtroDataContainer" style="display: none; margin-top: 10px;">
+  <input type="date" id="dataFiltroExterno" />
+  <button id="btnConfirmarDataExterno">Confirmar</button>
+</div>
+
+<div id="modalMostrarPedidos" style="display: none;">
+  <div>
+    <span class="fechar" onclick="fecharModal()">Fechar</span>
+    <h3>Escolha a Data para Ver os Pedidos</h3>
+    <label>Selecione a data:
+      <input type="date" id="dataFiltroModal"> 
+    </label><br><br>
+    <button id="btnConfirmarData">✔️ Confirmar</button>
+    <div id="resultadoPedidos"></div>
+  </div>
+</div>
+
+
+    <div class="filtros-container">
+      <label for="filtroCategoria">Filtrar por categoria:</label>
+      <select id="filtroCategoria" class="filtroCategoria">
+        <option value="TODOS">Todos</option>
+        <option value="SEC">SEC</option>
+        <option value="BEB">BEB</option>
+        <option value="CH">CH</option>
+        <option value="CONSERV">CONSERV</option>
+        <option value="BL e BI">BL e BI</option>
+        <option value="MAC">MAC</option>
+        <option value="O">O</option>
+        <option value="S">S</option>
+        <option value="TEMP">TEMP</option>
+        <option value="DESC">DESC</option>
+        <option value="SOBRE">SOBRE</option>
+      </select>
+    
+      <label for="filtroCor">Filtrar por cor:</label>
+      <select id="filtroCor" onchange="filtrarTabelaPorCor()">
+        <option value="todas">Todas</option>
+        <option value="red">Vermelho</option>
+        <option value="orange">Laranja</option>
+        <option value="green">Verde</option>
+      </select>
+    </div>
+    
+</div>
+
+<div id="modalAgendamento" class="modal" style="display: none;">
+  <div class="modal-content">
+    <span class="close" onclick="fecharModalAgendamento()">&times;</span>
+    <h3>Agendar Produtos</h3>
+    <form id="formAgendamento">
+
+      <div id="produtosContainer">
+        <div class="produtoItem">
+          <label>Produto:</label>
+          <input type="text" name="nomeProduto" required>
+          <label>Quantidade:</label>
+          <input type="number" name="qtdProduto" required>
+          <button type="button" class="removerItem" onclick="removerItem(this)">Remover</button>
+          <hr>
+        </div>
+      </div>
+
+      <button type="button" onclick="adicionarProduto()">+ Adicionar Produto</button>
+      <br><br>
+
+      <label for="dataAgendamento">Data de Agendamento:</label>
+      <input type="date" id="dataAgendamento" name="dataAgendamento" required><br><br>
+
+      <label for="eventoAgendamento">Evento:</label>
+      <input type="text" id="eventoAgendamento" name="eventoAgendamento" required><br><br>
+
+      <label for="refeicaoAgendamento">Refeição:</label>
+      <select id="refeicaoAgendamento" name="refeicaoAgendamento" required>
+        <option value="Almoço">Almoço</option>
+        <option value="Jantar">Jantar</option>
+        <option value="Café da Manhã">Café da Manhã</option>
+      </select><br><br>
+
+      <button type="submit">Agendar</button>
+    </form>
+  </div>
+</div>
+
+<div class="notifications-container"></div>
+
+<div class="notifications-container" id="notificacoesAgenda" style="margin-top: 20px;"></div>
+    <div class="tabela-container">
+      <table id="tabelaEstoque">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Uni Compra</th>
+            <th>Uni medida</th>
+            <th>Quantidade</th>
+            <th>Categoria</th>
+            <th>validade</th>
+            <th>Estoque</th>
+            <th>Baixa</th>
+          </tr>
+        </thead>
+        <tbody id="tabelcompleta"></tbody>
+      </table>
+    </div>
+    <div class="barra-rolagem"></div>
+    <div class="modal-container">
+      <div id="modal-alterar" class="modal-base modal-escolha">
+        <h3>Alterar Estoque</h3>
+        <p>Produto: <span id="nomeProdutoAlterar"></span></p>
+        <input type="hidden" id="produtoIdAlterar" />
+        <button onclick="abrirModalAdicionar()">Adicionar</button>
+        <button onclick="fecharModal()">Fechar</button>
+      </div>
+      <div id="modal-adicionar" class="modal-base modal-adicionar">
+        <h3>Adicionar Estoque</h3>
+        <input type="hidden" id="produtoIdAdicionar" />
+
+        <div class="form">
+          <label for="fornecedor">Fornecedor:</label>
+          <input type="text" id="fornecedor" class="input-simple" />
+
+          <label for="Produto_id">Produto:</label>
+          <input type="text" id="produto_entrada" class="input-simple" />
+          <label for="quantidade">Quantidade:</label>
+          <input
+            type="number"
+            id="inputquantidade"
+            class="input-simple"
+            required
+          />
+
+          <label for="preco-unitario">Preço unitário:</label>
+          <input type="text" id="preco-unitario" class="input-simple" />
+
+          <label for="valorNota">Valor da Nota:</label>
+          <input type="number" id="valornota" class="input-simple" />
+          <label for="dataalteracao">Data:</label>
+          <input type="date" id="data_entrada" class="input-simple" />
+          <button onclick="adicionarQuantidade(); salvarHistoricoEntrada()">
+            Adicionar
+          </button>
+          <button onclick="fecharModal()">Fechar</button>
+        </div>
+      </div>
+      <div id="modal-retirar" class="modal-base modal-retirar">
+        <h3>Retirar Estoque</h3>
+        <p class="esconder">Produto: <span id="nomeProdutoAlterar"></span></p>
+        <input type="hidden" id="produtoIdRetirar" />
+        <label for="Produto_id" class="esconder">Produto id:</label>
+        <input type="number" id="Prod_id" class="esconder" />
+        <div class="form">
+          <label for="user">Produto:</label>
+          <input type="text" id="nome_saida" class="input-simple" />
+          
+          <input type="hidden" id="produtoIdRetirar" />
+          <label for="evento">Evento:</label>
+          <select id="0">
+            <option value="Assembleia CF - Trimestral">
+              Assembleia CF - Trimestral
+            </option>
+            <option value="Plantão DARPE">Plantão DARPE</option>
+            <option value="Assist. Farmacêutica">Assist. Farmacêutica</option>
+            <option value="Equipe de Diáconos">Equipe de Diáconos</option>
+            <option value="Coord. Apoio Brasil">Coord. Apoio Brasil</option>
+            <option value="Atendimento CF">Atendimento CF</option>
+            <option value="DCR">DCR</option>
+            <option value="Encontro CA e D - SP (Capital)">
+              Encontro CA e D - SP (Capital)
+            </option>
+            <option value="RRM - Capital">RRM - Capital</option>
+            <option value="Atendimento Posto Médico - Colaboradores">
+              Atendimento Posto Médico - Colaboradores
+            </option>
+            <option value="Comitê Engenharia - Projetos África">
+              Comitê Engenharia - Projetos África
+            </option>
+            <option value="Gestão Estratégica DARPE">
+              Gestão Estratégica DARPE
+            </option>
+            <option value="Videoconf. Coordenadores DARPE">
+              Videoconf. Coordenadores DARPE
+            </option>
+            <option value="Grupo Estudos LIBRAS">Grupo Estudos LIBRAS</option>
+            <option value="Atendimento Engenharia - Plantão">
+              Atendimento Engenharia - Plantão
+            </option>
+            <option value="Supervisão Livro Azul - Plantão">
+              Supervisão Livro Azul - Plantão
+            </option>
+            <option value="GEM - Brás">GEM - Brás</option>
+            <option value="Encontro Representantes Técnicos GTM">
+              Encontro Representantes Técnicos GTM
+            </option>
+            <option value="Reunião Trabalho Semanal - GT Eng. e CTMs">
+              Reunião Trabalho Semanal - GT Eng. e CTMs
+            </option>
+            <option value="Diretoria e Presidência">
+              Diretoria e Presidência
+            </option>
+            <option value="CNS">CNS</option>
+            <option value="Coord. Nacional Apoio e Bombeiros">
+              Coord. Nacional Apoio e Bombeiros
+            </option>
+            <option value="Escritório Processos Organizacionais">
+              Escritório Processos Organizacionais
+            </option>
+            <option value="Plantão Segurança do Trabalho - Brasil">
+              Plantão Segurança do Trabalho - Brasil
+            </option>
+            <option value="GDI">GDI</option>
+            <option value="Planejamento Cozinha - RGE 2025">
+              Planejamento Cozinha - RGE 2025
+            </option>
+            <option value="Organização Alojamentos e Dormitórios">
+              Organização Alojamentos e Dormitórios
+            </option>
+            <option value="Encontro Administrativo - SP">
+              Encontro Administrativo - SP
+            </option>
+            <option value="Agentes Regionais Proteção Dados - LGPD">
+              Agentes Regionais Proteção Dados - LGPD
+            </option>
+            <option value="Secretaria Projetos - África">
+              Secretaria Projetos - África
+            </option>
+            <option value="Ensaio Musical - Eventos Oficiais">
+              Ensaio Musical - Eventos Oficiais
+            </option>
+            <option value="Planejamento Hospedagens - 2025">
+              Planejamento Hospedagens - 2025
+            </option>
+            <option value="Reunião Garçons e Equipe Serviço">
+              Reunião Garçons e Equipe Serviço
+            </option>
+            <option value="Coord. Estacionamento">Coord. Estacionamento</option>
+            <option value="Orientações Irmãs Piedade e Diáconos - Brás">
+              Orientações Irmãs Piedade e Diáconos - Brás
+            </option>
+            <option value="Procedimentos Online Cozinha Brás - RGE 2025">
+              Procedimentos Online Cozinha Brás - RGE 2025
+            </option>
+            <option value="Procedimentos Online Cozinha Hospedaria - RGE 2025">
+              Procedimentos Online Cozinha Hospedaria - RGE 2025
+            </option>
+            <option value="Videoconf. CNS">Videoconf. CNS</option>
+            <option value="Conselho Administração e Liderança DARPE">
+              Conselho Administração e Liderança DARPE
+            </option>
+            <option value="Encontro RGE - CA mais Antigos (Brasil e Ext.)">
+              Encontro RGE - CA mais Antigos (Brasil e Ext.)
+            </option>
+            <option value="Planejamento Departamento Apoio Indígena">
+              Planejamento Departamento Apoio Indígena
+            </option>
+            <option value="CA e D - Brasil e Exterior">
+              CA e D - Brasil e Exterior
+            </option>
+            <option value="Assembleia Virtual RGE">
+              Assembleia Virtual RGE
+            </option>
+            <option value="RMA">RMA</option>
+            <option value="Reunião Conselho Administração SP">
+              Reunião Conselho Administração SP
+            </option>
+            <option value="Planejamento Estratégico - Grupo Gestor">
+              Planejamento Estratégico - Grupo Gestor
+            </option>
+            <option value="Videoconf. Encarregados Regionais e Examinadores">
+              Videoconf. Encarregados Regionais e Examinadores
+            </option>
+            <option value="CA mais Antigos Estado">
+              CA mais Antigos Estado
+            </option>
+            <option value="DEPAC - Online">DEPAC - Online</option>
+            <option value="Reunião Coord. Jovens e Menores">
+              Reunião Coord. Jovens e Menores
+            </option>
+            <option value="Planejamento Equipe RA-SP">
+              Planejamento Equipe RA-SP
+            </option>
+            <option value="Assembleia Desenvolvimento Projetos Comunitários">
+              Assembleia Desenvolvimento Projetos Comunitários
+            </option>
+            <option value="Sessão Estratégica CNS Online">
+              Sessão Estratégica CNS Online
+            </option>
+            <option value="Planejamento Estratégias RRA Online">
+              Planejamento Estratégias RRA Online
+            </option>
+            <option value="Comitê Gestão GEM">Comitê Gestão GEM</option>
+            <option value="Planejamento Atividades DATEX">
+              Planejamento Atividades DATEX
+            </option>
+            <option value="CF - Supervisão e Auditoria">
+              CF - Supervisão e Auditoria
+            </option>
+          </select>
+
+          <label for="quantidade">Quantidade:</label>
+          <input
+            type="number"
+            id="quantidadeRetirar"
+            class="input-simple"
+            required
+          />
+
+          <label for="user">Quem retirou:</label>
+          <input type="text" id="quem_retirou" class="input-simple" />
+
+          <button onclick="retirarQuantidade(); salvarHistoricoSaida()">
+            Retirar
+          </button>
+          <button onclick="fecharModal('modal-retirar')">Fechar</button>
+        </div>
+      </div>
+    </div>
+    <div id="modalAdicionarProduto" class="modal-adicionar-produto">
+      <div class="modal-content-adicionar-produto">
+        <span class="close-adicionar-produto">&times;</span>
+        <h2>Adicionar Produto</h2>
+        <form id="addProductForm">
+          <label for="nome">Nome:</label>
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            class="input-simple input-uppercase"
+            required
+            oninput="capitalizeFirstLetter(this)"
+          />
+          <label for="uniCompra">Unidade de Compra:</label>
+          <select
+            id="uniCompra"
+            name="uniCompra"
+            class="select-simple"
+            required
+          >
+            <option value="">Selecionar</option>
+            <option value="Kg">Kg</option>
+            <option value="Unidade">Uni</option>
+            <option value="L">L</option>
+            <option value="Fardo">Fardo</option>
+            <option value="Cx">Cx</option>
+            <option value="Galao">Galao</option>
+            <option value="Balde">Balde</option>
+            <option value="Lata">Lata</option>
+            <option value="Rolos">Rolos</option>
+            <option value="BAG">BAG</option>
+          </select>
+          <label for="uniMedida">Unidade de Medida:</label>
+          <select
+            id="uniMedida"
+            name="uniMedida"
+            class="select-simple"
+            required
+          >
+            <option value="">Selecionar</option>
+            <option value="Kg">Kg</option>
+            <option value="Unidade">Uni</option>
+            <option value="Litro">L</option>
+            <option value="Fardo">Fardo</option>
+            <option value="Cx">Cx</option>
+            <option value="Galao">Galao</option>
+            <option value="Balde">Balde</option>
+            <option value="Lata">Lata</option>
+            <option value="Rolos">Rolos</option>
+            <option value="BAG">BAG</option>
+            <option value="SOBRE">SOBRE</option>
+          </select>
+          <label for="quantidade">Quantidade:</label>
+          <input
+            type="number"
+            id="quantidade"
+            name="quantidade"
+            class="input-simple"
+            step="any"
+            required
+          />
+          <label for="categoria">Categoria:</label>
+          <select
+            id="categoria"
+            name="categoria"
+            class="select-simple"
+            required
+          >
+            <option value="">Selecionar</option>
+            <option value="SEC">SEC</option>
+            <option value="BEB">BEB</option>
+            <option value="CH">CH</option>
+            <option value="CONSERV">CONSERV</option>
+            <option value="BL e BI">BL e BI</option>
+            <option value="MAC">MAC</option>
+            <option value="O">O</option>
+            <option value="S">S</option>
+            <option value="TEMP">TEMP</option>
+            <option value="DESC">DESC</option>
+            <option value="SOBRE">SOBRE</option>
+          </select>
+          <button id="helpButton">Ajuda</button>
+          <label for="validade">Validade:</label>
+          <input
+            type="date"
+            id="validade"
+            name="validade"
+            class="input-simple"
+            required
+          />
+          <label for="estoqueMax">Estoque Máximo:</label>
+          <input
+            type="number"
+            id="estoqueMax"
+            name="estoqueMax"
+            class="input-simple"
+            required
+          />
+          <label for="estoqueMed">Estoque Médio:</label>
+          <input
+            type="number"
+            id="estoqueMed"
+            name="estoqueMed"
+            class="input-simple"
+            required
+          />
+          <label for="estoqueMin">Estoque Mínimo:</label>
+          <input
+            type="number"
+            id="estoqueMin"
+            name="estoqueMin"
+            class="input-simple"
+            required
+          />
+          <button id="submit1">Confirmar</button>
+        </form>
+      </div>
+    </div>
+    <div
+      class="modal fade custom-modal"
+      id="historicoModal"
+      tabindex="-1"
+      aria-labelledby="historicoModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-container">
+        <div class="modal-content modal-box">
+          <div class="modal-body modal-main">
+            <p class="modal-text">Selecione uma opção abaixo:</p>
+            <div class="modal-buttons">
+              <button class="btn close-footer-btn" id="entradaButton">
+                Entrada
+              </button>
+              <button class="btn close-footer-btn" id="saidaButton">
+                Saída
+              </button>
+            </div>
+          </div>
+          <div class="modal-footer modal-bottom">
+            <button
+              type="button"
+              class="btn close-footer-btn"
+              data-bs-dismiss="modal"
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade modal-custom"
+      id="modalHistoricoEntrada"
+      tabindex="-1"
+      aria-labelledby="modalHistoricoEntradaLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-custom">
+        <div class="modal-content modal-content-custom">
+          <div class="modal-header modal-header-custom">
+            <h5
+              class="modal-title modal-title-custom"
+              id="modalHistoricoEntradaLabel"
+            >
+              Histórico de Entrada
+            </h5>
+            <div class="botoes-container">
+              <button
+                type="button"
+                class="btn-close btn-close-custom"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              >
+                Fechar
+              </button>
+
+              <div class="container-download" id="downloadExcel">
+                <label class="label-download">
+                  <input type="checkbox" class="input-download" />
+                  <span class="circle">
+                    <svg
+                      class="icon"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M12 19V5m0 14-4-4m4 4 4-4"
+                      ></path>
+                    </svg>
+                    <div class="square"></div>
+                  </span>
+                  <p id="downloadExcel" class="title">Download</p>
+                  <p id="openExcelBtn" class="title">Open</p>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-body modal-body-custom">
+            <table class="table table-custom" id="tabelaHistoricoEntrada">
+              <thead>
+                <tr>
+                  <th>Fornecedor</th>
+                  <th>Nome Entrada</th>
+                  <th>Quantidade</th>
+                  <th>Preço Uni</th>
+                  <th>Valor Nota</th>
+                  <th>Data Entrada</th>
+                </tr>
+              </thead>
+              <tbody id="entradaData"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade modal-custom"
+      id="modalHistoricoSaida"
+      tabindex="-1"
+      aria-labelledby="modalHistoricoSaidaLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-custom">
+        <div class="modal-content modal-content-custom">
+          <div class="modal-header modal-header-custom">
+            <h5
+              class="modal-title modal-title-custom"
+              id="modalHistoricoSaidaLabel"
+            >
+              Histórico de Saída
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-custom"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              Fechar
+            </button>
+            <select id="eventoHistoricoSaida" class="select-custom">
+              <option value="">Todos</option>
+              <option value="RGE">RGE</option>
+              <option value="ADM SP">ADM SP</option>
+              <option value="ANCIÃES">ANCIÃES</option>
+              <option value="C.O. BRAS">C.O. BRAS</option>
+              <option value="COMPLEXO BRAS">COMPLEXO BRAS</option>
+              <option value="DARPE/DEPAC/DATEX">DARPE/DEPAC/DATEX</option>
+              <option value="DIÁCONOS">DIÁCONOS</option>
+              <option value="MÚSICA">MÚSICA</option>
+              <option value="SETOR CENTRO">SETOR CENTRO</option>
+            </select>
+          </div>
+          <div class="modal-body modal-body-custom">
+            <table class="table table-custom" id="tabelaHistoricoSaida">
+              <thead>
+                <tr>
+                  <th>Nome Saída</th>
+                  <th>Quantidade</th>
+                  <th>Evento</th>
+                  <th>Data Saída</th>
+                  <th>Quem Retirou</th>
+                </tr>
+              </thead>
+              <tbody id="saidaData"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="modalImobilizado" class="modal-imobilizado">
+      <div class="modal-content">
+        <span class="close-imobilizado">&times;</span>
+        <h2>Adicionar Produto Imobilizado</h2>
+        <form id="formImobilizado">
+          <div class="input-field">
+            <label for="codigo_imobilizados">Código</label>
+            <input
+              type="text"
+              id="codigo_imobilizados"
+              name="codigo_imobilizados"
+              value="21-1097 / "
+              required
+            />
+          </div>
+          <div class="input-field">
+            <label for="nome_imobilizados">Nome</label>
+            <input
+              type="text"
+              id="nome_imobilizados"
+              name="nome_imobilizados"
+              required
+            />
+          </div>
+          <div class="input-field">
+            <label for="quantidade_imobilizados">Quantidade</label>
+            <input
+              type="number"
+              id="quantidade_imobilizados"
+              name="quantidade_imobilizados"
+              required
+            />
+          </div>
+          <div class="input-field">
+            <label for="fornecedor_imobilizados">Fornecedor</label>
+            <input
+              type="text"
+              id="fornecedor_imobilizados"
+              name="fornecedor_imobilizados"
+              required
+            />
+          </div>
+          <div class="input-field">
+            <label for="dependencia">Dependência</label>
+            <input type="text" id="dependencia" name="dependencia" required />
+          </div>
+          <div class="input-field">
+            <label for="dt_aquisicao">Data de Aquisição</label>
+            <input type="date" id="dt_aquisicao" name="dt_aquisicao" required />
+          </div>
+          <div class="input-field">
+            <label for="status">Status</label>
+            <select id="status" name="status" required>
+              <option value="ativo">Ativo</option>
+              <option value="inativo">Inativo</option>
+            </select>
+          </div>
+          <button type="submit-imobilizado">Salvar</button>
+        </form>
+      </div>
+    </div>
+    <div id="modal-imob-ajuste" class="caixa-ajuste-imob">
+      <div class="conteudo-ajuste-imob">
+        <h3 id="modal-title">Alterar Imobilizado</h3>
+        <div class="grupo-entrada">
+          <label for="codigo-imobilizado">Código do Imobilizado:</label>
+          <input
+            type="text"
+            id="codigo-imobilizado"
+            name="codigo-imobilizado"
+            value="21-1097 / "
+            pattern="^\d{2}-\d{4} / \d{5}$"
+            required
+          />
+        </div>
+        <div class="grupo-entrada">
+          <label>Destino:</label>
+          <input type="text" id="destino" />
+        </div>
+        <div class="grupo-entrada">
+          <label for="autorizacao">Autorização:</label>
+          <select id="autorizacao" name="autorizacao" required>
+            <option value="" disabled selected>Escolha uma opção</option>
+            <option value="Gisline">Gisline</option>
+            <option value="Wander">Wander</option>
+          </select>
+        </div>
+        <div class="grupo-entrada">
+          <label>Quantidade:</label>
+          <input type="number" id="quantidade-imobilizado" />
+        </div>
+        <div class="grupo-entrada">
+          <label>Data de Saída:</label>
+          <input type="date" id="data_saida" />
+        </div>
+        <div class="grupo-botoes">
+          <button class="botao-fechar-ajuste" onclick="fecharModAlterarImob()">
+            Fechar
+          </button>
+          <button class="botao-confirmar-ajuste" onclick="retirarImobilizado()">
+            Retirar
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="modal-selecao-retirada" style="display: none">
+      <div class="modal-container-retirada">
+        <span id="fecharModalSelecionarRetirada" style="cursor: pointer"
+          >&times;</span
+        >
+        <h2>Selecionar Produtos para Retirada</h2>
+        <button id="btnMostrarPedidos">Mostrar Pedidos</button><br><br>
+        <input type="hidden" id="produtoIdRetirar" />
+        <label for="evento">Evento:</label>
+        <select id="evento">
+          <option value="Assembleia CF - Trimestral">
+            Assembleia CF - Trimestral
+          </option>
+          <option value="Plantão DARPE">Plantão DARPE</option>
+          <option value="Assist. Farmacêutica">Assist. Farmacêutica</option>
+          <option value="Equipe de Diáconos">Equipe de Diáconos</option>
+          <option value="Coord. Apoio Brasil">Coord. Apoio Brasil</option>
+          <option value="Atendimento CF">Atendimento CF</option>
+          <option value="DCR">DCR</option>
+          <option value="Encontro CA e D - SP (Capital)">
+            Encontro CA e D - SP (Capital)
+          </option>
+          <option value="RRM - Capital">RRM - Capital</option>
+          <option value="Atendimento Posto Médico - Colaboradores">
+            Atendimento Posto Médico - Colaboradores
+          </option>
+          <option value="Comitê Engenharia - Projetos África">
+            Comitê Engenharia - Projetos África
+          </option>
+          <option value="Gestão Estratégica DARPE">
+            Gestão Estratégica DARPE
+          </option>
+          <option value="Videoconf. Coordenadores DARPE">
+            Videoconf. Coordenadores DARPE
+          </option>
+          <option value="Grupo Estudos LIBRAS">Grupo Estudos LIBRAS</option>
+          <option value="Atendimento Engenharia - Plantão">
+            Atendimento Engenharia - Plantão
+          </option>
+          <option value="Supervisão Livro Azul - Plantão">
+            Supervisão Livro Azul - Plantão
+          </option>
+          <option value="GEM - Brás">GEM - Brás</option>
+          <option value="Encontro Representantes Técnicos GTM">
+            Encontro Representantes Técnicos GTM
+          </option>
+          <option value="Reunião Trabalho Semanal - GT Eng. e CTMs">
+            Reunião Trabalho Semanal - GT Eng. e CTMs
+          </option>
+          <option value="Diretoria e Presidência">
+            Diretoria e Presidência
+          </option>
+          <option value="CNS">CNS</option>
+          <option value="Coord. Nacional Apoio e Bombeiros">
+            Coord. Nacional Apoio e Bombeiros
+          </option>
+          <option value="Escritório Processos Organizacionais">
+            Escritório Processos Organizacionais
+          </option>
+          <option value="Plantão Segurança do Trabalho - Brasil">
+            Plantão Segurança do Trabalho - Brasil
+          </option>
+          <option value="GDI">GDI</option>
+          <option value="Planejamento Cozinha - RGE 2025">
+            Planejamento Cozinha - RGE 2025
+          </option>
+          <option value="Organização Alojamentos e Dormitórios">
+            Organização Alojamentos e Dormitórios
+          </option>
+          <option value="Encontro Administrativo - SP">
+            Encontro Administrativo - SP
+          </option>
+          <option value="Agentes Regionais Proteção Dados - LGPD">
+            Agentes Regionais Proteção Dados - LGPD
+          </option>
+          <option value="Secretaria Projetos - África">
+            Secretaria Projetos - África
+          </option>
+          <option value="Ensaio Musical - Eventos Oficiais">
+            Ensaio Musical - Eventos Oficiais
+          </option>
+          <option value="Planejamento Hospedagens - 2025">
+            Planejamento Hospedagens - 2025
+          </option>
+          <option value="Reunião Garçons e Equipe Serviço">
+            Reunião Garçons e Equipe Serviço
+          </option>
+          <option value="Coord. Estacionamento">Coord. Estacionamento</option>
+          <option value="Orientações Irmãs Piedade e Diáconos - Brás">
+            Orientações Irmãs Piedade e Diáconos - Brás
+          </option>
+          <option value="Procedimentos Online Cozinha Brás - RGE 2025">
+            Procedimentos Online Cozinha Brás - RGE 2025
+          </option>
+          <option value="Procedimentos Online Cozinha Hospedaria - RGE 2025">
+            Procedimentos Online Cozinha Hospedaria - RGE 2025
+          </option>
+          <option value="Videoconf. CNS">Videoconf. CNS</option>
+          <option value="Conselho Administração e Liderança DARPE">
+            Conselho Administração e Liderança DARPE
+          </option>
+          <option value="Encontro RGE - CA mais Antigos (Brasil e Ext.)">
+            Encontro RGE - CA mais Antigos (Brasil e Ext.)
+          </option>
+          <option value="Planejamento Departamento Apoio Indígena">
+            Planejamento Departamento Apoio Indígena
+          </option>
+          <option value="CA e D - Brasil e Exterior">
+            CA e D - Brasil e Exterior
+          </option>
+          <option value="Assembleia Virtual RGE">Assembleia Virtual RGE</option>
+          <option value="RMA">RMA</option>
+          <option value="Reunião Conselho Administração SP">
+            Reunião Conselho Administração SP
+          </option>
+          <option value="Planejamento Estratégico - Grupo Gestor">
+            Planejamento Estratégico - Grupo Gestor
+          </option>
+          <option value="Videoconf. Encarregados Regionais e Examinadores">
+            Videoconf. Encarregados Regionais e Examinadores
+          </option>
+          <option value="CA mais Antigos Estado">CA mais Antigos Estado</option>
+          <option value="DEPAC - Online">DEPAC - Online</option>
+          <option value="Reunião Coord. Jovens e Menores">
+            Reunião Coord. Jovens e Menores
+          </option>
+          <option value="Planejamento Equipe RA-SP">
+            Planejamento Equipe RA-SP
+          </option>
+          <option value="Assembleia Desenvolvimento Projetos Comunitários">
+            Assembleia Desenvolvimento Projetos Comunitários
+          </option>
+          <option value="Sessão Estratégica CNS Online">
+            Sessão Estratégica CNS Online
+          </option>
+          <option value="Planejamento Estratégias RRA Online">
+            Planejamento Estratégias RRA Online
+          </option>
+          <option value="Comitê Gestão GEM">Comitê Gestão GEM</option>
+          <option value="Planejamento Atividades DATEX">
+            Planejamento Atividades DATEX
+          </option>
+          <option value="CF - Supervisão e Auditoria">
+            CF - Supervisão e Auditoria
+          </option>
+        </select>
+        <label for="quem">Quem retirou:</label>
+        <input
+          type="text"
+          id="quem-retirou"
+          class="select-custom"
+          placeholder="Digite o nome do usuário"
+        />
+        <label for="dataalteracao">Data:</label>
+        <input type="date" id="data-saida" class="input-simple" />
+        <input
+          type="text"
+          id="input-pesquisa-selecao-retirada"
+          placeholder="Pesquisar produto"
+          oninput="filtrarProdutos()"
+        />
+        <table id="tabela-produtos-selecao">
+          <thead>
+            <tr>
+              <th>Nome do Produto</th>
+              <th>Quantidade</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="produtos-lista-selecao"></tbody>
+        </table>
+        <button
+          id="confirmar-selecao-retirada"
+          onclick="salvarHistoricoSaida()"
+        >
+          Confirmar Seleção
+        </button>
+      </div>
+    </div>
+    <div id="rendimentoBox" class="hidden">
+      <button class="btn btn-primary" id="fecharRendimento">X</button>
+      <h3>Escolha uma opção</h3>
+
+      <div class="opcoes">
+        <label
+          ><input type="radio" name="tipoRendimento" value="produto" /> Por
+          Produto</label
+        >
+        <label
+          ><input type="radio" name="tipoRendimento" value="evento" /> Por
+          Evento</label
+        >
+      </div>
+      <div id="filtroProduto" class="hidden">
+        <label for="produtoSelect">Nome do produto:</label>
+        <select id="produtoSelect">
+          <option value="">Selecione</option>
+          <option value="café">Café</option>
+          <option value="arroz">Arroz</option>
+          <option value="feijão">Feijão</option>
+          <option value="macarrão">Macarrão</option>
+          <option value="bolacha">Bolacha</option>
+          <option value="Tomate">Tomate</option>
+        </select>
+      </div>
+      <div id="filtroEvento" class="hidden">
+        <label for="eventoSelect">Tipo de evento:</label>
+        <select id="eventoSelect">
+          <option value="">Selecione</option>
+          <option value="RGE">RGE</option>
+          <option value="RRM">RRM</option>
+          <option value="COMPLEX">COMPLEX</option>
+          <option value="COZ">COZ</option>
+        </select>
+      </div>
+      <div class="datas">
+        <label for="dataInici">De:</label>
+        <input type="date" id="dataInicio" />
+        <label for="dataFim">Até:</label>
+        <input type="date" id="dataFim" />
+      </div>
+      <div class="botoes-acao">
+        <button id="btnCalcularRendimento">Calcular</button>
+        <button id="btnComparar">Comparar</button>
+        <button id="btnToggleTabelas">Limpar</button>
+      </div>
+      <div id="compararBox" class="hidden">
+        <button class="btn btn-primary" id="fecharComparar">X</button>
+        <h4>Comparar Produto</h4>
+        <label for="produtoComparar">Produto:</label>
+        <select id="produtoComparar">
+          <option value="arroz">Arroz</option>
+          <option value="feijao">Feijão</option>
+          <option value="macarrao">Macarrão</option>
+        </select>
+        <div class="datas">
+          <label for="mesBase">De:</label>
+          <input type="month" id="mesBase" />
+
+          <label for="mesComparar">Até:</label>
+          <input type="month" id="mesComparar" />
+        </div>
+        <button
+          id="btnExecutarComparacao"
+          class="btn btn-primary"
+          type="button"
+        >
+          Comparar Preço
+        </button>
+        <div id="resultadoComparacao" class="hidden"></div>
+      </div>
+    </div>
+
+    <div id="modalAjuda" class="modal-ajuda">
+      <div class="modal-ajuda-content">
+        <span class="modal-ajuda-close" id="closeAjuda">&times;</span>
+        <h2>SIGLAS - ESTOQUE/GELADEIRA/FREEZER</h2>
+        <p>
+          SEC. Secos<br />
+          BEB. Bebida<br />
+          C. Cereais<br />
+          CH. Chá<br />
+          CONS. Conserva<br />
+          BL. BI. Bolachas e Biscoitos<br />
+          MAC. SEC macarrão Seco<br />
+          O. Óleo<br />
+          S. Sachê<br />
+          SOBRE. Sobremesas<br />
+          TEMP. Tempero<br /><br />
+
+          CAR. Carnes<br />
+          FAG. Frango<br />
+          PEX. Peixe<br />
+          FRI. Frios<br />
+          HORT. LEG. Hortifruti Legumes<br />
+          LEG. CONG. Legumes Congelados<br />
+          F. Frutas<br />
+          MASS. FRES. Massas Frescas<br />
+          MIS. PRONT. Mistura Pronta<br /><br />
+
+          SIGLAS - DESCARTÁVEIS<br />
+          DesC. Descartáveis<br /><br />
+
+          SIGLAS - LIMPEZA<br />
+          Limp. Limpeza
+        </p>
+      </div>
+    </div>
+    <div id="modalAdicionarLimpeza" class="modal-adicionar-produto">
+      <div class="modal-content-adicionar-produto">
+        <span class="close-adicionar-produto">&times;</span>
+        <h2>Adicionar Produto de Limpeza</h2>
+        <form id="addLimpezaForm">
+          <label for="nomeLimpeza">Nome:</label>
+          <input
+            type="text"
+            id="nomeLimpeza"
+            name="nomeLimpeza"
+            class="input-simple"
+            required
+          />
+
+          <label for="uniCompraLimpeza">Unidade de Compra:</label>
+          <select
+            id="uniCompraLimpeza"
+            name="uniCompraLimpeza"
+            class="select-simple"
+            required
+          >
+            <option value="">Selecionar</option>
+            <option value="Unidade">Uni</option>
+            <option value="L">L</option>
+            <option value="Fardo">Fardo</option>
+            <option value="Cx">Cx</option>
+            <option value="Galao">Galao</option>
+            <option value="Balde">Balde</option>
+            <option value="Lata">Lata</option>
+            <option value="Rolos">Rolos</option>
+            <option value="BAG">BAG</option>
+          </select>
+
+          <label for="uniMedidaLimpeza">Unidade de Medida:</label>
+          <select
+            id="uniMedidaLimpeza"
+            name="uniMedidaLimpeza"
+            class="select-simple"
+            required
+          >
+            <option value="">Selecionar</option>
+            <option value="Unidade">Uni</option>
+            <option value="L">L</option>
+            <option value="Fardo">Fardo</option>
+            <option value="Cx">Cx</option>
+            <option value="Galao">Galao</option>
+            <option value="Balde">Balde</option>
+            <option value="Lata">Lata</option>
+            <option value="Rolos">Rolos</option>
+            <option value="BAG">BAG</option>
+          </select>
+
+          <label for="quantidadeLimpeza">Quantidade:</label>
+          <input
+            type="number"
+            id="quantidadeLimpeza"
+            name="quantidadeLimpeza"
+            class="input-simple"
+            required
+          />
+
+          <label for="validadeLimpeza">Validade:</label>
+          <input
+            type="date"
+            id="validadeLimpeza"
+            name="validadeLimpeza"
+            class="input-simple"
+            required
+          />
+
+          <label for="estoqueMaxLimpeza">Estoque Máximo:</label>
+          <input
+            type="number"
+            id="estoqueMaxLimpeza"
+            name="estoqueMaxLimpeza"
+            class="input-simple"
+            required
+          />
+
+          <label for="estoqueMedLimpeza">Estoque Médio:</label>
+          <input
+            type="number"
+            id="estoqueMedLimpeza"
+            name="estoqueMedLimpeza"
+            class="input-simple"
+            required
+          />
+
+          <label for="estoqueMinLimpeza">Estoque Mínimo:</label>
+          <input
+            type="number"
+            id="estoqueMinLimpeza"
+            name="estoqueMinLimpeza"
+            class="input-simple"
+            required
+          />
+
+          <button id="submitLimpeza">Confirmar</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="modal-selecao-retirada-limpeza" style="display: none">
+      <table>
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Qtd</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="produtos-lista-selecao-limpeza"></tbody>
+      </table>
+      <button id="confirmar-selecao-retirada-limpeza">
+        Confirmar Retirada
+      </button>
+      <button id="fecharModalSelecionarRetiradaLimpeza">Fechar</button>
+    </div>
+
+    <script src="/public/assets/js/validade-componet/modal-validade.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="/public/assets/js/main.js"></script>
+    <script src="/public/assets/js/form.js"></script>
+    <script src="/public/assets/js/header.js"></script>
+    <script src="/public/assets/js/modtab.js"></script>
+    <script src="/public/assets/js/input.js"></script>
+    <script src="/public/assets/js/salvarhistorico.js"></script>
+    <script src="/public/assets/js/historicomodal.js"></script>
+    <script src="/public/assets/js/imobilizado-component/retirar-component.js"></script>
+    <script src="/public/assets/js/imobilizado-component/adicionar-component.js"></script>
+    <script src="/public/assets/js/select-retirada.js"></script>
+    <script src="/public/assets/js/header-component/rendimento-component.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.1/axios.min.js"></script>
+    <script src="/public/assets/js/lixeira-component/lixeira-produto.js"></script>
+    <script src="/public/assets/js/limpeza-component/limpeza-modal.js"></script>
+    <script src="/public/assets/js/select-retirada-limp.js"></script>
+    <script src="/public/assets/js/reserva-component/reserva-modal.js"></script>
+    <script>
+      document.getElementById("helpButton").onclick = function () {
+        document.getElementById("modalAjuda").style.display = "block";
+      };
+
+      document.getElementById("closeAjuda").onclick = function () {
+        document.getElementById("modalAjuda").style.display = "none";
+      };
+
+      window.onclick = function (event) {
+        const modal = document.getElementById("modalAjuda");
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      };
+      document.addEventListener("DOMContentLoaded", function () {
+        const iconeAjuda = document.getElementById("icone-ajuda");
+        const modalAjuda = document.getElementById("modal-ajuda");
+        const fecharModal = document.getElementById("fechar");
+        iconeAjuda.addEventListener("click", function () {
+          modalAjuda.style.display = "block";
+        });
+        fecharModal.addEventListener("click", function () {
+          modalAjuda.style.display = "none";
+        });
+        window.addEventListener("click", function (event) {
+          if (event.target === modalAjuda) {
+            modalAjuda.style.display = "none";
+          }
+        });
+      });
+      function baixarProdutos() {
+        const link = document.createElement("a");
+        link.href =
+          "https://controle-de-estoque-ccb.onrender.com/download-produtos";
+        link.download = "produtos.xlsx";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      function baixarTelaEstoque() {
+        const elemento = document.getElementById("telaEstoque");
+        if (!elemento) return alert("Elemento #telaEstoque não encontrado!");
+
+        html2canvas(elemento).then((canvas) => {
+          const link = document.createElement("a");
+          link.download = "tela_estoque.png";
+          link.href = canvas.toDataURL();
+          link.click();
+        });
+      }
+
+      function recarregarPagina() {
+        location.reload();
+      }
+      const btnCozinha = document.getElementById("openModalGerenciarProduto");
+      const btnImobilizados = document.getElementById(
+        "openModalGerenciarProdutoImobilizados"
+      );
+      const btnMezanino = document.getElementById(
+        "openModalGerenciarProdutoMezanino"
+      );
+      const btnlimpeza = document.getElementById(
+        "openModalGerenciarProdutolimpeza"
+      );
+      function atualizarBotoes() {
+        const filtro = document.getElementById("filtroEstoque").value;
+        if (filtro === "cozinha") {
+          btnCozinha.style.display = "inline-block";
+          btnImobilizados.style.display = "none";
+          btnMezanino.style.display = "none";
+          btnlimpeza.style.display = "none";
+        } else if (filtro === "imobilizados") {
+          btnCozinha.style.display = "none";
+          btnImobilizados.style.display = "inline-block";
+          btnMezanino.style.display = "none";
+          btnlimpeza.style.display = "none";
+        } else if (filtro === "mezanino") {
+          btnCozinha.style.display = "none";
+          btnImobilizados.style.display = "none";
+          btnMezanino.style.display = "inline-block";
+          btnlimpeza.style.display = "none";
+        } else if (filtro === "limpeza") {
+          btnCozinha.style.display = "none";
+          btnImobilizados.style.display = "none";
+          btnMezanino.style.display = "none";
+          btnlimpeza.style.display = "inline-block";
+        }
+      }
+      document
+        .getElementById("filtroEstoque")
+        .addEventListener("change", atualizarBotoes);
+      atualizarBotoes();
+      function openModalImobilizado() {
+        document.getElementById("modalImobilizado").style.display = "flex";
+      }
+      function closeModalImobilizado() {
+        document.getElementById("modalImobilizado").style.display = "none";
+      }
+      btnImobilizados.addEventListener("click", openModalImobilizado);
+      document
+        .querySelector(".close-imobilizado")
+        .addEventListener("click", closeModalImobilizado);
+      document
+        .getElementById("modalImobilizado")
+        .addEventListener("click", function (event) {
+          if (event.target === document.getElementById("modalImobilizado")) {
+            closeModalImobilizado();
+          }
+        });
+      document
+        .getElementById("formImobilizado")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const imobilizadoData = {
+            codigo_imobilizados: document.getElementById("codigo_imobilizados")
+              .value,
+            nome_imobilizados:
+              document.getElementById("nome_imobilizados").value,
+            quantidade_imobilizados: document.getElementById(
+              "quantidade_imobilizados"
+            ).value,
+            fornecedor_imobilizados: document.getElementById(
+              "fornecedor_imobilizados"
+            ).value,
+            dependencia: document.getElementById("dependencia").value,
+            dt_aquisicao: document.getElementById("dt_aquisicao").value,
+            status: document.getElementById("status").value,
+          };
+
+          console.log(imobilizadoData);
+          closeModalImobilizado();
+        });
+      document
+        .getElementById("openModalGerenciarProduto")
+        .addEventListener("click", function () {
+          document.getElementById("modalAdicionarProduto").style.display =
+            "flex";
+        });
+      document
+        .querySelector(".close-adicionar-produto")
+        .addEventListener("click", function () {
+          document.getElementById("modalAdicionarProduto").style.display =
+            "none";
+        });
+      document
+        .getElementById("modalAdicionarProduto")
+        .addEventListener("click", function (event) {
+          if (
+            event.target === document.getElementById("modalAdicionarProduto")
+          ) {
+            document.getElementById("modalAdicionarProduto").style.display =
+              "none";
+          }
+        });
+      document
+        .getElementById("addProductForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          // Captura os dados do formulário
+          const produto = {
+            nome: document.getElementById("nome").value.trim(),
+            uniCompra: document.getElementById("uniCompra").value.trim(),
+            uniMedida: document.getElementById("uniMedida").value.trim(),
+            quantidade: document
+              .getElementById("quantidade")
+              .value.replace(",", "."), // Altere aqui
+            categoria: document.getElementById("categoria").value.trim(),
+            validade: document.getElementById("validade").value,
+            estoque: {
+              max: parseInt(document.getElementById("estoqueMax").value),
+              med: parseInt(document.getElementById("estoqueMed").value),
+              min: parseInt(document.getElementById("estoqueMin").value),
+            },
+          };
+
+          // Verificação de campos obrigatórios
+          if (
+            !produto.nome ||
+            !produto.uniCompra ||
+            !produto.uniMedida ||
+            isNaN(produto.quantidade) ||
+            !produto.categoria ||
+            !produto.validade ||
+            isNaN(produto.estoque.max) ||
+            isNaN(produto.estoque.med) ||
+            isNaN(produto.estoque.min)
+          ) {
+            alert("Todos os campos devem ser preenchidos corretamente!");
+            return;
+          }
+
+          // Envio dos dados para o backend
+          fetch("https://controle-de-estoque-ccb.onrender.com/produtos", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(produto),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.error) {
+                alert("Erro ao adicionar produto: " + data.error);
+              } else {
+                console.log("Produto adicionado:", data);
+                alert("Produto adicionado com sucesso!");
+                document.getElementById("modalAdicionarProduto").style.display =
+                  "none";
+              }
+            })
+            .catch((error) => {
+              console.error("Erro ao adicionar produto:", error);
+              alert("Erro ao adicionar produto.");
+            });
+        });
+
+      const loginBtn = document.getElementById("loginBtn");
+      loginBtn.addEventListener("click", function () {
+        window.open("/pags/logpag2.html", "_blank");
+      });
+      const cadastrarBtn = document.getElementById("cadastrarBtn");
+      cadastrarBtn.addEventListener("click", function () {
+        window.open("/pags/cadaspag.html", "_blank");
+      });
+      function abrirModalAlterarImob(codigoImob, nomeImob) {
+        document.getElementById("destino").value = "";
+        document.getElementById("autorizacao").value = "";
+        document.getElementById("quantidade").value = "";
+        document.getElementById("data_saida").value = "";
+        document.getElementById("modal-imob-ajuste").style.display = "flex";
+      }
+      function fecharModAlterarImob() {
+        document.getElementById("modal-imob-ajuste").style.display = "none";
+      }
+    </script>
+  </body>
+</html>
