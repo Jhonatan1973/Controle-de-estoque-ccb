@@ -586,11 +586,9 @@ app.get("/download-produtos", async (req, res) => {
       return res.status(404).send("Nenhum produto encontrado.");
     }
 
-    // Criação do workbook e worksheet
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Produtos");
 
-    // Definir as colunas do Excel
     const columns = Object.keys(rows[0]).map((key) => ({
       header: key,
       key: key,
@@ -599,20 +597,22 @@ app.get("/download-produtos", async (req, res) => {
 
     worksheet.columns = columns;
 
-    // Adicionar o filtro automático (pode ser útil para filtrar os dados no Excel)
     worksheet.autoFilter = {
       from: "A1",
       to: worksheet.getRow(1).getCell(columns.length)._address,
     };
 
-    // Configurar o cabeçalho para o download do arquivo Excel
+    // ✅ Adicionar os dados aqui:
+    rows.forEach((row) => {
+      worksheet.addRow(row);
+    });
+
     res.setHeader(
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
     res.setHeader("Content-Disposition", "attachment; filename=produtos.xlsx");
 
-    // Gerar e enviar o arquivo Excel
     await workbook.xlsx.write(res);
     res.end();
   } catch (error) {
@@ -620,6 +620,7 @@ app.get("/download-produtos", async (req, res) => {
     res.status(500).send("Erro ao gerar Excel");
   }
 });
+
 app.get("/limpeza", (req, res) => {
   db.query("SELECT * FROM limpeza", (err, results) => {
     if (err) {
