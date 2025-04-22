@@ -441,7 +441,7 @@
         <p>Produto: <span id="nomeProdutoAlterar"></span></p>
         <input type="hidden" id="produtoIdAlterar" />
         <button onclick="abrirModalAdicionar()">Adicionar</button>
-        <button onclick="fecharModal('modal-alterar')">Fechar</button>
+        <button onclick="fecharModal()">Fechar</button>
       </div>
       <div id="modal-adicionar" class="modal-base modal-adicionar">
         <h3>Adicionar Estoque</h3>
@@ -453,11 +453,6 @@
 
           <label for="Produto_id">Produto:</label>
           <input type="text" id="produto_entrada" class="input-simple" />
-
-          <label for="valorNota">Valor da Nota:</label>
-          <input type="number" id="valornota" class="input-simple" />
-          <label for="dataalteracao">Data:</label>
-          <input type="date" id="data_entrada" class="input-simple" />
           <label for="quantidade">Quantidade:</label>
           <input
             type="number"
@@ -465,10 +460,18 @@
             class="input-simple"
             required
           />
+
+          <label for="preco-unitario">Preço unitário:</label>
+          <input type="text" id="preco-unitario" class="input-simple" />
+
+          <label for="valorNota">Valor da Nota:</label>
+          <input type="number" id="valornota" class="input-simple" />
+          <label for="dataalteracao">Data:</label>
+          <input type="date" id="data_entrada" class="input-simple" />
           <button onclick="adicionarQuantidade(); salvarHistoricoEntrada()">
             Adicionar
           </button>
-          <button onclick="fecharModal('modal-adicionar')">Fechar</button>
+          <button onclick="fecharModal()">Fechar</button>
         </div>
       </div>
       <div id="modal-retirar" class="modal-base modal-retirar">
@@ -853,8 +856,8 @@
                 <tr>
                   <th>Fornecedor</th>
                   <th>Nome Entrada</th>
-                  <th>Evento</th>
                   <th>Quantidade</th>
+                  <th>Preço Uni</th>
                   <th>Valor Nota</th>
                   <th>Data Entrada</th>
                 </tr>

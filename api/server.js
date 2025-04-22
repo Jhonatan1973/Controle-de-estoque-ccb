@@ -227,8 +227,8 @@ app.post("/historico_entrada", (req, res) => {
   const {
     fornecedor,
     nome_entrada,
-    evento_entrada,
     quantidade_entrada,
+    preco_unit,
     valor_nota,
     data_entrada,
   } = req.body;
@@ -237,13 +237,13 @@ app.post("/historico_entrada", (req, res) => {
       .status(400)
       .json({ message: "Preencha todos os campos obrigatórios!" });
   }
-  const sql = `INSERT INTO historico_entrada (fornecedor, nome_entrada, evento_entrada, quantidade_entrada, valor_nota, data_entrada) 
+  const sql = `INSERT INTO historico_entrada (fornecedor, nome_entrada, quantidade_entrada, preco_unit, valor_nota, data_entrada) 
                VALUES (?, ?, ?, ?, ?, ?)`;
   const values = [
     fornecedor,
     nome_entrada,
-    evento_entrada,
     quantidade_entrada,
+    preco_unit,
     valor_nota || null,
     data_entrada,
   ];
@@ -586,11 +586,10 @@ app.get("/download-produtos", async (req, res) => {
       return res.status(404).send("Nenhum produto encontrado.");
     }
 
-    // Criação do workbook e worksheet
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Produtos");
 
-    // Definir as colunas do Excel
+    // Definindo as colunas
     const columns = Object.keys(rows[0]).map((key) => ({
       header: key,
       key: key,
@@ -599,20 +598,24 @@ app.get("/download-produtos", async (req, res) => {
 
     worksheet.columns = columns;
 
-    // Adicionar o filtro automático (pode ser útil para filtrar os dados no Excel)
+    // Adiciona os dados de cada linha na planilha
+    rows.forEach((row) => {
+      worksheet.addRow(row);
+    });
+
+    // Aplica o filtro na coluna F
     worksheet.autoFilter = {
-      from: "A1",
-      to: worksheet.getRow(1).getCell(columns.length)._address,
+      from: "A1", // Começa no cabeçalho da primeira coluna
+      to: worksheet.getRow(1).getCell(columns.length)._address, // Vai até o cabeçalho da última coluna
     };
 
-    // Configurar o cabeçalho para o download do arquivo Excel
+    // Envia o arquivo com o filtro aplicado
     res.setHeader(
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
     res.setHeader("Content-Disposition", "attachment; filename=produtos.xlsx");
 
-    // Gerar e enviar o arquivo Excel
     await workbook.xlsx.write(res);
     res.end();
   } catch (error) {

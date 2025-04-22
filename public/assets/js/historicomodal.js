@@ -39,8 +39,8 @@ function carregarHistoricoEntrada() {
         row.innerHTML = `
               <td>${item.fornecedor}</td>
               <td>${item.nome_entrada}</td>
-              <td>${item.evento_entrada}</td>
               <td>${item.quantidade_entrada}</td>
+              <td>${item.preco_unit}</td>
               <td>${valorFormatado}</td>
               <td>${item.data_entrada}</td>
             `;

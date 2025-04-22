@@ -108,7 +108,7 @@ function formatarData(dataISO) {
 function salvarHistoricoEntrada() {
   const fornecedor = document.getElementById("fornecedor").value;
   const nome_entrada = document.getElementById("produto_entrada").value;
-  const evento_entrada = document.getElementById("evento_entrada").value;
+  const preco_unit = document.getElementById("preco-unitario").value;
   const quantidade_entrada = document.getElementById("inputquantidade").value;
   const valor_nota = document.getElementById("valornota").value;
   const data_entrada = document.getElementById("data_entrada").value;
@@ -123,8 +123,8 @@ function salvarHistoricoEntrada() {
     body: JSON.stringify({
       fornecedor,
       nome_entrada,
-      evento_entrada,
       quantidade_entrada,
+      preco_unit,
       valor_nota,
       data_entrada,
     }),
@@ -151,5 +151,6 @@ function selecionarProduto(linha) {
   }
 }
 document.getElementById("downloadExcel").addEventListener("click", () => {
-  window.location.href = "https://controle-de-estoque-ccb.onrender.com/download-excel"; // ajuste se o servidor for outro
+  window.location.href =
+    "https://controle-de-estoque-ccb.onrender.com/download-excel"; // ajuste se o servidor for outro
 });
