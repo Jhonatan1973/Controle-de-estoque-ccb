@@ -589,6 +589,7 @@ app.get("/download-produtos", async (req, res) => {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Produtos");
 
+    // Definindo as colunas
     const columns = Object.keys(rows[0]).map((key) => ({
       header: key,
       key: key,
@@ -597,16 +598,18 @@ app.get("/download-produtos", async (req, res) => {
 
     worksheet.columns = columns;
 
-    worksheet.autoFilter = {
-      from: "A1",
-      to: worksheet.getRow(1).getCell(columns.length)._address,
-    };
-
-    // ✅ Adicionar os dados aqui:
+    // Adiciona os dados de cada linha na planilha
     rows.forEach((row) => {
       worksheet.addRow(row);
     });
 
+    // Aplica o filtro na coluna F
+    worksheet.autoFilter = {
+      from: "A1", // Começa no cabeçalho da primeira coluna
+      to: worksheet.getRow(1).getCell(columns.length)._address, // Vai até o cabeçalho da última coluna
+    };
+
+    // Envia o arquivo com o filtro aplicado
     res.setHeader(
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
