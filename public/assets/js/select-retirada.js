@@ -135,3 +135,26 @@ function mostrarAnimacaoErro() {
     erro.remove();
   }, 2000);
 }
+window.filtrarProdutosSelecaoRetirada = function () {
+  const pesquisa = document
+    .getElementById("input-pesquisa-selecao-retirada")
+    .value.toLowerCase();
+  const linhas = document.querySelectorAll("#produtos-lista-selecao tr");
+
+  linhas.forEach((linha) => {
+    const nomeProduto = linha
+      .querySelector(".nome-produto")
+      ?.textContent.toLowerCase();
+
+    if (nomeProduto && nomeProduto.includes(pesquisa)) {
+      linha.style.display = "";
+    } else {
+      linha.style.display = "none";
+    }
+  });
+};
+
+// Sempre que digitar, já chama a função:
+document
+  .getElementById("input-pesquisa-selecao-retirada")
+  .addEventListener("input", filtrarProdutosSelecaoRetirada);

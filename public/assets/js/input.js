@@ -26,8 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
       let colunaIndex;
       if (filtro === "Nome") {
         colunaIndex = 1;
-      } else if (filtro === "Categoria") {
-        colunaIndex = 4;
       }
       const conteudo = linha
         .querySelector(`td:nth-child(${colunaIndex})`)
