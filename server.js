@@ -623,7 +623,6 @@ app.get("/download-produtos", async (req, res) => {
     res.status(500).send("Erro ao gerar Excel");
   }
 });
-
 app.get("/limpeza", (req, res) => {
   db.query("SELECT * FROM limpeza", (err, results) => {
     if (err) {
