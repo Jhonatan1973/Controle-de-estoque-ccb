@@ -277,7 +277,7 @@
           class="btn btn-primary"
           onclick="closeSideBar()"
         >
-          Rendimento
+          Custo por Evento
         </button>
         <button
           id="validades-venci"
@@ -354,15 +354,13 @@
         <option value="TODOS">Todos</option>
         <option value="SEC">SEC</option>
         <option value="BEB">BEB</option>
-        <option value="CH">CH</option>
-        <option value="CONSERV">CONSERV</option>
-        <option value="BL e BI">BL e BI</option>
-        <option value="MAC">MAC</option>
-        <option value="O">O</option>
-        <option value="S">S</option>
+        <option value="CONS">CONS</option>
+        <option value="BOL">BOL</option>
+        <option value="OLEO">OLEO</option>
+        <option value="SACHE">SACHE</option>
         <option value="TEMP">TEMP</option>
         <option value="DESC">DESC</option>
-        <option value="SOBRE">SOBRE</option>
+        <option value="SOB">SOB</option>
       </select>
     
       <label for="filtroCor">Filtrar por cor:</label>
@@ -385,7 +383,7 @@
       <div id="produtosContainer">
         <div class="produtoItem">
           <label>Produto:</label>
-          <input type="text" name="nomeProduto" required>
+          <input type="text" name="nomeProduto" oninput="capitalizeFirstLetter(this)" required >
           <label>Quantidade:</label>
           <input type="number" name="qtdProduto" required>
           <button type="button" class="removerItem" onclick="removerItem(this)">Remover</button>
@@ -400,13 +398,14 @@
       <input type="date" id="dataAgendamento" name="dataAgendamento" required><br><br>
 
       <label for="eventoAgendamento">Evento:</label>
-      <input type="text" id="eventoAgendamento" name="eventoAgendamento" required><br><br>
+      <input type="text" id="eventoAgendamento" name="eventoAgendamento" oninput="capitalizeFirstLetter(this)" required><br><br>
 
       <label for="refeicaoAgendamento">Refeição:</label>
       <select id="refeicaoAgendamento" name="refeicaoAgendamento" required>
-        <option value="Almoço">Almoço</option>
-        <option value="Jantar">Jantar</option>
         <option value="Café da Manhã">Café da Manhã</option>
+        <option value="Almoço">Almoço</option>
+        <option value="Café da Manhã">Café da Tarde</option>
+        <option value="Jantar">Jantar</option>
       </select><br><br>
 
       <button type="submit">Agendar</button>
@@ -718,15 +717,13 @@
             <option value="">Selecionar</option>
             <option value="SEC">SEC</option>
             <option value="BEB">BEB</option>
-            <option value="CH">CH</option>
-            <option value="CONSERV">CONSERV</option>
-            <option value="BL e BI">BL e BI</option>
-            <option value="MAC">MAC</option>
-            <option value="O">O</option>
-            <option value="S">S</option>
+            <option value="CONS">CONS</option>
+            <option value="BOL">BOL</option>
+            <option value="OLEO">OLEO</option>
+            <option value="SACHE">SACHE</option>
             <option value="TEMP">TEMP</option>
             <option value="DESC">DESC</option>
-            <option value="SOBRE">SOBRE</option>
+            <option value="SOB">SOB</option>
           </select>
           <button id="helpButton">Ajuda</button>
           <label for="validade">Validade:</label>
@@ -1037,6 +1034,9 @@
         <input type="hidden" id="produtoIdRetirar" />
         <label for="evento">Evento:</label>
         <select id="evento">
+          <option value="Dia comun">
+            Dia comun
+          </option>
           <option value="Assembleia CF - Trimestral">
             Assembleia CF - Trimestral
           </option>
@@ -1192,7 +1192,8 @@
           <thead>
             <tr>
               <th>Nome do Produto</th>
-              <th>Quantidade</th>
+              <th>Quant. Total</th>
+              <th>Retirado</th>
               <th>Ações</th>
             </tr>
           </thead>
@@ -1287,14 +1288,11 @@
         <p>
           SEC. Secos<br />
           BEB. Bebida<br />
-          C. Cereais<br />
-          CH. Chá<br />
           CONS. Conserva<br />
-          BL. BI. Bolachas e Biscoitos<br />
-          MAC. SEC macarrão Seco<br />
-          O. Óleo<br />
-          S. Sachê<br />
-          SOBRE. Sobremesas<br />
+          BOL. Bolachas ou Bolinhos<br />
+          OLEO. Óleo<br />
+          SACHE. Sachê<br />
+          SOB. Sobremesas<br />
           TEMP. Tempero<br /><br />
 
           CAR. Carnes<br />
@@ -1308,7 +1306,7 @@
           MIS. PRONT. Mistura Pronta<br /><br />
 
           SIGLAS - DESCARTÁVEIS<br />
-          DesC. Descartáveis<br /><br />
+          DESC. Descartáveis<br /><br />
 
           SIGLAS - LIMPEZA<br />
           Limp. Limpeza

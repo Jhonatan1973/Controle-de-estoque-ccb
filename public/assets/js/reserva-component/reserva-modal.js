@@ -277,7 +277,7 @@ document
         return;
       }
 
-      let html = "<h3>Pedidos encontrados:</h3><ul>";
+      let html = "<h3>Retirada estoque para evento:</h3><ul>";
       pedidos.forEach((p) => {
         html += `<li><strong>${p.evento}</strong> - ${p.refeicao} - ${p.produto} (${p.quantidade_agendada})</li>`;
       });

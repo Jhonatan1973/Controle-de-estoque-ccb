@@ -21,6 +21,7 @@ function carregarProdutos() {
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td class="nome-produto" data-produto-id="${produto.produto_id}">${produto.nome_produto}</td>
+          <td style="font-weight: bold;">${produto.quantidade}</td>
           <td><span id="quantidadeRetirar-${produto.produto_id}">0</span></td>
           <td>
             <button onclick="alterarQuantidade('${produto.produto_id}', 'mais')">+</button>
@@ -35,6 +36,7 @@ function carregarProdutos() {
       alert("Erro ao carregar os produtos.");
     });
 }
+
 function alterarQuantidade(produtoId, acao) {
   const quantidadeElement = document.getElementById(
     `quantidadeRetirar-${produtoId}`
