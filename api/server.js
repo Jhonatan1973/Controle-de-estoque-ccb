@@ -326,12 +326,10 @@ app.get("/historico_saida", (req, res) => {
 app.get("/api/produtos", (req, res) => {
   const sql = `
     SELECT 
-      produto_id, 
-      nome_produto, 
-      quantidade,
-      estoque_max AS max,
-      estoque_med AS med,
-      estoque_min AS min
+        produto_id, 
+        nome_produto, 
+        quantidade,
+        estoque
     FROM produtos;
   `;
 
@@ -340,16 +338,19 @@ app.get("/api/produtos", (req, res) => {
       console.error("Erro ao buscar os dados:", err);
       return res.status(500).json({ error: "Erro ao buscar os dados" });
     } else {
-      // Agrupar os valores max, med, min dentro do campo estoque
-      const produtos = results.map((produto) => {
-        const { max, med, min, ...outrosCampos } = produto;
-        return {
-          ...outrosCampos,
-          estoque: { max, med, min },
-        };
+      // Verificar se 'estoque' é uma string JSON e precisar ser convertido para objeto
+      results.forEach((produto) => {
+        if (typeof produto.estoque === "string") {
+          try {
+            produto.estoque = JSON.parse(produto.estoque); // Convertendo para objeto se necessário
+          } catch (e) {
+            console.error("Erro ao fazer o parse do JSON:", e);
+            produto.estoque = {}; // Em caso de erro, podemos retornar um objeto vazio
+          }
+        }
       });
 
-      res.json(produtos);
+      res.json(results); // Retorna os dados com o campo 'estoque' já como objeto
     }
   });
 });

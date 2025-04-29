@@ -4,50 +4,38 @@ document
 document
   .getElementById("fecharModalSelecionarRetirada")
   .addEventListener("click", fecharModalSelecionarRetirada);
+
 function abrirModalSelecionarRetirada() {
   document.getElementById("modal-selecao-retirada").style.display = "flex";
   carregarProdutos();
 }
+
 function fecharModalSelecionarRetirada() {
   document.getElementById("modal-selecao-retirada").style.display = "none";
 }
+
 function carregarProdutos() {
-  fetch("https://controle-de-estoque-ccb.onrender.com/api/produtos")
+  fetch("http://localhost:3000/api/produtos")
     .then((response) => response.json())
     .then((produtos) => {
       const tabela = document.getElementById("produtos-lista-selecao");
       tabela.innerHTML = "";
 
       produtos.forEach((produto) => {
-        const { quantidade } = produto;
-        let corQuantidade = "black";
-
-        // Verifica se o estoque existe
-        if (produto.estoque && !isNaN(quantidade)) {
-          const { max, med, min } = produto.estoque;
-          const diffMax = Math.abs(quantidade - max);
-          const diffMed = Math.abs(quantidade - med);
-          const diffMin = Math.abs(quantidade - min);
-
-          if (diffMax <= diffMed && diffMax <= diffMin) {
-            corQuantidade = "green";
-          } else if (diffMed <= diffMax && diffMed <= diffMin) {
-            corQuantidade = "orange";
-          } else {
-            corQuantidade = "red";
-          }
-        }
+        const { quantidade, estoque } = produto;
+        const { max, med, min } = estoque || {}; // Garantir que estoque exista
+        let corQuantidade = calcularCorQuantidade(quantidade, estoque);
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td class="nome-produto" data-produto-id="${produto.produto_id}">${produto.nome_produto}</td>
           <td id="quantidadeAtual-${produto.produto_id}" style="color: ${corQuantidade}; font-weight: bold;">
-            ${produto.quantidade}
+            ${quantidade}
           </td>
           <td><span id="quantidadeRetirar-${produto.produto_id}">0</span></td>
           <td>
-            <button onclick="alterarQuantidade('${produto.produto_id}', 'mais', ${produto.quantidade})">+</button>
-            <button onclick="alterarQuantidade('${produto.produto_id}', 'menos', ${produto.quantidade})">-</button>
+            <button onclick="alterarQuantidade('${produto.produto_id}', 'mais', ${produto.quantidade}, ${max}, ${med}, ${min})">+</button>
+            <button onclick="alterarQuantidade('${produto.produto_id}', 'menos', ${produto.quantidade}, ${max}, ${med}, ${min})">-</button>
           </td>
         `;
         tabela.appendChild(tr);
@@ -59,7 +47,27 @@ function carregarProdutos() {
     });
 }
 
-function alterarQuantidade(produtoId, acao, quantidadeInicial) {
+function calcularCorQuantidade(quantidade, estoque) {
+  const { max, med, min } = estoque || {};
+  let corQuantidade = "black";
+
+  if (!isNaN(quantidade)) {
+    const diffMax = Math.abs(quantidade - max);
+    const diffMed = Math.abs(quantidade - med);
+    const diffMin = Math.abs(quantidade - min);
+
+    if (diffMax <= diffMed && diffMax <= diffMin) {
+      corQuantidade = "green";
+    } else if (diffMed <= diffMax && diffMed <= diffMin) {
+      corQuantidade = "orange";
+    } else {
+      corQuantidade = "red";
+    }
+  }
+  return corQuantidade;
+}
+
+function alterarQuantidade(produtoId, acao, quantidadeInicial, max, med, min) {
   const quantidadeRetirarElement = document.getElementById(
     `quantidadeRetirar-${produtoId}`
   );
@@ -80,6 +88,14 @@ function alterarQuantidade(produtoId, acao, quantidadeInicial) {
 
   quantidadeRetirarElement.textContent = quantidadeRetirar;
   quantidadeAtualElement.textContent = novaQuantidadeEstoque;
+
+  // Atualiza a cor da quantidade instantaneamente
+  const corQuantidade = calcularCorQuantidade(novaQuantidadeEstoque, {
+    max,
+    med,
+    min,
+  });
+  quantidadeAtualElement.style.color = corQuantidade;
 }
 
 document
@@ -104,16 +120,13 @@ document
     });
     console.log("Produtos para retirar:", produtosParaRetirar);
     if (produtosParaRetirar.length > 0) {
-      fetch(
-        "https://controle-de-estoque-ccb.onrender.com/api/retirarProdutos",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(produtosParaRetirar),
-        }
-      )
+      fetch("http://localhost:3000/api/retirarProdutos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(produtosParaRetirar),
+      })
         .then((response) => response.json())
         .then((data) => {
           console.log("Resposta do servidor:", data);
@@ -134,6 +147,7 @@ document
       mostrarAnimacaoErro();
     }
   });
+
 function mostrarAnimacaoSucesso() {
   const animacao = document.createElement("div");
   animacao.classList.add("checkbox-wrapper-31");
