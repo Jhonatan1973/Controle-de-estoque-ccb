@@ -326,9 +326,12 @@ app.get("/historico_saida", (req, res) => {
 app.get("/api/produtos", (req, res) => {
   const sql = `
     SELECT 
-        produto_id, 
-        nome_produto, 
-        quantidade
+      produto_id, 
+      nome_produto, 
+      quantidade,
+      estoque_max AS max,
+      estoque_med AS med,
+      estoque_min AS min
     FROM produtos;
   `;
 
@@ -337,10 +340,20 @@ app.get("/api/produtos", (req, res) => {
       console.error("Erro ao buscar os dados:", err);
       return res.status(500).json({ error: "Erro ao buscar os dados" });
     } else {
-      res.json(results);
+      // Agrupar os valores max, med, min dentro do campo estoque
+      const produtos = results.map((produto) => {
+        const { max, med, min, ...outrosCampos } = produto;
+        return {
+          ...outrosCampos,
+          estoque: { max, med, min },
+        };
+      });
+
+      res.json(produtos);
     }
   });
 });
+
 app.post("/api/retirarProdutos", (req, res) => {
   const produtosParaRetirar = req.body;
   if (!Array.isArray(produtosParaRetirar) || produtosParaRetirar.length === 0) {

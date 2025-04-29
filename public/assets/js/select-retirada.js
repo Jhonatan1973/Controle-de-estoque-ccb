@@ -17,15 +17,37 @@ function carregarProdutos() {
     .then((produtos) => {
       const tabela = document.getElementById("produtos-lista-selecao");
       tabela.innerHTML = "";
+
       produtos.forEach((produto) => {
+        const { quantidade } = produto;
+        let corQuantidade = "black";
+
+        // Verifica se o estoque existe
+        if (produto.estoque && !isNaN(quantidade)) {
+          const { max, med, min } = produto.estoque;
+          const diffMax = Math.abs(quantidade - max);
+          const diffMed = Math.abs(quantidade - med);
+          const diffMin = Math.abs(quantidade - min);
+
+          if (diffMax <= diffMed && diffMax <= diffMin) {
+            corQuantidade = "green";
+          } else if (diffMed <= diffMax && diffMed <= diffMin) {
+            corQuantidade = "orange";
+          } else {
+            corQuantidade = "red";
+          }
+        }
+
         const tr = document.createElement("tr");
         tr.innerHTML = `
           <td class="nome-produto" data-produto-id="${produto.produto_id}">${produto.nome_produto}</td>
-          <td style="font-weight: bold;">${produto.quantidade}</td>
+          <td id="quantidadeAtual-${produto.produto_id}" style="color: ${corQuantidade}; font-weight: bold;">
+            ${produto.quantidade}
+          </td>
           <td><span id="quantidadeRetirar-${produto.produto_id}">0</span></td>
           <td>
-            <button onclick="alterarQuantidade('${produto.produto_id}', 'mais')">+</button>
-            <button onclick="alterarQuantidade('${produto.produto_id}', 'menos')">-</button>
+            <button onclick="alterarQuantidade('${produto.produto_id}', 'mais', ${produto.quantidade})">+</button>
+            <button onclick="alterarQuantidade('${produto.produto_id}', 'menos', ${produto.quantidade})">-</button>
           </td>
         `;
         tabela.appendChild(tr);
@@ -37,18 +59,29 @@ function carregarProdutos() {
     });
 }
 
-function alterarQuantidade(produtoId, acao) {
-  const quantidadeElement = document.getElementById(
+function alterarQuantidade(produtoId, acao, quantidadeInicial) {
+  const quantidadeRetirarElement = document.getElementById(
     `quantidadeRetirar-${produtoId}`
   );
-  let quantidade = parseInt(quantidadeElement.textContent);
-  if (acao === "mais") {
-    quantidade++;
-  } else if (acao === "menos" && quantidade > 0) {
-    quantidade--;
+  const quantidadeAtualElement = document.getElementById(
+    `quantidadeAtual-${produtoId}`
+  );
+
+  let quantidadeRetirar = parseInt(quantidadeRetirarElement.textContent);
+  let novaQuantidadeEstoque;
+
+  if (acao === "mais" && quantidadeRetirar < quantidadeInicial) {
+    quantidadeRetirar++;
+  } else if (acao === "menos" && quantidadeRetirar > 0) {
+    quantidadeRetirar--;
   }
-  quantidadeElement.textContent = quantidade;
+
+  novaQuantidadeEstoque = quantidadeInicial - quantidadeRetirar;
+
+  quantidadeRetirarElement.textContent = quantidadeRetirar;
+  quantidadeAtualElement.textContent = novaQuantidadeEstoque;
 }
+
 document
   .getElementById("confirmar-selecao-retirada")
   .addEventListener("click", function () {
