@@ -326,8 +326,8 @@ function abrirModalAlterar(produtoId, nomeProduto) {
   document.getElementById("nomeProdutoAlterar").textContent = nomeProduto;
   document.getElementById("modal-alterar").style.display = "block";
 }
-function fecharModal(idModal) {
-  document.getElementById(idModal).style.display = "none";
+function fecharModalAdicionar() {
+  document.getElementById("modal-alterar").style.display = "none";
 }
 function abrirModalAdicionar() {
   document.getElementById("modal-alterar").style.display = "none";
@@ -335,8 +335,8 @@ function abrirModalAdicionar() {
   const produtoId = document.getElementById("produtoIdAlterar").value;
   document.getElementById("produtoIdAdicionar").value = produtoId;
 }
-function fecharModal(idModal) {
-  document.getElementById(idModal).style.display = "none";
+function fecharModalAdicionarProd() {
+  document.getElementById("modal-adicionar").style.display = "none";
 }
 async function adicionarQuantidade() {
   const produtoId = document.getElementById("produtoIdAdicionar").value;
@@ -356,7 +356,7 @@ async function adicionarQuantidade() {
   );
   if (response.ok) {
     mostrarAnimacaoSucesso();
-    fecharModal("modal-adicionar");
+    fecharModalAdicionar("modal-adicionar");
     await atualizarTabela();
   } else {
     alert("Erro ao adicionar quantidade.");
@@ -380,7 +380,7 @@ async function retirarQuantidade() {
   );
   if (response.ok) {
     alert("Quantidade retirada com sucesso!");
-    fecharModal("modal-retirar");
+    fecharModalAdicionar("modal-retirar");
     await atualizarTabela();
   } else {
     alert("Erro ao retirar quantidade.");
